@@ -4,13 +4,13 @@ body {
   margin: 0;
   padding: 10px;
   font-family: Arial, Helvetica, sans-serif;
-  background: #ffffff;
+  background: #fcfdfa;
   color: #1a1a2e;
   min-width: 400px;
   overflow-y: scroll;
 }
 
-h1 { font-size: 25px; font-weight: 500; margin: 1rem; }
+h1 { font-size: 25px; font-weight: 500; margin: 1rem; padding-top: 0.5rem;}
 h2 { font-size: 16px; font-weight: 500; }
 h3 { font-size: 14px; font-weight: 500; margin-bottom: 1rem; }
 h4 { font-size: 13px; color: #555770; margin-bottom: 0.75rem; }
@@ -134,7 +134,7 @@ button:active {
 .deck-card.selected .deck-name { color: #9D87ED; }
 
 .deck-count    { font-size: 28px; font-weight: 500; color: #1a1a2e; margin: 0.5rem 0; }
-.deck-name     { font-size: 14px; color: #555770; }
+.deck-name     { font-size: 20px; color: #0f0f12;  margin: 1rem 0 1rem; }
 .deck-progress { font-size: 11px; color: #8b8da3; margin-top: 0.5rem; }
 
 /* ─── Cards list (inside deck controls) ─────────────────────────────────────── */
@@ -200,7 +200,7 @@ button:active {
   font-size: 14px;
 }
 
-/* ─── Buttons: primary / danger ─────────────────────────────────────────────── */
+/* ─── Buttons ─────────────────────────────────────────────── */
 
 .btn-primary { background: #D7ED87; color: #1a1a2e; border-color: #D7ED87; }
 .btn-primary:hover { background: #c8e06e; border-color: #c8e06e; }
@@ -230,7 +230,7 @@ button:active {
   border: 1px solid #e0e0e0;
 }
 
-/* Centered panel — used for "Deck complete" screen */
+/* Centered panel */
 .panel-center {
   background: #f9fdf0;
   padding: 2rem;
@@ -515,6 +515,10 @@ body.dark .study-title {
   color: #e0e0e0;
 }
 
+body.dark .deck-name {
+  color: #e0e0e0;
+}
+
 /* Adjust header */
 
 .header-controls {
@@ -522,4 +526,149 @@ body.dark .study-title {
   justify-content: flex-end;
   gap: 0.5rem;
   align-items: center;
+}
+
+
+/*** authentication  ***/
+
+.auth-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-box {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 360px;
+}
+
+/* ----- Landing ---- */
+
+.auth-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-header {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1rem;
+}
+
+.auth-hero {
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+  max-width: 500px;
+}
+
+.auth-hero h2 {
+  font-size: 28px;
+  margin-bottom: 1rem;
+}
+
+.auth-hero p {
+  color: #555770;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.auth-features {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.auth-feature {
+  background: #f9fdf0;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 13px;
+}
+
+.auth-box {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 360px;
+}
+
+#auth-error {
+  color: #ED87A4;
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 13px;
+  min-height: 1rem;
+}
+
+
+
+body.dark .auth-screen {
+  background: #0b0b14;
+}
+
+body.dark .auth-box {
+  background: #2a2a3e;
+  border-color: #6a6a93;
+}
+
+body.dark .auth-feature {
+  background: #2a2a3e;
+  border-color: #6a6a93;
+  color: #e0e0e0;
+}
+
+body.dark .auth-hero p {
+  color: #9a9ab8;
+}
+
+body.dark input {
+  background: #1a1a2e;
+  color: #e0e0e0;
+}
+
+.auth-header {
+  border-bottom: 2px solid #9D87ED;
+}
+
+/* cards landing page */
+
+.bg-cards {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-card {
+  position: absolute;
+  width: 120px;
+  height: 160px;
+  border: 2px solid var(--c);
+  border-radius: 10px;
+  left: var(--x);
+  top: var(--y);
+  transform: rotate(var(--r));
+  opacity: 0.4;
+}
+
+.auth-hero,
+.auth-box {
+  position: relative;
+  z-index: 1;
 }

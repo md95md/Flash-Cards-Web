@@ -1,4 +1,23 @@
-import { loadDecks, saveDeck, deleteDeckFromDB } from './firebase.js';
+import { loadDecks, saveDeck, deleteDeckFromDB, registerUser, loginUser, logoutUser, onAuthChange } from './firebase.js';
+
+let currentUser = null;
+
+onAuthChange(user => {
+  if (user) {
+    currentUser = user;
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadDecks(currentUser.uid).then(data => {
+      decks = data;
+      renderStudyDecks();
+    });
+  } else {
+    currentUser = null;
+    document.getElementById('auth-screen').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+  }
+});
+
 import { translations } from './lang.js';
 
 let lang = 'en';
@@ -66,26 +85,24 @@ function renderDecks() {
   const list = document.getElementById('decks-list');
   list.innerHTML = '';
 
-  decks.forEach(deck => {
-    const div = document.createElement('div');
-    div.className = 'deck-card' + (selectedDeckId === deck.id ? ' selected' : '');
-    div.onclick = () => selectDeck(deck.id);
 
-    const count = document.createElement('div');
-    count.className = 'deck-count';
-    count.textContent = deck.cards.length;
+decks.forEach(deck => {
+  const div = document.createElement('div');
+  div.className = 'deck-card' + (selectedDeckId === deck.id ? ' selected' : '');
+  div.onclick = () => selectDeck(deck.id);
 
-    const name = document.createElement('div');
-    name.className = 'deck-name';
-    name.textContent = deck.name;
+  const name = document.createElement('div');
+  name.className = 'deck-name';
+  name.textContent = deck.name;
 
-    const progress = document.createElement('div');
-    progress.className = 'deck-progress';
-    progress.textContent = deck.cards.filter(c => c.correct > 0).length + ' ' + t('learned_count');
+  const count = document.createElement('div');
+  count.className = 'deck-progress';
+  count.textContent = deck.cards.length + ' ' + t('cards_count');
 
-    div.append(count, name, progress);
-    list.appendChild(div);
-  });
+  div.append(name, count);
+  list.appendChild(div);
+});
+
 
   renderDeckControls();
 }
@@ -184,7 +201,7 @@ function deleteSelectedCard() {
   const deck = decks.find(d => d.id === selectedDeckId);
   deck.cards.splice(selectedCardIdx, 1);
   selectedCardIdx = null;
-  saveDeck(deck);
+  saveDeck(currentUser.uid, deck);
   renderDeckControls();
 }
 
@@ -220,7 +237,7 @@ function saveEditCard() {
 
   editingCardIdx = null;
   selectedCardIdx = null;
-  saveDeck(deck);
+  saveDeck(currentUser.uid, deck);
   hideAddCardForm();
   renderDeckControls();
 }
@@ -262,7 +279,7 @@ function deleteDeck() {
     const id = selectedDeckId;
     decks = decks.filter(d => d.id !== id);
     selectedDeckId = null;
-    deleteDeckFromDB(id);
+    deleteDeckFromDB(currentUser.uid, id);
     renderDecks();
   };
 }
@@ -315,7 +332,7 @@ function addCard() {
   const deck = decks.find(d => d.id === selectedDeckId);
   deck.cards.push({ id: Date.now(), question, answer, correct: 0, total: 0 });
 
-  saveDeck(deck);
+  saveDeck(currentUser.uid, deck);
   hideAddCardForm();
   renderDeckControls();
 }
@@ -555,7 +572,7 @@ function markCorrect() {
   const deck = decks.find(d => d.id === currentStudyDeckId);
   deck.cards[idx].correct++;
   deck.cards[idx].total++;
-  saveDeck(deck);
+  saveDeck(currentUser.uid, deck);
   nextCard();
 }
 
@@ -563,7 +580,7 @@ function markWrong() {
   const idx = cardSequence[cardSequenceIndex];
   const deck = decks.find(d => d.id === currentStudyDeckId);
   deck.cards[idx].total++;
-  saveDeck(deck);
+  saveDeck(currentUser.uid, deck);
   cardSequence.push(idx);
   nextCard();
 }
@@ -617,8 +634,10 @@ function renderStats() {
 
 function toggleTheme() {
   const isDark = document.body.classList.toggle('dark');
-  document.getElementById('theme-btn').textContent = isDark ? 'Light' : 'Dark';
+  document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  document.getElementById('theme-btn-auth').textContent = isDark ? '☀️' : '🌙';
+document.getElementById('lang-label-auth').textContent = current.label;
 }
 
 // restore on load
@@ -626,6 +645,38 @@ if (localStorage.getItem('theme') === 'dark') {
   document.body.classList.add('dark');
   document.getElementById('theme-btn').textContent = 'Light';
 }
+
+
+
+/*** Authentication Functions */
+
+async function handleLogin() {
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value.trim();
+  try {
+    await loginUser(email, password);
+  } catch (e) {
+    document.getElementById('auth-error').textContent = e.message;
+  }
+}
+
+async function handleRegister() {
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value.trim();
+  try {
+    await registerUser(email, password);
+  } catch (e) {
+    document.getElementById('auth-error').textContent = e.message;
+  }
+}
+
+function handleLogout() {
+  logoutUser();
+}
+
+window.handleLogin = handleLogin;
+window.handleRegister = handleRegister;
+window.handleLogout = handleLogout;
 
 
 

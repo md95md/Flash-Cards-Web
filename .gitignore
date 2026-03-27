@@ -1,4 +1,8 @@
-temp/
-.settings/
-.vscode/
-firebase.js
+firebase-config.js
+node_modules/
+.firebase/
+*.log
+.env
+firebase-debug.log
+.firebaserc
+firebase.json
