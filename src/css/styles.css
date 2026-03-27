@@ -6,11 +6,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background: #fcfdfa;
   color: #1a1a2e;
-  min-width: 400px;
   overflow-y: scroll;
 }
 
-h1 { font-size: 25px; font-weight: 500; margin: 1rem; padding-top: 0.5rem;}
+h1 { font-size: 25px; font-weight: 500; margin: 1rem; padding-top: 0.5rem; }
 h2 { font-size: 16px; font-weight: 500; }
 h3 { font-size: 14px; font-weight: 500; margin-bottom: 1rem; }
 h4 { font-size: 13px; color: #555770; margin-bottom: 0.75rem; }
@@ -110,7 +109,7 @@ button:active {
 .content        { display: none; }
 .content.active { display: block; }
 
-/* ─── Deck grid  ────────────────────────────────────────────────── */
+/* ─── Deck grid ─────────────────────────────────────────────────────────────── */
 
 .decks-grid {
   display: grid;
@@ -129,15 +128,15 @@ button:active {
   transition: border-color 0.2s, background 0.2s;
 }
 
-.deck-card:hover         { border-color: #9D87ED; background: #f5f3fc; }
-.deck-card.selected { border: 1px solid #9D87ED; outline: 1px solid #9D87ED; background: #eeebf9; }
+.deck-card:hover          { border-color: #9D87ED; background: #f5f3fc; }
+.deck-card.selected       { border: 1px solid #9D87ED; outline: 1px solid #9D87ED; background: #eeebf9; }
 .deck-card.selected .deck-name { color: #9D87ED; }
 
 .deck-count    { font-size: 28px; font-weight: 500; color: #1a1a2e; margin: 0.5rem 0; }
-.deck-name     { font-size: 20px; color: #0f0f12;  margin: 1rem 0 1rem; }
+.deck-name     { font-size: 20px; color: #0f0f12; margin: 1rem 0; }
 .deck-progress { font-size: 11px; color: #8b8da3; margin-top: 0.5rem; }
 
-/* ─── Cards list (inside deck controls) ─────────────────────────────────────── */
+/* ─── Cards list ─────────────────────────────────────────────────────────────── */
 
 .cards-list-wrapper {
   border-top: 1px solid #e0e0e0;
@@ -164,10 +163,10 @@ button:active {
   border: 1px solid transparent;
 }
 
-.card-list-item:hover       { background: #e8f0d5; }
+.card-list-item:hover         { background: #e8f0d5; }
 .card-list-item.card-selected { background: #eeebf9; border-color: #9D87ED; }
 
-/* ─── Deck item rows (Study & Stats lists) ──────────────────────────────────── */
+/* ─── Deck item rows ─────────────────────────────────────────────────────────── */
 
 .study-decks-grid {
   display: grid;
@@ -200,7 +199,7 @@ button:active {
   font-size: 14px;
 }
 
-/* ─── Buttons ─────────────────────────────────────────────── */
+/* ─── Buttons ────────────────────────────────────────────────────────────────── */
 
 .btn-primary { background: #D7ED87; color: #1a1a2e; border-color: #D7ED87; }
 .btn-primary:hover { background: #c8e06e; border-color: #c8e06e; }
@@ -208,7 +207,7 @@ button:active {
 .btn-danger { background: white; color: #ED87A4; border-color: #ED87A4; }
 .btn-danger:hover { background: #ED87A4; color: white; }
 
-/* ─── Forms ─────────────────────────────────────────────────────────────────── */
+/* ─── Forms ──────────────────────────────────────────────────────────────────── */
 
 .form-group { margin-bottom: 1rem; }
 
@@ -220,7 +219,14 @@ button:active {
   color: #1a1a2e;
 }
 
-/* ─── Panels ────────────────────────────────────────────────────────────────── */
+.input-hint {
+  font-size: 11px;
+  color: #8b8da3;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* ─── Panels ─────────────────────────────────────────────────────────────────── */
 
 .panel {
   background: #f9fdf0;
@@ -230,7 +236,6 @@ button:active {
   border: 1px solid #e0e0e0;
 }
 
-/* Centered panel */
 .panel-center {
   background: #f9fdf0;
   padding: 2rem;
@@ -249,7 +254,7 @@ button:active {
   margin-bottom: 1rem;
 }
 
-/* ─── Study mode ────────────────────────────────────────────────────────────── */
+/* ─── Study mode ─────────────────────────────────────────────────────────────── */
 
 .study-header {
   background: white;
@@ -266,7 +271,7 @@ button:active {
   margin-bottom: 0.5rem;
 }
 
-.study-title    { font-size: 18px; font-weight: 500; }
+.study-title      { font-size: 18px; font-weight: 500; }
 .progress-percent { font-size: 28px; font-weight: 600; color: #9D87ED; }
 
 .progress-bar {
@@ -283,7 +288,7 @@ button:active {
   transition: width 0.3s;
 }
 
-/* ─── Flashcard ─────────────────────────────────────────────────────────────── */
+/* ─── Flashcard ──────────────────────────────────────────────────────────────── */
 
 .card-container {
   perspective: 1000px;
@@ -343,7 +348,7 @@ button:active {
   line-height: 1.6;
 }
 
-/* ─── Study controls ────────────────────────────────────────────────────────── */
+/* ─── Study controls ─────────────────────────────────────────────────────────── */
 
 .controls {
   display: flex;
@@ -358,7 +363,7 @@ button:active {
   margin-top: 1rem;
 }
 
-/* ─── Stats ─────────────────────────────────────────────────────────────────── */
+/* ─── Stats ──────────────────────────────────────────────────────────────────── */
 
 .stats-grid {
   display: grid;
@@ -377,14 +382,6 @@ button:active {
 .stat-label { font-size: 12px; color: #555770; margin-bottom: 0.5rem; }
 .stat-value { font-size: 24px; font-weight: 500; color: #1a1a2e; }
 
-/* ─── Empty state ───────────────────────────────────────────────────────────── */
-
-.empty-state {
-  text-align: center;
-  padding: 2rem;
-  color: #555770;
-}
-
 .stat-deck-percent {
   padding: 2rem;
   font-size: 24px;
@@ -398,7 +395,16 @@ button:active {
   color: #555770;
 }
 
-/* Dialog overlay ---- */
+/* ─── Empty state ────────────────────────────────────────────────────────────── */
+
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: #555770;
+}
+
+/* ─── Dialog ─────────────────────────────────────────────────────────────────── */
+
 .dialog-overlay {
   display: none;
   position: fixed;
@@ -418,15 +424,12 @@ button:active {
   text-align: center;
 }
 
-.dialog-text {
-  margin: 0 0 1.5rem;
-}
+.dialog-text { margin: 0 0 1.5rem; }
 
-.dialog-box .button-row {
-  justify-content: center;
-}
+.dialog-box .button-row { justify-content: center; }
 
-/* Language switcher */
+/* ─── Header & lang switcher ─────────────────────────────────────────────────── */
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -434,9 +437,15 @@ button:active {
   margin-bottom: 0.5rem;
 }
 
-.lang-switcher {
+.header-controls {
   display: flex;
   justify-content: flex-end;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.lang-switcher {
+  display: flex;
   align-items: center;
   gap: 0.4rem;
   padding: 6px 12px;
@@ -454,7 +463,8 @@ button:active {
   background: transparent;
 }
 
-/*---------Dark theme---------*/
+/* ─── Dark theme ─────────────────────────────────────────────────────────────── */
+
 body.dark {
   background: #13132a;
   color: #e0e0e0;
@@ -492,18 +502,16 @@ body.dark button {
   color: #e0e0e0;
 }
 
-body.dark .tab-btn {
-  background: transparent;
-}
+body.dark .tab-btn { background: transparent; }
+
+body.dark .tab-btn.active { color: #9D87ED; border-bottom-color: #9D87ED; }
+
+body.dark .tab-btn:hover { color: #9D87ED; background: transparent; }
 
 body.dark .deck-count,
-body.dark .stat-deck-percent {
-  color: #e0e0e0;
-}
+body.dark .stat-deck-percent { color: #e0e0e0; }
 
-body.dark .deck-card {
-  border-color: #6a6a93;
-}
+body.dark .deck-card { border-color: #6a6a93; }
 
 body.dark .deck-card.selected {
   border-color: #9D87ED;
@@ -511,49 +519,25 @@ body.dark .deck-card.selected {
 }
 
 body.dark .card-text,
-body.dark .study-title {
-  color: #e0e0e0;
-}
+body.dark .study-title,
+body.dark .deck-name { color: #e0e0e0; }
 
-body.dark .deck-name {
-  color: #e0e0e0;
-}
+body.dark .btn-primary { background: #a8c030; border-color: #a8c030; color: #1a1a2e; }
+body.dark .btn-primary:hover { background: #bfd43a; border-color: #bfd43a; }
 
-/* Adjust header */
+body.dark .btn-danger { background: transparent; color: #ED87A4; border-color: #ED87A4; }
+body.dark .btn-danger:hover { background: #ED87A4; color: #1a1a2e; }
 
-.header-controls {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  align-items: center;
-}
+body.dark .lang-switcher { background: #2a2a3e; border-color: #6a6a93; }
 
-
-/*** authentication  ***/
-
-.auth-screen {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.auth-box {
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 2rem;
-  width: 100%;
-  max-width: 360px;
-}
-
-/* ----- Landing ---- */
+/* ─── Auth / Landing ─────────────────────────────────────────────────────────── */
 
 .auth-screen {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0;
 }
 
 .auth-header {
@@ -563,18 +547,18 @@ body.dark .deck-name {
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 1rem;
+  border-bottom: 2px solid #9D87ED;
 }
 
 .auth-hero {
   text-align: center;
   padding: 3rem 1rem 2rem;
   max-width: 500px;
+  position: relative;
+  z-index: 1;
 }
 
-.auth-hero h2 {
-  font-size: 28px;
-  margin-bottom: 1rem;
-}
+.auth-hero h2 { font-size: 28px; margin-bottom: 1rem; }
 
 .auth-hero p {
   color: #555770;
@@ -606,6 +590,9 @@ body.dark .deck-name {
   padding: 2rem;
   width: 100%;
   max-width: 360px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 2rem;
 }
 
 #auth-error {
@@ -616,37 +603,7 @@ body.dark .deck-name {
   min-height: 1rem;
 }
 
-
-
-body.dark .auth-screen {
-  background: #0b0b14;
-}
-
-body.dark .auth-box {
-  background: #2a2a3e;
-  border-color: #6a6a93;
-}
-
-body.dark .auth-feature {
-  background: #2a2a3e;
-  border-color: #6a6a93;
-  color: #e0e0e0;
-}
-
-body.dark .auth-hero p {
-  color: #9a9ab8;
-}
-
-body.dark input {
-  background: #1a1a2e;
-  color: #e0e0e0;
-}
-
-.auth-header {
-  border-bottom: 2px solid #9D87ED;
-}
-
-/* cards landing page */
+/* ─── Background cards ───────────────────────────────────────────────────────── */
 
 .bg-cards {
   position: fixed;
@@ -667,8 +624,54 @@ body.dark input {
   opacity: 0.4;
 }
 
-.auth-hero,
-.auth-box {
-  position: relative;
-  z-index: 1;
+/* ─── Dark theme — auth ──────────────────────────────────────────────────────── */
+
+body.dark .auth-screen  { background: #0b0b14; }
+
+body.dark .auth-box {
+  background: #2a2a3e;
+  border-color: #6a6a93;
+}
+
+body.dark .auth-feature {
+  background: #2a2a3e;
+  border-color: #6a6a93;
+  color: #e0e0e0;
+}
+
+body.dark .auth-hero p { color: #9a9ab8; }
+
+body.dark .input-hint { color: #6a6a93; }
+
+/* ─── Mobile ─────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .auth-header {
+    padding: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .auth-header h1 { font-size: 18px; }
+
+  .auth-hero {
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .auth-hero h2 { font-size: 20px; }
+
+  .auth-features {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .auth-box {
+    max-width: 100%;
+    margin: 0 1rem 2rem;
+    box-sizing: border-box;
+    padding: 1.5rem;
+  }
+
+  .bg-cards { display: none; }
 }

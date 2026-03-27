@@ -25,8 +25,6 @@
   <div class="auth-hero">
     <h2>Learn anything, faster.</h2>
     <p>Create flashcard decks, study at your own pace, and track your progress — all in one place.</p>
-
-    <!-- Features -->
     <div class="auth-features">
       <div class="auth-feature">📚 Create decks</div>
       <div class="auth-feature">🧠 Study & repeat</div>
@@ -42,7 +40,8 @@
     </div>
     <div class="form-group">
       <label>Password</label>
-    <input type="password" id="authPassword" placeholder="your password here">
+      <input type="password" id="authPassword" placeholder="min. 6 characters">
+      <span class="input-hint">At least 6 characters</span>
     </div>
     <div class="button-row" style="justify-content:center">
       <button class="btn-primary" onclick="handleLogin()">Sign In</button>
@@ -51,16 +50,15 @@
     <p id="auth-error"></p>
   </div>
 
-  <!-- Cards -->
-<div class="bg-cards">
-  <div class="bg-card" style="--r:-15deg; --x:5%; --y:20%; --c:#9D87ED"></div>
-  <div class="bg-card" style="--r:10deg; --x:8%; --y:50%; --c:#D7ED87"></div>
-  <div class="bg-card" style="--r:-8deg; --x:3%; --y:70%; --c:#87EDD0"></div>
-  <div class="bg-card" style="--r:20deg; --x:75%; --y:15%; --c:#ED87A4"></div>
-  <div class="bg-card" style="--r:-12deg; --x:80%; --y:45%; --c:#9D87ED"></div>
-  <div class="bg-card" style="--r:8deg; --x:72%; --y:70%; --c:#D7ED87"></div>
-</div>
-
+  <!-- Background cards -->
+  <div class="bg-cards">
+    <div class="bg-card" style="--r:-15deg; --x:5%; --y:20%; --c:#9D87ED"></div>
+    <div class="bg-card" style="--r:10deg; --x:8%; --y:50%; --c:#D7ED87"></div>
+    <div class="bg-card" style="--r:-8deg; --x:3%; --y:70%; --c:#87EDD0"></div>
+    <div class="bg-card" style="--r:20deg; --x:75%; --y:15%; --c:#ED87A4"></div>
+    <div class="bg-card" style="--r:-12deg; --x:80%; --y:45%; --c:#9D87ED"></div>
+    <div class="bg-card" style="--r:8deg; --x:72%; --y:70%; --c:#D7ED87"></div>
+  </div>
 
 </div>
 
@@ -81,13 +79,13 @@
 
     <!-- Tabs -->
     <div class="tabs">
-      <button class="tab-btn" data-tab="decks" data-i18n="my_decks" onclick="switchTab('decks')">My Decks</button>
-      <button class="tab-btn active" data-tab="study" data-i18n="study" onclick="switchTab('study')">Study</button>
+      <button class="tab-btn active" data-tab="decks" data-i18n="my_decks" onclick="switchTab('decks')">My Decks</button>
+      <button class="tab-btn" data-tab="study" data-i18n="study" onclick="switchTab('study')">Study</button>
       <button class="tab-btn" data-tab="stats" data-i18n="stats" onclick="switchTab('stats')">Statistics</button>
     </div>
 
     <!-- ─── Decks tab ─────────────────────────────── -->
-    <div id="decks" class="content">
+    <div id="decks" class="content active">
 
       <div class="section-header">
         <h2 data-i18n="your_decks">Your Decks</h2>
@@ -165,7 +163,7 @@
     </div>
 
     <!-- ─── Study tab ─────────────────────────────── -->
-    <div id="study" class="content active">
+    <div id="study" class="content">
       <div id="study-content"></div>
     </div>
 

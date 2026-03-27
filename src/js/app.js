@@ -1,4 +1,5 @@
 import { loadDecks, saveDeck, deleteDeckFromDB, registerUser, loginUser, logoutUser, onAuthChange } from './firebase.js';
+import { translations } from './lang.js';
 
 let currentUser = null;
 
@@ -9,7 +10,7 @@ onAuthChange(user => {
     document.getElementById('app').style.display = 'block';
     loadDecks(currentUser.uid).then(data => {
       decks = data;
-      renderStudyDecks();
+      renderDecks();
     });
   } else {
     currentUser = null;
@@ -17,8 +18,6 @@ onAuthChange(user => {
     document.getElementById('app').style.display = 'none';
   }
 });
-
-import { translations } from './lang.js';
 
 let lang = 'en';
 export function t(key) {
@@ -61,10 +60,6 @@ let cardSequenceIndex = 0;
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
-loadDecks().then(data => {
-  decks = data;
-  renderStudyDecks();
-});
 
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
 
@@ -649,24 +644,54 @@ if (localStorage.getItem('theme') === 'dark') {
 
 
 /*** Authentication Functions */
+/** Handle Login */
 
 async function handleLogin() {
   const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPassword').value.trim();
+  const errorEl = document.getElementById('auth-error');
+
+  if (!email || !password) {
+    errorEl.textContent = 'Please enter your email and password.';
+    return;
+  }
+
   try {
     await loginUser(email, password);
   } catch (e) {
-    document.getElementById('auth-error').textContent = e.message;
+    if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') {
+      errorEl.textContent = 'Incorrect email or password.';
+    } else {
+      errorEl.textContent = 'Something went wrong. Please try again.';
+    }
   }
 }
+
+/* Handle Register ------ */
 
 async function handleRegister() {
   const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPassword').value.trim();
+  const errorEl = document.getElementById('auth-error');
+
+  if (!email.includes('@')) {
+    errorEl.textContent = 'Please enter a valid email address.';
+    return;
+  }
+
+  if (password.length < 6) {
+    errorEl.textContent = 'Password must be at least 6 characters.';
+    return;
+  }
+
   try {
     await registerUser(email, password);
   } catch (e) {
-    document.getElementById('auth-error').textContent = e.message;
+    if (e.code === 'auth/email-already-in-use') {
+      errorEl.textContent = 'This email is already registered. Try signing in.';
+    } else {
+      errorEl.textContent = 'Something went wrong. Please try again.';
+    }
   }
 }
 
