@@ -225,13 +225,29 @@ function createDeck() {
   hideDeckForm();
 }
 
+let confirmCallback = null;
+
 function deleteDeck() {
-  if (!confirm('Удалить колоду?')) return;
-  const id = selectedDeckId;
-  decks = decks.filter(d => d.id !== id);
-  selectedDeckId = null;
-  deleteDeckFromDB(id);
-  renderDecks();
+  const dialog = document.getElementById('confirm-dialog');
+  dialog.style.display = 'flex';
+  confirmCallback = () => {
+    const id = selectedDeckId;
+    decks = decks.filter(d => d.id !== id);
+    selectedDeckId = null;
+    deleteDeckFromDB(id);
+    renderDecks();
+  };
+}
+
+function confirmYes() {
+  document.getElementById('confirm-dialog').style.display = 'none';
+  if (confirmCallback) confirmCallback();
+  confirmCallback = null;
+}
+
+function confirmNo() {
+  document.getElementById('confirm-dialog').style.display = 'none';
+  confirmCallback = null;
 }
 
 // ─── Card form ────────────────────────────────────────────────────────────────
@@ -304,10 +320,6 @@ function buildCardSequence(deckId) {
 function renderStudyDecks() {
   const container = document.getElementById('study-content');
   container.innerHTML = '';
-
-  const heading = document.createElement('h2');
-  heading.textContent = 'Выберите колоду для учёбы';
-  container.appendChild(heading);
 
   const grid = document.createElement('div');
   grid.className = 'study-decks-grid';
@@ -541,73 +553,34 @@ function exitStudy() {
 // ─── Stats ────────────────────────────────────────────────────────────────────
 
 function renderStats() {
-  const totalCards = decks.reduce((s, d) => s + d.cards.length, 0);
-  const totalReviewed = decks.reduce((s, d) => s + d.cards.filter(c => c.total > 0).length, 0);
-  const totalLearned = decks.reduce((s, d) => s + d.cards.filter(c => c.correct > 0).length, 0);
-  const accuracy = totalCards > 0 ? Math.round((totalLearned / totalCards) * 100) : 0;
-
   const container = document.getElementById('stats-content');
   container.innerHTML = '';
 
-  const heading = document.createElement('h2');
-  heading.textContent = 'Ваша статистика';
-  container.appendChild(heading);
-
-  const statsGrid = document.createElement('div');
-  statsGrid.className = 'stats-grid';
-
-  [
-    { label: 'Всего карточек', value: totalCards },
-    { label: 'Просмотрено', value: totalReviewed },
-    { label: 'Правильно', value: totalLearned },
-    { label: 'Точность', value: accuracy + '%' }
-  ].forEach(({ label, value }) => {
-    const card = document.createElement('div');
-    card.className = 'stat-card';
-
-    const lbl = document.createElement('div');
-    lbl.className = 'stat-label';
-    lbl.textContent = label;
-
-    const val = document.createElement('div');
-    val.className = 'stat-value';
-    val.textContent = value;
-
-    card.append(lbl, val);
-    statsGrid.appendChild(card);
-  });
-
-  container.appendChild(statsGrid);
-
-  const deckHeading = document.createElement('h3');
-  deckHeading.textContent = 'По колодам';
-  container.appendChild(deckHeading);
-
   const deckList = document.createElement('div');
-  deckList.className = 'study-decks-grid';
+ deckList.className = 'decks-grid';
 
   decks.forEach(deck => {
     const learned = deck.cards.filter(c => c.correct > 0).length;
     const total = deck.cards.length;
-    const reviewed = deck.cards.filter(c => c.total > 0).length;
+    const pct = total > 0 ? Math.round((learned / total) * 100) : 0;
 
-    const item = document.createElement('div');
-    item.className = 'deck-item';
+    const card = document.createElement('div');
+    card.className = 'deck-card';
 
-    const info = document.createElement('div');
-    info.className = 'deck-item-info';
+    const name = document.createElement('div');
+    name.className = 'deck-name';
+    name.textContent = deck.name;
 
-    const title = document.createElement('div');
-    title.className = 'deck-item-title';
-    title.textContent = deck.name;
+    const percent = document.createElement('div');
+    percent.className = 'stat-deck-percent';
+    percent.textContent = pct + '%';
 
-    const stats = document.createElement('div');
-    stats.className = 'deck-item-stats';
-    stats.textContent = learned + ' из ' + total + ' выучено • ' + reviewed + ' просмотрено';
+    const count = document.createElement('div');
+    count.className = 'stat-deck-count';
+    count.textContent = learned + '/' + total + ' выучено';
 
-    info.append(title, stats);
-    item.appendChild(info);
-    deckList.appendChild(item);
+    card.append(name, percent, count);
+    deckList.appendChild(card);
   });
 
   container.appendChild(deckList);
@@ -623,3 +596,5 @@ window.deleteDeck = deleteDeck;
 window.showAddCardForm = showAddCardForm;
 window.hideAddCardForm = hideAddCardForm;
 window.addCard = addCard;
+window.confirmYes = confirmYes;
+window.confirmNo = confirmNo;

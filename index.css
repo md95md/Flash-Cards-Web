@@ -9,7 +9,7 @@ body {
   min-width: 400px;
 }
 
-h1 { font-size: 22px; font-weight: 500; margin-bottom: 0.5rem; }
+h1 { font-size: 25px; font-weight: 500; margin: rem; }
 h2 { font-size: 16px; font-weight: 500; }
 h3 { font-size: 14px; font-weight: 500; margin-bottom: 1rem; }
 h4 { font-size: 13px; color: #555770; margin-bottom: 0.75rem; }
@@ -85,9 +85,9 @@ button:active {
   background: transparent;
   border: none;
   border-bottom: 2px solid transparent;
-  padding: 0.75rem 1rem;
+  padding: 1rem 2rem;
   color: #555770;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   border-radius: 0;
 }
@@ -129,7 +129,7 @@ button:active {
 }
 
 .deck-card:hover         { border-color: #9D87ED; background: #f5f3fc; }
-.deck-card.selected      { border: 2px solid #9D87ED; background: #eeebf9; }
+.deck-card.selected { border: 1px solid #9D87ED; outline: 1px solid #9D87ED; background: #eeebf9; }
 .deck-card.selected .deck-name { color: #9D87ED; }
 
 .deck-count    { font-size: 28px; font-weight: 500; color: #1a1a2e; margin: 0.5rem 0; }
@@ -382,4 +382,45 @@ button:active {
   text-align: center;
   padding: 2rem;
   color: #555770;
+}
+
+.stat-deck-percent {
+  padding: 2rem;
+  font-size: 24px;
+  font-weight: 500;
+  color: #1a1a2e;
+}
+
+.stat-deck-count {
+  font-size: 14px;
+  font-weight: 400;
+  color: #555770;
+}
+
+/* Dialog overlay ---- */
+.dialog-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialog-box {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 320px;
+  width: 100%;
+  text-align: center;
+}
+
+.dialog-text {
+  margin: 0 0 1.5rem;
+}
+
+.dialog-box .button-row {
+  justify-content: center;
 }

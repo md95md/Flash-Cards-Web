@@ -25,9 +25,19 @@
   <div id="decks" class="content">
 
     <div class="section-header">
-      <h2>Ваши колоды</h2>
-      <button class="btn-primary" onclick="showCreateDeckForm()">+ Новая колода</button>
+      <button class="btn-primary" onclick="showCreateDeckForm()">&#43 &#xa0 Добавить колоду</button>
     </div>
+
+    <!----- -->
+<div id="confirm-dialog" class="dialog-overlay">
+  <div class="dialog-box">
+    <p id="confirm-text" class="dialog-text">Удалить колоду навсегда?</p>
+    <div class="button-row">
+      <button onclick="confirmNo()">Отмена</button>
+      <button class="btn-danger" onclick="confirmYes()">Подтверждаю</button>
+    </div>
+  </div>
+</div>
 
     <!-- Create deck form -->
     <div id="create-deck-form" class="panel" style="display: none;">
@@ -53,7 +63,7 @@
     <div class="panel" style="margin-top: 2rem;">
 
       <div class="section-header">
-        <h3 style="margin-bottom: 0;">Управление карточками</h3>
+        <h3 style=".dialog-text">Управление карточками</h3>
         <button class="btn-danger" id="delete-deck-btn" onclick="deleteDeck()" style="display: none;">
           Удалить колоду
         </button>
@@ -67,7 +77,7 @@
 
         <!-- Add / Edit card form -->
         <div id="add-card-form" class="panel-inner" style="display: none;">
-          <h4 id="card-form-title">Добавить карточку</h4>
+          <h4 id="card-form-title"> + Добавить карточку</h4>
           <div class="form-group">
             <label>Вопрос</label>
             <textarea id="questionInput" placeholder="Введите вопрос"></textarea>
