@@ -1,4 +1,32 @@
 import { loadDecks, saveDeck, deleteDeckFromDB } from './firebase.js';
+import { translations } from './lang.js';
+
+let lang = 'en';
+export function t(key) {
+  return translations[lang][key] || key;
+}
+
+const langs = [
+  { code: 'en', label: 'EN' },
+  { code: 'ru', label: 'RU' },
+  { code: 'es', label: 'ES' },
+];
+let langIndex = 0;
+
+function cycleLang() {
+  langIndex = (langIndex + 1) % langs.length;
+  const current = langs[langIndex];
+  lang = current.code;
+  document.getElementById('lang-label').textContent = current.label;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.dataset.i18n);
+  });
+  const active = document.querySelector('.tab-btn.active')?.dataset.tab;
+  if (active === 'study') renderStudyDecks();
+  if (active === 'decks') renderDecks();
+  if (active === 'stats') renderStats();
+}
+window.cycleLang = cycleLang;
 
 // ─── State ────────────────────────────────────────────────────────────────────
 
@@ -53,7 +81,7 @@ function renderDecks() {
 
     const progress = document.createElement('div');
     progress.className = 'deck-progress';
-    progress.textContent = deck.cards.filter(c => c.correct > 0).length + ' выучено';
+    progress.textContent = deck.cards.filter(c => c.correct > 0).length + ' ' + t('learned_count');
 
     div.append(count, name, progress);
     list.appendChild(div);
@@ -91,19 +119,19 @@ function renderDeckControls() {
 
   if (selectedCardIdx !== null && selectedCardIdx < deck.cards.length) {
     const editBtn = document.createElement('button');
-    editBtn.textContent = 'Редактировать';
+    editBtn.textContent = t('edit_card_btn');
     editBtn.onclick = showEditCardForm;
 
     const delBtn = document.createElement('button');
     delBtn.className = 'btn-danger';
-    delBtn.textContent = 'Удалить карточку';
+    delBtn.textContent = t('delete_card_btn');
     delBtn.onclick = deleteSelectedCard;
 
     toolbar.append(editBtn, delBtn);
   } else {
     selectedCardIdx = null;
     const addBtn = document.createElement('button');
-    addBtn.textContent = '+ Добавить карточку';
+    addBtn.textContent = t('add_card_btn');
     addBtn.onclick = showAddCardForm;
     toolbar.appendChild(addBtn);
   }
@@ -119,7 +147,7 @@ function renderCardsList(deck) {
   wrapper.className = 'cards-list-wrapper';
 
   const heading = document.createElement('h4');
-  heading.textContent = 'Карточки в колоде:';
+  heading.textContent = t('cards_in_deck');
   wrapper.appendChild(heading);
 
   const grid = document.createElement('div');
@@ -168,10 +196,10 @@ function showEditCardForm() {
 
   document.getElementById('questionInput').value = card.question;
   document.getElementById('answerInput').value = card.answer;
-  document.getElementById('card-form-title').textContent = 'Редактировать карточку';
+  document.getElementById('card-form-title').textContent = t('edit_card_btn');
 
   const submitBtn = document.getElementById('card-form-submit');
-  submitBtn.textContent = 'Сохранить';
+  submitBtn.textContent = t('save');
   submitBtn.onclick = saveEditCard;
 
   document.getElementById('add-card-form').style.display = 'block';
@@ -182,7 +210,7 @@ function saveEditCard() {
   const answer = document.getElementById('answerInput').value.trim();
 
   if (!question || !answer) {
-    alert('Введите вопрос и ответ');
+    alert(t('enter_question_answer'));
     return;
   }
 
@@ -214,7 +242,7 @@ function createDeck() {
   const desc = document.getElementById('deckDescInput').value.trim();
 
   if (!name) {
-    alert('Введите название колоды');
+    alert(t('deck_name'));
     return;
   }
 
@@ -254,16 +282,16 @@ function confirmNo() {
 
 function showAddCardForm() {
   if (!selectedDeckId) {
-    alert('Выберите колоду');
+    alert(t('select_deck'));
     return;
   }
   editingCardIdx = null;
   document.getElementById('questionInput').value = '';
   document.getElementById('answerInput').value = '';
-  document.getElementById('card-form-title').textContent = 'Добавить карточку';
+  document.getElementById('card-form-title').textContent = t('add_card_btn');
 
   const submitBtn = document.getElementById('card-form-submit');
-  submitBtn.textContent = 'Добавить';
+  submitBtn.textContent = t('add_card_btn');
   submitBtn.onclick = addCard;
 
   document.getElementById('add-card-form').style.display = 'block';
@@ -340,7 +368,7 @@ function renderStudyDecks() {
 
     const stats = document.createElement('div');
     stats.className = 'deck-item-stats';
-    stats.textContent = deck.cards.length + ' карточек';
+    stats.textContent = deck.cards.length + ' ' + t('cards_count');
 
     info.append(title, stats);
 
@@ -350,7 +378,7 @@ function renderStudyDecks() {
     if (!hasCards) {
       const noCards = document.createElement('span');
       noCards.className = 'no-cards-label';
-      noCards.textContent = 'Нет карточек';
+      noCards.textContent = t('no_cards');
       actions.appendChild(noCards);
     } else {
       if (!allLearned) {
@@ -361,7 +389,7 @@ function renderStudyDecks() {
         actions.appendChild(learnBtn);
       } else {
         const doneBtn = document.createElement('button');
-        doneBtn.textContent = 'Колода выучена';
+        doneBtn.textContent = t('deck_complete_btn');
         actions.appendChild(doneBtn);
       }
 
@@ -385,7 +413,7 @@ function startStudy(deckId, reviewMode = false) {
 
   const deck = decks.find(d => d.id === deckId);
   if (!deck || deck.cards.length === 0) {
-    alert('Нет карточек');
+    alert(t('no_cards'));
     return;
   }
 
@@ -404,7 +432,7 @@ function renderStudyMode() {
   if (!deck || deck.cards.length === 0) {
     const empty = document.createElement('div');
     empty.className = 'empty-state';
-    empty.textContent = 'В этой колоде нет карточек';
+    empty.textContent = t('no_cards_in_deck');
     container.appendChild(empty);
     return;
   }
@@ -414,14 +442,14 @@ function renderStudyMode() {
     panel.className = 'panel-center';
 
     const h2 = document.createElement('h2');
-    h2.textContent = 'Колода завершена!';
+    h2.textContent = t('deck_complete_btn');
 
     const p = document.createElement('p');
-    p.textContent = 'Отлично! Вы прошли все карточки.';
+    p.textContent = t('deck_done_sub');
 
     const backBtn = document.createElement('button');
     backBtn.className = 'btn-primary';
-    backBtn.textContent = '← Вернуться';
+    backBtn.textContent = t('back');
     backBtn.onclick = () => switchTab('study');
 
     panel.append(h2, p, backBtn);
@@ -473,7 +501,7 @@ function renderStudyMode() {
   front.className = 'flashcard-content';
   const frontLabel = document.createElement('div');
   frontLabel.className = 'card-label';
-  frontLabel.textContent = 'Вопрос';
+  frontLabel.textContent = t('question');
   const frontText = document.createElement('div');
   frontText.className = 'card-text';
   frontText.textContent = currentCard.question;
@@ -483,7 +511,7 @@ function renderStudyMode() {
   back.className = 'flashcard-content flashcard-back';
   const backLabel = document.createElement('div');
   backLabel.className = 'card-label';
-  backLabel.textContent = 'Ответ';
+  backLabel.textContent = t('answer');
   const backText = document.createElement('div');
   backText.className = 'card-text';
   backText.textContent = currentCard.answer;
@@ -497,12 +525,12 @@ function renderStudyMode() {
   controls.className = 'controls';
 
   const wrongBtn = document.createElement('button');
-  wrongBtn.textContent = 'Не знаю ✕';
+wrongBtn.textContent = t('dont_know');
   wrongBtn.onclick = markWrong;
 
   const correctBtn = document.createElement('button');
   correctBtn.className = 'btn-primary';
-  correctBtn.textContent = 'Знаю ✓';
+correctBtn.textContent = t('know');
   correctBtn.onclick = markCorrect;
 
   controls.append(wrongBtn, correctBtn);
@@ -510,7 +538,7 @@ function renderStudyMode() {
   const exitWrap = document.createElement('div');
   exitWrap.className = 'exit-wrap';
   const exitBtn = document.createElement('button');
-  exitBtn.textContent = '← Выход';
+  exitBtn.textContent = t('exit');
   exitBtn.onclick = exitStudy;
   exitWrap.appendChild(exitBtn);
 
@@ -577,7 +605,7 @@ function renderStats() {
 
     const count = document.createElement('div');
     count.className = 'stat-deck-count';
-    count.textContent = learned + '/' + total + ' выучено';
+    count.textContent = learned + '/' + total + ' ' + t('learned_count');
 
     card.append(name, percent, count);
     deckList.appendChild(card);
