@@ -384,7 +384,7 @@ function renderStudyDecks() {
       if (!allLearned) {
         const learnBtn = document.createElement('button');
         learnBtn.className = 'btn-primary';
-        learnBtn.textContent = 'Учить';
+        learnBtn.textContent = t('study');
         learnBtn.onclick = () => startStudy(deck.id);
         actions.appendChild(learnBtn);
       } else {
@@ -614,6 +614,21 @@ function renderStats() {
   container.appendChild(deckList);
 }
 
+
+function toggleTheme() {
+  const isDark = document.body.classList.toggle('dark');
+  document.getElementById('theme-btn').textContent = isDark ? 'Light' : 'Dark';
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+}
+
+// restore on load
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark');
+  document.getElementById('theme-btn').textContent = 'Light';
+}
+
+
+
 // ─── Expose to window (required for onclick in HTML with type="module") ───────
 
 window.switchTab = switchTab;
@@ -626,3 +641,4 @@ window.hideAddCardForm = hideAddCardForm;
 window.addCard = addCard;
 window.confirmYes = confirmYes;
 window.confirmNo = confirmNo;
+window.toggleTheme = toggleTheme;

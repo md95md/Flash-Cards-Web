@@ -7,9 +7,10 @@ body {
   background: #ffffff;
   color: #1a1a2e;
   min-width: 400px;
+  overflow-y: scroll;
 }
 
-h1 { font-size: 25px; font-weight: 500; margin: rem; }
+h1 { font-size: 25px; font-weight: 500; margin: 1rem; }
 h2 { font-size: 16px; font-weight: 500; }
 h3 { font-size: 14px; font-weight: 500; margin-bottom: 1rem; }
 h4 { font-size: 13px; color: #555770; margin-bottom: 0.75rem; }
@@ -451,4 +452,74 @@ button:active {
   border-color: #9D87ED;
   color: #9D87ED;
   background: transparent;
+}
+
+/*---------Dark theme---------*/
+body.dark {
+  background: #13132a;
+  color: #e0e0e0;
+}
+
+body.dark .deck-card,
+body.dark .deck-item,
+body.dark .stat-card,
+body.dark .study-header,
+body.dark .panel,
+body.dark .dialog-box {
+  background: #2a2a3e;
+  border-color: #6a6a93;
+}
+
+body.dark .panel-inner,
+body.dark .card-list-item {
+  background: #554b69;
+}
+
+body.dark .flashcard-content,
+body.dark .flashcard-back {
+  background: #2a2a3e;
+}
+
+body.dark input,
+body.dark textarea {
+  background: #2a2a3e;
+  color: #e0e0e0;
+  border-color: #9D87ED;
+}
+
+body.dark button {
+  background: #2a2a3e;
+  color: #e0e0e0;
+}
+
+body.dark .tab-btn {
+  background: transparent;
+}
+
+body.dark .deck-count,
+body.dark .stat-deck-percent {
+  color: #e0e0e0;
+}
+
+body.dark .deck-card {
+  border-color: #6a6a93;
+}
+
+body.dark .deck-card.selected {
+  border-color: #9D87ED;
+  outline-color: #9D87ED;
+}
+
+body.dark .card-text,
+body.dark .study-title {
+  color: #e0e0e0;
+}
+
+/* Adjust header */
+
+.header-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  align-items: center;
 }

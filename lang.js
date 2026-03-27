@@ -42,6 +42,7 @@ export const translations = {
     edit_card_btn: 'Edit Card',
     delete_card_btn: 'Delete Card',
     enter_question_answer: 'Please enter both question and answer',
+    study: 'Study',
   },
   ru: {
     my_decks: 'Мои колоды',
@@ -86,6 +87,7 @@ export const translations = {
     edit_card_btn: 'Редактировать',
     delete_card_btn: 'Удалить карточку',
     enter_question_answer: 'Пожалуйста, введите и вопрос, и ответ',
+    study: 'Учить',
   },
   es: {
     my_decks: 'Mis mazos',
@@ -130,5 +132,6 @@ export const translations = {
     edit_card_btn: 'Editar tarjeta',
     delete_card_btn: 'Eliminar tarjeta',
     enter_question_answer: 'Por favor, ingresa tanto la pregunta como la respuesta',
+    study: 'Estudiar',
   }
 };
