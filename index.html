@@ -1,28 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flash Card Game</title>
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
 <div class="container">
+
   <div class="header">
     <h1>Flash Card Game</h1>
   </div>
-  
+
+  <!-- ─── Tabs ─────────────────────────────────── -->
   <div class="tabs">
-    <button class="tab-btn" onclick="switchTab('decks')">Мои колоды</button>
-    <button class="tab-btn active" onclick="switchTab('study')">Учёба</button>
-    <button class="tab-btn" onclick="switchTab('stats')">Статистика</button>
+    <button class="tab-btn" data-tab="decks" onclick="switchTab('decks')">Мои колоды</button>
+    <button class="tab-btn active" data-tab="study" onclick="switchTab('study')">Учёба</button>
+    <button class="tab-btn" data-tab="stats" onclick="switchTab('stats')">Статистика</button>
   </div>
-  
+
+  <!-- ─── Decks tab ─────────────────────────────── -->
   <div id="decks" class="content">
+
     <div class="section-header">
       <h2>Ваши колоды</h2>
       <button class="btn-primary" onclick="showCreateDeckForm()">+ Новая колода</button>
     </div>
-    
+
+    <!-- Create deck form -->
     <div id="create-deck-form" class="panel" style="display: none;">
       <h3>Создать новую колоду</h3>
       <div class="form-group">
@@ -38,20 +45,29 @@
         <button class="btn-primary" onclick="createDeck()">Создать</button>
       </div>
     </div>
-    
+
+    <!-- Deck cards grid — filled by JS -->
     <div id="decks-list" class="decks-grid"></div>
-    
+
+    <!-- Card management panel -->
     <div class="panel" style="margin-top: 2rem;">
+
       <div class="section-header">
         <h3 style="margin-bottom: 0;">Управление карточками</h3>
-        <button class="btn-danger" onclick="deleteDeck()" id="delete-deck-btn" style="display: none;">Удалить колоду</button>
+        <button class="btn-danger" id="delete-deck-btn" onclick="deleteDeck()" style="display: none;">
+          Удалить колоду
+        </button>
       </div>
+
+      <!-- Shown when a deck is selected -->
       <div id="deck-controls" style="display: none;">
-        <div id="card-toolbar" class="button-row" style="margin-bottom: 1rem;">
-          <button onclick="showAddCardForm()">+ Добавить карточку</button>
-        </div>
+
+        <!-- Add / Edit / Delete card buttons — filled by JS -->
+        <div id="card-toolbar" class="button-row" style="margin-bottom: 1rem;"></div>
+
+        <!-- Add / Edit card form -->
         <div id="add-card-form" class="panel-inner" style="display: none;">
-          <h4 id="card-form-title" style="margin-bottom: 0.75rem;">Добавить карточку</h4>
+          <h4 id="card-form-title">Добавить карточку</h4>
           <div class="form-group">
             <label>Вопрос</label>
             <textarea id="questionInput" placeholder="Введите вопрос"></textarea>
@@ -62,27 +78,35 @@
           </div>
           <div class="button-row">
             <button onclick="hideAddCardForm()">Отмена</button>
-            <button class="btn-primary" id="card-form-submit" onclick="addCard()">Добавить</button>
+            <button class="btn-primary" id="card-form-submit">Добавить</button>
           </div>
         </div>
+
+        <!-- Cards list — filled by JS -->
         <div id="cards-list"></div>
+
       </div>
+
+      <!-- Shown when no deck is selected -->
       <div id="no-deck-selected" class="empty-state">
         <p>Выберите колоду, чтобы добавить или отредактировать карточки</p>
       </div>
+
     </div>
   </div>
-  
+
+  <!-- ─── Study tab ─────────────────────────────── -->
   <div id="study" class="content active">
     <div id="study-content"></div>
   </div>
-  
+
+  <!-- ─── Stats tab ─────────────────────────────── -->
   <div id="stats" class="content">
     <div id="stats-content"></div>
   </div>
+
 </div>
 
-<script src="index.js"></script>
-
+<script type="module" src="index.js"></script>
 </body>
 </html>

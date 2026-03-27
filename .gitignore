@@ -1,0 +1,4 @@
+temp/
+.settings/
+.vscode/
+firebase.js

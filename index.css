@@ -1,3 +1,5 @@
+/* ─── Reset & Base ─────────────────────────────────────────────────────────── */
+
 body {
   margin: 0;
   padding: 10px;
@@ -7,28 +9,10 @@ body {
   min-width: 400px;
 }
 
-h1 {
-  font-size: 22px;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-
-h2 {
-  font-size: 16px;
-  font-weight: 500;
-}
-
-h3 {
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 1rem;
-}
-
-h4 {
-  font-size: 13px;
-  color: #555770;
-  margin-bottom: 0.75rem;
-}
+h1 { font-size: 22px; font-weight: 500; margin-bottom: 0.5rem; }
+h2 { font-size: 16px; font-weight: 500; }
+h3 { font-size: 14px; font-weight: 500; margin-bottom: 1rem; }
+h4 { font-size: 13px; color: #555770; margin-bottom: 0.75rem; }
 
 input,
 textarea {
@@ -68,13 +52,27 @@ button:active {
   transform: scale(0.95);
 }
 
+/* ─── Layout ────────────────────────────────────────────────────────────────── */
+
 .container {
   max-width: 800px;
   margin: 0 auto;
   padding: 1rem;
 }
 
-/* Tabs */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.button-row {
+  display: flex;
+  gap: 1rem;
+}
+
+/* ─── Tabs ──────────────────────────────────────────────────────────────────── */
 
 .tabs {
   display: flex;
@@ -106,17 +104,12 @@ button:active {
   border-bottom-color: #9D87ED;
 }
 
-/* Content sections */
+/* ─── Content sections ──────────────────────────────────────────────────────── */
 
-.content {
-  display: none;
-}
+.content        { display: none; }
+.content.active { display: block; }
 
-.content.active {
-  display: block;
-}
-
-/* Deck grid */
+/* ─── Deck grid  ────────────────────────────────────────────────── */
 
 .decks-grid {
   display: grid;
@@ -135,67 +128,88 @@ button:active {
   transition: border-color 0.2s, background 0.2s;
 }
 
-.deck-card:hover {
-  border-color: #9D87ED;
-  background: #f5f3fc;
+.deck-card:hover         { border-color: #9D87ED; background: #f5f3fc; }
+.deck-card.selected      { border: 2px solid #9D87ED; background: #eeebf9; }
+.deck-card.selected .deck-name { color: #9D87ED; }
+
+.deck-count    { font-size: 28px; font-weight: 500; color: #1a1a2e; margin: 0.5rem 0; }
+.deck-name     { font-size: 14px; color: #555770; }
+.deck-progress { font-size: 11px; color: #8b8da3; margin-top: 0.5rem; }
+
+/* ─── Cards list (inside deck controls) ─────────────────────────────────────── */
+
+.cards-list-wrapper {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1rem;
 }
 
-.deck-card.selected {
-  border: 2px solid #9D87ED;
-  background: #eeebf9;
+.cards-list-wrapper h4 { margin-bottom: 0.75rem; }
+
+.cards-grid {
+  display: grid;
+  gap: 0.5rem;
 }
 
-.deck-card.selected .deck-name {
-  color: #9D87ED;
+.card-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: #f0f7e0;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  border: 1px solid transparent;
 }
 
-.deck-count {
-  font-size: 28px;
-  font-weight: 500;
-  color: #1a1a2e;
-  margin: 0.5rem 0;
+.card-list-item:hover       { background: #e8f0d5; }
+.card-list-item.card-selected { background: #eeebf9; border-color: #9D87ED; }
+
+/* ─── Deck item rows (Study & Stats lists) ──────────────────────────────────── */
+
+.study-decks-grid {
+  display: grid;
+  gap: 0.75rem;
 }
 
-.deck-name {
-  font-size: 14px;
-  color: #555770;
-}
-
-.deck-progress {
-  font-size: 11px;
-  color: #8b8da3;
-  margin-top: 0.5rem;
-}
-
-/* Buttons: primary and danger */
-
-.btn-primary {
-  background: #D7ED87;
-  color: #1a1a2e;
-  border-color: #D7ED87;
-}
-
-.btn-primary:hover {
-  background: #c8e06e;
-  border-color: #c8e06e;
-}
-
-.btn-danger {
+.deck-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
   background: white;
-  color: #ED87A4;
-  border-color: #ED87A4;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
 }
 
-.btn-danger:hover {
-  background: #ED87A4;
-  color: white;
+.deck-item-info  { text-align: left; }
+.deck-item-title { font-weight: 500; margin-bottom: 0.25rem; }
+.deck-item-stats { font-size: 12px; color: #555770; }
+
+.deck-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
-/* Forms */
-
-.form-group {
-  margin-bottom: 1rem;
+.no-cards-label {
+  color: #8b8da3;
+  font-size: 14px;
 }
+
+/* ─── Buttons: primary / danger ─────────────────────────────────────────────── */
+
+.btn-primary { background: #D7ED87; color: #1a1a2e; border-color: #D7ED87; }
+.btn-primary:hover { background: #c8e06e; border-color: #c8e06e; }
+
+.btn-danger { background: white; color: #ED87A4; border-color: #ED87A4; }
+.btn-danger:hover { background: #ED87A4; color: white; }
+
+/* ─── Forms ─────────────────────────────────────────────────────────────────── */
+
+.form-group { margin-bottom: 1rem; }
 
 .form-group label {
   display: block;
@@ -205,7 +219,36 @@ button:active {
   color: #1a1a2e;
 }
 
-/* Study mode */
+/* ─── Panels ────────────────────────────────────────────────────────────────── */
+
+.panel {
+  background: #f9fdf0;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e0e0e0;
+}
+
+/* Centered panel — used for "Deck complete" screen */
+.panel-center {
+  background: #f9fdf0;
+  padding: 2rem;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.panel-center h2 { margin-bottom: 1rem; }
+.panel-center p  { margin-bottom: 1.5rem; color: #555770; }
+
+.panel-inner {
+  background: #f0f7e0;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* ─── Study mode ────────────────────────────────────────────────────────────── */
 
 .study-header {
   background: white;
@@ -222,16 +265,8 @@ button:active {
   margin-bottom: 0.5rem;
 }
 
-.study-title {
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.progress-percent {
-  font-size: 28px;
-  font-weight: 600;
-  color: #9D87ED;
-}
+.study-title    { font-size: 18px; font-weight: 500; }
+.progress-percent { font-size: 28px; font-weight: 600; color: #9D87ED; }
 
 .progress-bar {
   height: 6px;
@@ -247,12 +282,7 @@ button:active {
   transition: width 0.3s;
 }
 
-.progress-text {
-  font-size: 12px;
-  color: #555770;
-}
-
-/* Flashcard */
+/* ─── Flashcard ─────────────────────────────────────────────────────────────── */
 
 .card-container {
   perspective: 1000px;
@@ -273,21 +303,18 @@ button:active {
   transition: transform 0.6s;
 }
 
-.flashcard.flipped {
-  transform: rotateY(180deg);
-}
+.flashcard.flipped { transform: rotateY(180deg); }
 
 .flashcard-content,
 .flashcard-back {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  background: white;
-  border: 2px solid #9D87ED;
+  background: #ffffff;
+  border: 2px solid #9d87ed;
   border-radius: 10px;
   padding: 2rem;
   box-sizing: border-box;
@@ -298,9 +325,7 @@ button:active {
   text-align: left;
 }
 
-.flashcard-back {
-  transform: rotateY(180deg);
-}
+.flashcard-back { transform: rotateY(180deg); }
 
 .card-label {
   font-size: 12px;
@@ -317,14 +342,7 @@ button:active {
   line-height: 1.6;
 }
 
-.card-hint {
-  font-size: 11px;
-  color: #8b8da3;
-  margin-top: 1.5rem;
-  font-style: italic;
-}
-
-/* Controls under flashcard */
+/* ─── Study controls ────────────────────────────────────────────────────────── */
 
 .controls {
   display: flex;
@@ -334,7 +352,12 @@ button:active {
   margin-top: 2rem;
 }
 
-/* Stats */
+.exit-wrap {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* ─── Stats ─────────────────────────────────────────────────────────────────── */
 
 .stats-grid {
   display: grid;
@@ -350,102 +373,10 @@ button:active {
   border: 1px solid #e0e0e0;
 }
 
-.stat-label {
-  font-size: 12px;
-  color: #555770;
-  margin-bottom: 0.5rem;
-}
+.stat-label { font-size: 12px; color: #555770; margin-bottom: 0.5rem; }
+.stat-value { font-size: 24px; font-weight: 500; color: #1a1a2e; }
 
-.stat-value {
-  font-size: 24px;
-  font-weight: 500;
-  color: #1a1a2e;
-}
-
-/* Deck item rows */
-
-.deck-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background: white;
-  border-radius: 8px;
-  margin-bottom: 0.75rem;
-  border: 1px solid #e0e0e0;
-}
-
-.deck-item-info {
-  text-align: left;
-}
-
-.deck-item-title {
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-}
-
-.deck-item-stats {
-  font-size: 12px;
-  color: #555770;
-}
-
-/* Layout helpers */
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.button-row {
-  display: flex;
-  gap: 1rem;
-}
-
-.panel {
-  background: #f9fdf0;
-  padding: 1.5rem;
-  border-radius: 10px;
-  margin-bottom: 1.5rem;
-  border: 1px solid #e0e0e0;
-}
-
-.panel-inner {
-  background: #f0f7e0;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
-
-.card-list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem;
-  background: #f0f7e0;
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
-  border: 1px solid transparent;
-}
-
-.card-list-item:hover {
-  background: #e8f0d5;
-}
-
-.card-list-item.card-selected {
-  background: #eeebf9;
-  border-color: #9D87ED;
-}
-
-.card-list-item button {
-  padding: 0.25rem 0.75rem;
-  font-size: 12px;
-}
-
-/* Empty state */
+/* ─── Empty state ───────────────────────────────────────────────────────────── */
 
 .empty-state {
   text-align: center;
