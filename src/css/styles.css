@@ -39,7 +39,7 @@ textarea {
 button {
   background: white;
   color: #1a1a2e;
-  border: 1px solid #9D87ED;
+  border: 1px solid #87a0ed;
   padding: 8px 16px;
   border-radius: 6px;
   font-size: 14px;
@@ -49,9 +49,9 @@ button {
 }
 
 button:hover {
-  background-color: #87EDD0;
+  background-color: #fce6d4;
   color: #1a1a2e;
-  border-color: #87EDD0;
+  border-color: #d882cd;
 }
 
 button:active {
@@ -207,8 +207,8 @@ button:active {
 
 /* ─── Buttons ────────────────────────────────────────────────────────────────── */
 
-.btn-primary { background: #D7ED87; color: #1a1a2e; border-color: #D7ED87; }
-.btn-primary:hover { background: #c8e06e; border-color: #c8e06e; }
+.btn-primary { background: #c6e0f5; color: #1a1a2e; border-color: #7ab8e8; }
+.btn-primary:hover { background: #add3ef; border-color: #5a9fd4; }
 
 .btn-danger { background: white; color: #ED87A4; border-color: #ED87A4; }
 .btn-danger:hover { background: #ED87A4; color: white; }
@@ -312,7 +312,7 @@ button:active {
   position: relative;
   cursor: pointer;
   transform-style: preserve-3d;
-  transition: transform 0.6s;
+  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
 
 .flashcard.flipped { transform: rotateY(180deg); }
@@ -326,8 +326,8 @@ button:active {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   background: #ffffff;
-  border: 2px solid #9d87ed;
-  border-radius: 10px;
+  border: 1px solid #9d87ed;
+  border-radius: 12px;
   padding: 2rem;
   box-sizing: border-box;
   display: flex;
@@ -337,14 +337,19 @@ button:active {
   text-align: left;
 }
 
-.flashcard-back { transform: rotateY(180deg); }
+.flashcard-back {
+  transform: rotateY(180deg);
+  background: #eeebf9;
+  border-color: #9d87ed;
+}
 
 .card-label {
-  font-size: 12px;
-  color: #555770;
-  margin-bottom: 0.5rem;
+  font-size: 11px;
+  color: #9d87ed;
+  margin-bottom: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.06em;
+  font-weight: 500;
 }
 
 .card-text {
@@ -353,6 +358,32 @@ button:active {
   color: #1a1a2e;
   line-height: 1.6;
 }
+
+.card-hint {
+  margin-top: auto;
+  font-size: 11px;
+  color: #8b8da3;
+  align-self: center;
+}
+
+
+/* ─── Flashcard Navigation ───────────────────────────────────────────────────── */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 1rem;
+}
+
+.nav-count {
+  font-size: 13px;
+  color: #8b8da3;
+  min-width: 48px;
+  text-align: center;
+}
+
 
 /* ─── Study controls ─────────────────────────────────────────────────────────── */
 
@@ -586,8 +617,13 @@ body.dark .lang-switcher { background: #2a2a3e; border-color: #6a6a93; }
   border: 1px solid #e0e0e0;
   border-radius: 20px;
   padding: 0.5rem 1rem;
-  font-size: 13px;
+  font-size: 16px;
 }
+
+.auth-feature:nth-child(1):hover { background: #fde0e2; border-color: #f5828a; color: #c0464f; transform: translateY(-2px); }
+.auth-feature:nth-child(2):hover { background: #d4f5d3; border-color: #7dd87a; color: #3a8a38; transform: translateY(-2px); }
+.auth-feature:nth-child(3):hover { background: #ede8fb; border-color: #9D87ED; color: #5a42b0; transform: translateY(-2px); }
+
 
 .auth-box {
   background: white;

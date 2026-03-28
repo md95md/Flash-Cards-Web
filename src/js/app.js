@@ -300,10 +300,10 @@ function showAddCardForm() {
   editingCardIdx = null;
   document.getElementById('questionInput').value = '';
   document.getElementById('answerInput').value = '';
-  document.getElementById('card-form-title').textContent = t('add_card_btn');
+  document.getElementById('card-form-title').textContent = t('');
 
   const submitBtn = document.getElementById('card-form-submit');
-  submitBtn.textContent = t('add_card_btn');
+  submitBtn.textContent = t('add_card');
   submitBtn.onclick = addCard;
 
   document.getElementById('add-card-form').style.display = 'block';
