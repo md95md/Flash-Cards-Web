@@ -638,7 +638,7 @@ function toggleTheme() {
 // restore on load
 if (localStorage.getItem('theme') === 'dark') {
   document.body.classList.add('dark');
-  document.getElementById('theme-btn').textContent = 'Light';
+  document.getElementById('theme-btn').textContent = '☀️';
 }
 
 
