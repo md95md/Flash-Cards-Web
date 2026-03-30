@@ -62,7 +62,7 @@ button:active { transform: scale(0.95); }
 .container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 0;
+  padding-top: 1rem;
 }
 
 .section-header {
@@ -696,3 +696,6 @@ footer {
 
   .bg-cards { display: none; }
 }
+
+
+

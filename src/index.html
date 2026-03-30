@@ -80,21 +80,24 @@
 <!-- ─── App ───────────────────────────────────────── -->
 <!------------------------------------------------------->
 
+
 <div id="app" style="display:none">
 
+   
   <!-- Header -->
-    <div class="header">
-      <h1>Flash Card Game</h1>
-      <div class="header-controls">
-        <button class="lang-switcher" onclick="cycleLang()">
-          <span id="lang-label">EN</span>
-        </button>
-        <button class="lang-switcher" onclick="toggleTheme()" id="theme-btn">🌙</button>
-        <button onclick="handleLogout()">Sign Out</button>
+      <div class="header">
+        <h1>Flash Card Game</h1>
+        <div class="header-controls">
+          <button class="lang-switcher" onclick="cycleLang()">
+            <span id="lang-label">EN</span>
+          </button>
+          <button class="lang-switcher" onclick="toggleTheme()" id="theme-btn">🌙</button>
+          <button onclick="handleLogout()">Sign Out</button>
+        </div>
       </div>
-    </div>
 
-  <div class="container">
+
+<div class="container">
     <!-- Tabs -->
     <div class="tabs">
       <button class="tab-btn active" data-tab="decks" data-i18n="my_decks" onclick="switchTab('decks')">My Decks</button>
