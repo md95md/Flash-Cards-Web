@@ -1,4 +1,4 @@
-import { loadDecks, saveDeck, deleteDeckFromDB, registerUser, loginUser, logoutUser, onAuthChange } from './firebase.js';
+import { loadDecks, saveDeck, deleteDeckFromDB, auth, registerUser, loginUser, logoutUser, onAuthChange, loginWithGoogle } from './firebase.js';
 import { translations } from './lang.js';
 
 let currentUser = null;
@@ -629,10 +629,10 @@ function renderStats() {
 
 function toggleTheme() {
   const isDark = document.body.classList.toggle('dark');
-  document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
+  const icon = isDark ? '☀️' : '🌙';
+  document.getElementById('theme-btn').textContent = icon;
+  document.getElementById('theme-btn-auth').textContent = icon;
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  document.getElementById('theme-btn-auth').textContent = isDark ? '☀️' : '🌙';
-document.getElementById('lang-label-auth').textContent = current.label;
 }
 
 // restore on load
@@ -664,6 +664,14 @@ async function handleLogin() {
     } else {
       errorEl.textContent = 'Something went wrong. Please try again';
     }
+  }
+}
+
+window.handleGoogleLogin = async function() {
+  try {
+    await loginWithGoogle();
+  } catch (e) {
+    document.getElementById('auth-error').textContent = e.message;
   }
 }
 

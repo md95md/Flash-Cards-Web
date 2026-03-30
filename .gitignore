@@ -6,3 +6,5 @@ node_modules/
 firebase-debug.log
 .firebaserc
 firebase.json
+firebase.js
+.gitignore
