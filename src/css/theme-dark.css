@@ -1,0 +1,101 @@
+/* ─── Dark Theme Variables ───────────────────────────────────────────────────── */
+
+body.dark {
+  /* Grid background */
+  --grid-line:          #1e2d3e;
+  --bg-page:            #111820;
+
+  /* Text */
+  --text-primary:       #e0e0e0;
+  --text-secondary:     #6a8da8;
+  --text-muted:         #6a8da8;
+
+  /* Accent (blue) — same as light */
+  --accent:             #5a9fd4;
+  --accent-light:       #7ab8e8;
+  --accent-hover:       #5a9fd4;
+
+  /* Surfaces */
+  --surface:            #1a2535;
+  --surface-raised:     #1a2535;
+  --surface-sunken:     #1e3248;
+  --surface-deep:       #243d58;
+  --surface-selected:   #1e3248;
+
+  /* Borders */
+  --border:             #2e4a6a;
+  --border-accent:      #2e4a6a;
+  --border-strong:      #2e6090;
+
+  /* Buttons */
+  --btn-bg:             #1a2535;
+  --btn-color:          #e0e0e0;
+  --btn-border:         #2e4a6a;
+  --btn-hover-bg:       #1e3248;
+  --btn-hover-color:    #e0e0e0;
+  --btn-hover-border:   #5a9fd4;
+
+  --btn-primary-bg:     #1e4a72;
+  --btn-primary-color:  #e0e0e0;
+  --btn-primary-border: #3a82be;
+  --btn-primary-hover-bg:     #255a8a;
+  --btn-primary-hover-border: #5a9fd4;
+
+  --btn-danger-bg:      transparent;
+  --btn-danger-color:   #ED87A4;
+  --btn-danger-border:  #ED87A4;
+  --btn-danger-hover-bg:    #ED87A4;
+  --btn-danger-hover-color: #111820;
+
+  /* Inputs */
+  --input-bg:           #1a2535;
+  --input-color:        #e0e0e0;
+  --input-border:       #3a6fa0;
+
+  /* Header / nav */
+  --header-bg:          #1a2535;
+  --header-border:      #2e4a6a;
+  --tab-color:          #6a8da8;
+  --tabs-border:        #2e4a6a;
+
+  /* Cards */
+  --card-bg:            #1a2535;
+  --card-border:        #2e4a6a;
+  --card-hover-bg:      #1e3248;
+  --card-selected-bg:   #1e3248;
+  --deck-name-color:    #e0e0e0;
+
+  /* Flashcard */
+  --flashcard-bg:       #1a2535;
+  --flashcard-back-bg:  #162030;
+  --flashcard-border:   #2e6090;
+
+  /* Progress */
+  --progress-bar-bg:    #2e4a6a;
+  --progress-fill:      #5a9fd4;
+  --progress-color:     #5a9fd4;
+
+  /* Lang switcher */
+  --lang-bg:            #1a2535;
+  --lang-color:         #6a8da8;
+  --lang-border:        #2e4a6a;
+
+  /* Auth */
+  --auth-box-bg:        #1a2535;
+  --auth-box-border:    #2e4a6a;
+  --auth-feature-bg:    #1a2535;
+  --auth-feature-border:#2e4a6a;
+  --auth-hero-p:        #6a8da8;
+  --auth-header-bg:     #1a2535;
+
+  /* Footer */
+  --footer-bg:          #111820;
+  --footer-border:      #2e4a6a;
+  --footer-color:       #4a7090;
+
+  /* Dialog */
+  --dialog-bg:          #1a2535;
+
+  /* Misc */
+  --hint-color:         #4a7090;
+}

@@ -14,7 +14,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-export const auth = getAuth(app);
 
 export async function loadDecks(userId) {
   const snapshot = await get(ref(db, `users/${userId}/decks`));
@@ -32,6 +31,10 @@ export async function saveDeck(userId, deck) {
 export async function deleteDeckFromDB(userId, deckId) {
   await remove(ref(db, `users/${userId}/decks/${deckId}`));
 }
+
+/* ------ Authentication  ------ */
+
+export const auth = getAuth(app);
 
 export function registerUser(email, password) {
   return createUserWithEmailAndPassword(auth, email, password);
