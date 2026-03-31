@@ -75,9 +75,20 @@ button:active { transform: scale(0.95); }
 .button-row {
   display: flex;
   gap: 1rem;
+}
+
+.auth-box .button-row {
   flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
+}
+
+.or-divider {
+  border: none;
+  text-align: center;
+  color: #8b8da3;
+  font-size: 13px;
+}
+.or-divider::after {
+  content: 'or';
 }
 
 /* ─── Tabs ──────────────────────────────────────────────────────────────────── */
@@ -206,6 +217,8 @@ button:active { transform: scale(0.95); }
   color: var(--text-muted);
   font-size: 14px;
 }
+
+
 
 /* ─── Buttons ────────────────────────────────────────────────────────────────── */
 

@@ -9,21 +9,24 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+<!-- ─── Header ───────────────────────────────────── -->
+<!------------------------------------------------------->
+
+<div class="header">
+  <img src="../images/logo-test-2.png" alt="Flash Card Game Logo" class="logo">
+  <h1>Flash Card Game</h1>
+  <div class="header-controls">
+    <button class="lang-switcher" onclick="cycleLang()">
+      <span id="lang-label">EN</span>
+    </button>
+    <button class="lang-switcher" onclick="toggleTheme()" id="theme-btn">🌙</button>
+  </div>
+</div>
+
 <!-- ─── Authentication screen ──────────────────────── -->
 <!------------------------------------------------------->
-<!-- Header -->
 <div id="auth-screen"> 
-  <div class="header">
-          <img src="../images/logo-test-2.png" alt="Flash Card Game Logo" class="logo">
-          <h1>Flash Card Game</h1>
-          <div class="header-controls">
-            <button class="lang-switcher" onclick="cycleLang()">
-              <span id="lang-label">EN</span>
-            </button>
-            <button class="lang-switcher" onclick="toggleTheme()" id="theme-btn">🌙</button>
-            <button onclick="handleLogout()">Sign Out</button>
-          </div>
-  </div>
 
   <div class="container">
     <!-- Hero -->
@@ -50,18 +53,15 @@
         <label>Password</label>
         <input type="password" id="authPassword" placeholder="at least 6 characters">
       </div>
-
           <p id="auth-error"></p>
-      <div class="button-row">
+        <div class="button-row">
           <button class="btn-primary" onclick="handleRegister()">Register</button>
           <button class="btn" onclick="handleLogin()">Sign In</button>
-          <div style="text-align:center; color:#8b8da3; font-size:13px;">
-            or
-          </div>
-        <button type="button" class="btn-google" onclick="handleGoogleLogin()">
-          Continue with Google
-        </button>
-      </div>
+          <hr class="or-divider">
+          <button type="button" class="btn-google" onclick="handleGoogleLogin()">
+            Continue with Google
+          </button>
+        </div>
   </div>
 
     <!-- Background cards -->
@@ -89,32 +89,16 @@
   </div>
 </div>
 
-
 <!-- ─── App ───────────────────────────────────────── -->
 <!------------------------------------------------------->
 <div id="app" style="display:none">
-
-   
-  <!-- Header -->
-  <div class="header">
-          <img src="../images/logo-test-2.png" alt="Flash Card Game Logo" class="logo">
-          <h1>Flash Card Game</h1>
-          <div class="header-controls">
-            <button class="lang-switcher" onclick="cycleLang()">
-              <span id="lang-label">EN</span>
-            </button>
-            <button class="lang-switcher" onclick="toggleTheme()" id="theme-btn">🌙</button>
-            <button onclick="handleLogout()">Sign Out</button>
-          </div>
-  </div>
-
-
 <div class="container">
     <!-- Tabs -->
     <div class="tabs">
-      <button class="tab-btn active" data-tab="decks" data-i18n="my_decks" onclick="switchTab('decks')">My Decks</button>
+      <button class="tab-btn active" data-tab="decks" data-i18n="my_decks" onclick="switchTab('decks')">Decks</button>
       <button class="tab-btn" data-tab="study" data-i18n="study" onclick="switchTab('study')">Study</button>
       <button class="tab-btn" data-tab="stats" data-i18n="stats" onclick="switchTab('stats')">Statistics</button>
+      <button class="tab-btn" data-tab="account" data-i18n="account" onclick="switchTab('account')">Account</button>
     </div>
 
     <!-- ─── Decks tab ─────────────────────────────── -->
@@ -203,6 +187,11 @@
     <!-- ─── Stats tab ─────────────────────────────── -->
     <div id="stats" class="content">
       <div id="stats-content"></div>
+    </div>
+
+    <!-- ─── Account tab ───────────────────────────── -->
+    <div id="account" class="content">
+    <div id="account-content"></div>
     </div>
 
   </div>

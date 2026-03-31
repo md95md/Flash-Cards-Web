@@ -63,16 +63,16 @@ let cardSequenceIndex = 0;
 
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
 
-function switchTab(tab) {
-  document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-  document.getElementById(tab).classList.add('active');
-  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+// function switchTab(tab) {
+//   document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
+//   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+//   document.getElementById(tab).classList.add('active');
+//   document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
 
-  if (tab === 'stats') renderStats();
-  if (tab === 'decks') renderDecks();
-  if (tab === 'study') renderStudyDecks();
-}
+//   if (tab === 'stats') renderStats();
+//   if (tab === 'decks') renderDecks();
+//   if (tab === 'study') renderStudyDecks();
+// }
 
 // ─── Deck list ────────────────────────────────────────────────────────────────
 
@@ -260,7 +260,7 @@ function createDeck() {
 
   const newDeck = { id: Date.now(), name, description: desc, cards: [] };
   decks.push(newDeck);
-  saveDeck(newDeck);
+  saveDeck(currentUser.uid, newDeck);
   renderDecks();
   hideDeckForm();
 }
@@ -299,8 +299,8 @@ function showAddCardForm() {
   }
   editingCardIdx = null;
   document.getElementById('questionInput').value = '';
-  document.getElementById('answerInput').value = '';
-  document.getElementById('card-form-title').textContent = t('');
+ document.getElementById('card-form-title').textContent = t('add_card');
+  
 
   const submitBtn = document.getElementById('card-form-submit');
   submitBtn.textContent = t('add_card');
@@ -320,7 +320,7 @@ function addCard() {
   const answer = document.getElementById('answerInput').value.trim();
 
   if (!question || !answer) {
-    alert('Введите вопрос и ответ');
+    alert(t('enter_question_answer'));
     return;
   }
 
@@ -631,7 +631,7 @@ function toggleTheme() {
   const isDark = document.body.classList.toggle('dark');
   const icon = isDark ? '☀️' : '🌙';
   document.getElementById('theme-btn').textContent = icon;
-  document.getElementById('theme-btn-auth').textContent = icon;
+  //document.getElementById('theme-btn-auth').textContent = icon;
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 }
 
@@ -707,6 +707,61 @@ function handleLogout() {
   logoutUser();
 }
 
+
+/* render account info */
+
+function switchTab(tab) {
+  document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+
+  if (tab === 'stats') renderStats();
+  if (tab === 'decks') renderDecks();
+  if (tab === 'study') renderStudyDecks();
+  if (tab === 'account') renderAccount(); 
+}
+
+function renderAccount() {
+  const container = document.getElementById('account-content');
+  container.innerHTML = '';
+
+  const panel = document.createElement('div');
+  panel.className = 'panel';
+
+  const title = document.createElement('h2');
+  title.textContent = 'Account Info';
+
+  const email = document.createElement('div');
+  email.className = 'form-group';
+  email.innerHTML = `<label>Email</label><p>${currentUser.email}</p>`;
+
+  const provider = currentUser.providerData[0]?.providerId;
+  const isGoogle = provider === 'google.com';
+
+  const passRow = document.createElement('div');
+  passRow.className = 'form-group';
+  passRow.innerHTML = isGoogle
+    ? `<label>Password</label><p style="color:var(--text-secondary)">Signed in with Google</p>`
+    : `<label>Password</label><p style="color:var(--text-secondary)">••••••••</p>`;
+
+  const logoutBtn = document.createElement('button');
+  logoutBtn.className = 'btn-danger';
+  logoutBtn.textContent = 'Sign Out';
+  logoutBtn.onclick = handleLogout;
+
+  panel.append(title, email, passRow, logoutBtn);
+  container.appendChild(panel);
+}
+
+window.renderAccount = renderAccount;
+
+
+
+
+
+
+
 window.handleLogin = handleLogin;
 window.handleRegister = handleRegister;
 window.handleLogout = handleLogout;
@@ -726,3 +781,6 @@ window.addCard = addCard;
 window.confirmYes = confirmYes;
 window.confirmNo = confirmNo;
 window.toggleTheme = toggleTheme;
+
+
+
