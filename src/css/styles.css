@@ -508,6 +508,13 @@ button:active { transform: scale(0.95); }
   box-sizing: border-box;
 }
 
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 45px;
+}
+
 .logo {
   height: 40px;
   width: auto;
@@ -551,7 +558,7 @@ button:active { transform: scale(0.95); }
 
 .auth-hero {
   text-align: center;
-  padding: 2rem 1rem 2rem;
+  padding: 1rem;
 }
 
 .auth-features {
@@ -661,32 +668,7 @@ body.dark .btn-google:focus  { box-shadow: 0 -1px 0 rgba(255,255,255,.04), 0 2px
 
 /* ─── Mobile ─────────────────────────────────────────────────────────────────── */
 
-@media (max-width: 600px) {
-  .auth-header {
-    padding: 1rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
 
-  .auth-header h1 { font-size: 18px; }
-  .auth-hero      { padding: 1.5rem 1rem 1rem; }
-  .auth-hero h2   { font-size: 20px; }
-
-  .auth-features {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .auth-box {
-    max-width: 100%;
-    margin: 0 1rem 2rem;
-    box-sizing: border-box;
-    padding: 1.5rem;
-  }
-
-  .bg-cards { display: none; }
-}
 
 
 

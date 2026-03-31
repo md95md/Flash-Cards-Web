@@ -137,7 +137,10 @@ function renderDeckControls() {
     const delBtn = document.createElement('button');
     delBtn.className = 'btn-danger';
     delBtn.textContent = t('delete_card_btn');
-    delBtn.onclick = deleteSelectedCard;
+    delBtn.onclick = () => {
+    document.getElementById('confirm-dialog').style.display = 'flex';
+    confirmCallback = deleteSelectedCard;
+    }
 
     toolbar.append(editBtn, delBtn);
   } else {
@@ -150,6 +153,9 @@ function renderDeckControls() {
 
   renderCardsList(deck);
 }
+
+
+
 
 function renderCardsList(deck) {
   const cardsList = document.getElementById('cards-list');
