@@ -125,7 +125,10 @@ button:active { transform: scale(0.95); }
 
 /* ─── Content sections ──────────────────────────────────────────────────────── */
 
-.content        { display: none; }
+.content        { 
+  display: none; 
+  margin: 1rem 1.5rem;
+}
 .content.active { display: block; }
 
 /* ─── Deck grid ─────────────────────────────────────────────────────────────── */
@@ -556,6 +559,10 @@ button:active { transform: scale(0.95); }
   min-height: 100vh;
 }
 
+#auth-screen .container {
+  flex: 1;
+}
+
 .auth-hero {
   text-align: center;
   padding: 1rem;
@@ -590,7 +597,7 @@ button:active { transform: scale(0.95); }
   border-radius: 16px;
   padding: 2rem;
   margin-bottom: 2rem;
-  max-width: 350px;
+  max-width: 300px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -668,6 +675,64 @@ body.dark .btn-google:focus  { box-shadow: 0 -1px 0 rgba(255,255,255,.04), 0 2px
 
 /* ─── Mobile ─────────────────────────────────────────────────────────────────── */
 
+@media (max-width: 480px) and (max-width: 1024px) {
+
+  .header {
+    padding: 1.5rem;
+    height: 80px;
+  }
+
+  .header h1 {
+    font-size: 16px;
+  }
+
+  .tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-btn {
+    padding: 0.75rem 1rem;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .container {
+    padding: 0.5rem;
+  }
+
+  .decks-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+
+  .flashcard {
+    min-height: 220px;
+  }
+
+  .card-text {
+    font-size: 16px;
+  }
+
+    #auth-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #auth-screen .container {
+    flex: 1;
+  }
+
+  .footer {
+    padding: 1.5rem;
+    margin-top: auto;
+  }
+}
 
 
 
