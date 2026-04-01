@@ -703,7 +703,7 @@ async function handleLogin() {
   const errorEl = document.getElementById('auth-error');
 
   if (!email || !password) {
-    errorEl.textContent = 'Please enter your email and password';
+    errorEl.textContent = t('enter_emailAndPassword');
     return;
   }
 
@@ -711,9 +711,9 @@ async function handleLogin() {
     await loginUser(email, password);
   } catch (e) {
     if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') {
-      errorEl.textContent = 'Incorrect email or password';
+      errorEl.textContent = t('incorrect_email_or_password');
     } else {
-      errorEl.textContent = 'Something went wrong. Please try again';
+      errorEl.textContent = t('something_went_wrong');
     }
   }
 }
@@ -734,12 +734,12 @@ async function handleRegister() {
   const errorEl = document.getElementById('auth-error');
 
   if (!email.includes('@')) {
-    errorEl.textContent = 'Please enter a valid email address';
+    errorEl.textContent = t('valid_emailAndPassword');
     return;
   }
 
   if (password.length < 6) {
-    errorEl.textContent = 'Password must be at least 6 characters';
+    errorEl.textContent = t('password_length');
     return;
   }
 
@@ -747,9 +747,9 @@ async function handleRegister() {
     await registerUser(email, password);
   } catch (e) {
     if (e.code === 'auth/email-already-in-use') {
-      errorEl.textContent = 'This email is already registered. Try signing in';
+      errorEl.textContent = t('email_already_in_use');
     } else {
-      errorEl.textContent = 'Something went wrong. Please try again';
+      errorEl.textContent = t('something_went_wrong');
     }
   }
 }

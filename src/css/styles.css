@@ -88,7 +88,7 @@ button:active { transform: scale(0.95); }
   font-size: 13px;
 }
 .or-divider::after {
-  content: 'or';
+  content: t('or');
 }
 
 /* ─── Tabs ──────────────────────────────────────────────────────────────────── */

@@ -31,36 +31,38 @@
 <div id="auth-screen"> 
 
   <div class="container">
+
+
     <!-- Hero -->
     <div class="auth-hero">
-      <h1>Learn anything faster!</h1>
-      <h2>Create flashcard decks, study at your own pace, and track your progress — all in one place</h2>
+      <h1 data-i18n="hero_title">Learn anything faster!</h1>
+      <h2 data-i18n="hero_sub">Create flashcard decks, study at your own pace, and track your progress — all in one place</h2>
       <div class="auth-features">
-        <div class="auth-feature">Create decks</div>
-        <div class="auth-feature">Study & repeat</div>
-        <div class="auth-feature">Track progress</div>
+        <div class="auth-feature" data-i18n="feature_create">Create decks</div>
+        <div class="auth-feature" data-i18n="feature_study">Study & repeat</div>
+        <div class="auth-feature" data-i18n="feature_track">Track progress</div>
       </div>
     </div>
 
     <!-- Auth form -->
 
   <div class="auth-box">
-    <h1>Register to try it out!</h1>
+    <h1 data-i18n="auth_title">Register to try it out!</h1>
       <div class="form-group">
-        <label>Email</label>
+        <label data-i18n="email">Email</label>
         <input type="email" id="authEmail" placeholder="your@email.com">
       </div>
 
       <div class="form-group">
-        <label>Password</label>
+        <label data-i18n="password">Password</label>
         <input type="password" id="authPassword" placeholder="at least 6 characters">
       </div>
           <p id="auth-error"></p>
         <div class="button-row">
-          <button class="btn-primary" onclick="handleRegister()">Register</button>
-          <button class="btn" onclick="handleLogin()">Sign In</button>
-          <hr class="or-divider">
-          <button type="button" class="btn-google" onclick="handleGoogleLogin()">
+          <button class="btn-primary" onclick="handleRegister()" data-i18n="register">Register</button>
+          <button class="btn" onclick="handleLogin()" data-i18n="sign_in">Sign In</button>
+          <hr class="or-divider" data-i18n="or">
+          <button type="button" class="btn-google" onclick="handleGoogleLogin()" data-i18n="continue_google">
             Continue with Google
           </button>
         </div>
@@ -81,7 +83,7 @@
   <!-- Footer -->
   <div class="footer"> 
     <div class="footer-contacts">
-      <p>Contact</p>
+      <p data-i18n="contact">Contact</p>
       <p><a href="https://www.linkedin.com/in/alina-galeeva/" target="_blank" rel="noopener noreferrer">Linkedin</a></p>
       <p><a href="https://github.com/md95md" target="_blank" rel="noopener noreferrer">GitHub</a></p>
     </div>  
