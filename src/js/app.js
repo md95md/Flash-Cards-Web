@@ -722,6 +722,7 @@ window.handleGoogleLogin = async function() {
   try {
     await loginWithGoogle();
   } catch (e) {
+    if (e.code === 'auth/popup-closed-by-user') return;
     document.getElementById('auth-error').textContent = e.message;
   }
 }
