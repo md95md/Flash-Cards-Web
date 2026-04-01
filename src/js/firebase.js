@@ -32,6 +32,15 @@ export async function deleteDeckFromDB(userId, deckId) {
   await remove(ref(db, `users/${userId}/decks/${deckId}`));
 }
 
+export async function getSeeded(userId) {
+  const snap = await get(ref(db, `users/${userId}/seeded`));
+  return snap.exists() && snap.val() === true;
+}
+
+export async function setSeeded(userId) {
+  await set(ref(db, `users/${userId}/seeded`), true);
+}
+
 /* ------ Authentication  ------ */
 
 export const auth = getAuth(app);

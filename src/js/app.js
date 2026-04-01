@@ -1,4 +1,4 @@
-import { loadDecks, saveDeck, deleteDeckFromDB, auth, registerUser, loginUser, logoutUser, onAuthChange, loginWithGoogle } from './firebase.js';
+import { loadDecks, saveDeck, deleteDeckFromDB, auth, registerUser, loginUser, logoutUser, onAuthChange, loginWithGoogle, getSeeded, setSeeded} from './firebase.js';
 import { translations } from './lang.js';
 
 let currentUser = null;
@@ -8,8 +8,10 @@ onAuthChange(user => {
     currentUser = user;
     document.getElementById('auth-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    loadDecks(currentUser.uid).then(data => {
+    loadDecks(currentUser.uid).then(async data => {
       decks = data;
+      const seeded = await getSeeded(currentUser.uid);
+      if (!seeded) await seedDefaultDecks();
       renderDecks();
     });
   } else {
@@ -17,7 +19,32 @@ onAuthChange(user => {
     document.getElementById('auth-screen').style.display = 'flex';
     document.getElementById('app').style.display = 'none';
   }
+  switchTab('decks');
 });
+
+async function seedDefaultDecks() {
+  const deck = {
+    id: Date.now(),
+    name: 'French Basics',
+    description: 'Beginner French vocabulary',
+    cards: [
+      { id: 1, question: 'Bonjour', answer: 'Hello', correct: 0, total: 0 },
+      { id: 2, question: 'Merci', answer: 'Thank you', correct: 0, total: 0 },
+      { id: 3, question: 'Oui / Non', answer: 'Yes / No', correct: 0, total: 0 },
+      { id: 4, question: 'S\'il vous plaît', answer: 'Please', correct: 0, total: 0 },
+      { id: 5, question: 'Comment vous appelez-vous?', answer: 'What is your name?', correct: 0, total: 0 },
+      { id: 6, question: 'Je m\'appelle...', answer: 'My name is...', correct: 0, total: 0 },
+      { id: 7, question: 'Où est...?', answer: 'Where is...?', correct: 0, total: 0 },
+      { id: 8, question: 'Combien ça coûte?', answer: 'How much does it cost?', correct: 0, total: 0 },
+      { id: 9, question: 'Je ne comprends pas', answer: 'I don\'t understand', correct: 0, total: 0 },
+      { id: 10, question: 'Au revoir', answer: 'Goodbye', correct: 0, total: 0 },
+    ]
+  };
+  decks.push(deck);
+  await saveDeck(currentUser.uid, deck);
+  await setSeeded(currentUser.uid);
+}
+
 
 let lang = 'en';
 export function t(key) {
