@@ -5,5 +5,5 @@ Pet project — maybe it will be upgraded to a desktop or mobile application.
 
 https://flash-cards-1ee15.web.app
 
-![Интерфейс](images/preview.png)
+![Интерфейс](src/images/preview.png)
 
