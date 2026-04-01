@@ -13,13 +13,13 @@ onAuthChange(user => {
       const seeded = await getSeeded(currentUser.uid);
       if (!seeded) await seedDefaultDecks();
       renderDecks();
+      switchTab('decks');
     });
   } else {
     currentUser = null;
     document.getElementById('auth-screen').style.display = 'flex';
     document.getElementById('app').style.display = 'none';
   }
-  switchTab('decks');
 });
 
 async function seedDefaultDecks() {
@@ -29,15 +29,15 @@ async function seedDefaultDecks() {
     description: 'Beginner French vocabulary',
     cards: [
       { id: 1, question: 'Bonjour', answer: 'Hello', correct: 0, total: 0 },
-      { id: 2, question: 'Merci', answer: 'Thank you', correct: 0, total: 0 },
-      { id: 3, question: 'Oui / Non', answer: 'Yes / No', correct: 0, total: 0 },
-      { id: 4, question: 'S\'il vous plaît', answer: 'Please', correct: 0, total: 0 },
-      { id: 5, question: 'Comment vous appelez-vous?', answer: 'What is your name?', correct: 0, total: 0 },
-      { id: 6, question: 'Je m\'appelle...', answer: 'My name is...', correct: 0, total: 0 },
-      { id: 7, question: 'Où est...?', answer: 'Where is...?', correct: 0, total: 0 },
-      { id: 8, question: 'Combien ça coûte?', answer: 'How much does it cost?', correct: 0, total: 0 },
-      { id: 9, question: 'Je ne comprends pas', answer: 'I don\'t understand', correct: 0, total: 0 },
-      { id: 10, question: 'Au revoir', answer: 'Goodbye', correct: 0, total: 0 },
+      { id: 2, question: "Je t'aime", answer: 'I love you', correct: 0, total: 0 },
+      { id: 3, question: 'Oui', answer: 'Yes', correct: 0, total: 0 },
+      { id: 4, question: 'Non', answer: 'No', correct: 0, total: 0 },
+      { id: 5, question: 'Merci', answer: 'Thank you', correct: 0, total: 0 },
+      { id: 6, question: 'Au revoir', answer: 'Goodbye', correct: 0, total: 0 },
+      { id: 7, question: 'Délicieux', answer: 'Delicious', correct: 0, total: 0 },
+      { id: 8, question: 'Froid', answer: 'Cold', correct: 0, total: 0 },
+      { id: 9, question: "S'il vous plaît", answer: 'Please', correct: 0, total: 0 },
+      { id: 10, question: 'Excusez-moi', answer: 'Excuse me', correct: 0, total: 0 },
     ]
   };
   decks.push(deck);
@@ -139,22 +139,33 @@ function selectDeck(id) {
 function renderDeckControls() {
   const controls = document.getElementById('deck-controls');
   const noDeck = document.getElementById('no-deck-selected');
-  const deleteDeckBtn = document.getElementById('delete-deck-btn');
-
+  
   if (!selectedDeckId) {
     controls.style.display = 'none';
     noDeck.style.display = 'block';
-    deleteDeckBtn.style.display = 'none';
+    
     return;
   }
 
   controls.style.display = 'block';
   noDeck.style.display = 'none';
-  deleteDeckBtn.style.display = 'block';
+  
 
   const deck = decks.find(d => d.id === selectedDeckId);
   const toolbar = document.getElementById('card-toolbar');
   toolbar.innerHTML = '';
+
+  const existingDelDeck = document.getElementById('delete-deck-btn');
+  if (existingDelDeck) existingDelDeck.remove();
+
+  if (selectedCardIdx === null) {
+    const delDeckBtn = document.createElement('button');
+    delDeckBtn.id = 'delete-deck-btn';
+    delDeckBtn.className = 'btn-danger';
+    delDeckBtn.textContent = t('delete_deck');
+    delDeckBtn.onclick = deleteDeck;
+    toolbar.appendChild(delDeckBtn);
+  }
 
   if (selectedCardIdx !== null && selectedCardIdx < deck.cards.length) {
     const editBtn = document.createElement('button');
@@ -248,6 +259,8 @@ function showEditCardForm() {
   submitBtn.onclick = saveEditCard;
 
   document.getElementById('add-card-form').style.display = 'block';
+  document.getElementById('delete-deck-btn').style.display = 'none';
+  document.getElementById('card-toolbar').style.display = 'none';
 }
 
 function saveEditCard() {
@@ -340,12 +353,17 @@ function showAddCardForm() {
   submitBtn.onclick = addCard;
 
   document.getElementById('add-card-form').style.display = 'block';
+  document.getElementById('delete-deck-btn').style.display = 'none';
+  document.getElementById('card-toolbar').style.display = 'none';
 }
 
 function hideAddCardForm() {
   document.getElementById('add-card-form').style.display = 'none';
   document.getElementById('questionInput').value = '';
   document.getElementById('answerInput').value = '';
+ document.getElementById('delete-deck-btn')?.style && 
+  (document.getElementById('delete-deck-btn').style.display = 'block');
+  document.getElementById('card-toolbar').style.display = 'flex';
 }
 
 function addCard() {
