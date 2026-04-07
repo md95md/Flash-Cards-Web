@@ -635,7 +635,7 @@ dotlottie-wc {
 .auth-box {
   background: var(--auth-box-bg);
   border: 1px solid var(--auth-box-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-pill);
   padding: 2rem;
   margin-bottom: 2rem;
   width: 300px;
