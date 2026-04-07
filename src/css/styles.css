@@ -568,6 +568,18 @@ button:active { transform: scale(0.95); }
   flex: 1;
 }
 
+
+#signin-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#signin-screen .container {
+  flex: 1;
+}
+
+
 .auth-hero {
   text-align: center;
   padding: 1rem;
@@ -586,10 +598,12 @@ button:active { transform: scale(0.95); }
   background: var(--auth-feature-bg);
   border: 1px solid var(--auth-feature-border);
   border-radius: 20px;
-  padding: 0.5rem 1rem;
+  padding: .5rem 1rem;
   font-size: 16px;
   display: flex;
   align-items: center;
+  width: 100px;
+  height: 100px;
 }
 
 .auth-feature:nth-child(1):hover { background: #fde8e0; border-color: #f59f82; color: #c05046; transform: translateY(-2px); }
@@ -602,7 +616,7 @@ button:active { transform: scale(0.95); }
   border-radius: 16px;
   padding: 2rem;
   margin-bottom: 2rem;
-  max-width: 300px;
+  width: 300px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -617,6 +631,14 @@ button:active { transform: scale(0.95); }
   text-align: left;
 }
 
+#signin-error {
+  color: var(--error-color);
+  margin-top: .2rem;
+  font-size: 14px;
+  min-height: 1rem;
+  font-weight: 500;
+  text-align: left;
+}
 
 /* ─── Google button ──────────────────────────────────────────────────────────── */
 

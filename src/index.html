@@ -15,8 +15,10 @@
 
 <div class="header">
   <div class="header-brand">
-    <img src="images/logo.png" alt="Flash Card Game Logo" class="logo">
-    <h1>Flash Card Game</h1>
+    
+      <img src="images/logo.png" alt="Flash Card Game Logo" class="logo">
+
+      <h1 class="app-name" data-i18n="app_name">Flash Card Game</h1>
   </div>
   <div class="header-controls">
     <button class="lang-switcher" onclick="cycleLang()">
@@ -35,62 +37,96 @@
 
     <!-- Hero -->
     <div class="auth-hero">
-      <h1 data-i18n="hero_title">Learn anything faster!</h1>
-      <h2 data-i18n="hero_sub">Create flashcard decks, study at your own pace, and track your progress — all in one place</h2>
+      <h2 data-i18n="hero_title">POV: you're finally studying (for real this time)</h2>
+      <h1 data-i18n="hero_sub">Stop saving videos "for later" and notes "for before the exam"
+        <br>Flash Card Game is a system that actually works</h1>
       <div class="auth-features">
         <div class="auth-feature" data-i18n="feature_create">Create decks</div>
         <div class="auth-feature" data-i18n="feature_study">Study & repeat</div>
         <div class="auth-feature" data-i18n="feature_track">Track progress</div>
       </div>
+          <h2>
+          <span data-i18n="perk_no_sub">no subscription,</span>
+          <span data-i18n="perk_no_ads">no ads,</span>
+          <span data-i18n="perk_no_streak">no streak pressure</span>
+        </h2>
     </div>
 
     <!-- Auth form -->
 
   <div class="auth-box">
-    <h1 data-i18n="auth_title">Register to try it out!</h1>
+    <h1 data-i18n="auth_title">Let's try it out!</h1>
       <div class="form-group">
-        <label data-i18n="email">Email</label>
+        <label data-i18n="email">Enter a valid email</label>
         <input type="email" id="authEmail" placeholder="your@email.com">
       </div>
 
       <div class="form-group">
-        <label data-i18n="password">Password</label>
-        <input type="password" id="authPassword" placeholder="at least 6 characters">
+        <label data-i18n="password">Enter 6 characters password</label>
+        <input type="password" id="authPassword" placeholder="passexam">
       </div>
           <p id="auth-error"></p>
         <div class="button-row">
-          <button class="btn-primary" onclick="handleRegister()" data-i18n="register">Register</button>
-          <button class="btn" onclick="handleLogin()" data-i18n="sign_in">Sign In</button>
+          <button class="btn-primary" onclick="handleRegister()" data-i18n="register">Fine</button>
           <div class="or-divider" data-i18n="or">or</div>
           <button type="button" class="btn-google" onclick="handleGoogleLogin()" data-i18n="continue_google">
             Continue with Google
           </button>
         </div>
+    </div> 
   </div>
 
-    <!-- Background cards -->
-    <div class="bg-cards">
-      <div class="bg-card" style="--r:-15deg; --x:5%; --y:20%; --c:#9D87ED"></div>
-      <div class="bg-card" style="--r:10deg; --x:8%; --y:50%; --c:#D7ED87"></div>
-      <div class="bg-card" style="--r:-8deg; --x:3%; --y:70%; --c:#87EDD0"></div>
-      <div class="bg-card" style="--r:20deg; --x:75%; --y:15%; --c:#ED87A4"></div>
-      <div class="bg-card" style="--r:-12deg; --x:80%; --y:45%; --c:#9D87ED"></div>
-      <div class="bg-card" style="--r:8deg; --x:72%; --y:70%; --c:#D7ED87"></div>
-    </div>
+    <!-- Footer -->
+<div class="footer">
+  <div class="footer-contacts">
+    <p><a href="https://www.linkedin.com/in/alina-galeeva/" target="_blank" rel="noopener noreferrer">Linkedin</a></p>
+    <p><a href="https://github.com/md95md" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    <p><a href="#" onclick="goToLanding()">Register</a></p>
+    <p><a href="#" onclick="goToSignIn()">Sign In</a></p>
+  </div>
+  <p data-i18n="copyright">© 2026 Flash Card Game</p>
+</div>
 
+</div>
+
+
+
+<!-- ─── Sign-in screen (loaded from sign.html) ────── -->
+<div id="signin-screen">
+
+  <div class="container">
+    <div class="auth-hero">
+      <h1 data-i18n="welcome_back">Welcome back!</h1>
+    </div>
+    <div class="auth-box">
+      <div class="form-group">
+        <label data-i18n="email">Enter a valid email</label>
+        <input type="email" id="signinEmail" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label data-i18n="password">Enter 6-digit password</label>
+        <input type="password" id="signinPassword" placeholder="••••••">
+      </div>
+      <p id="signin-error"></p>
+      <div class="button-row">
+        <button class="btn-primary" onclick="handleSignIn()" data-i18n="sign_in">Sign In</button>
+        <div class="or-divider" data-i18n="or">or</div>
+        <button type="button" class="btn-google" onclick="handleGoogleLogin()" data-i18n="continue_google">Continue with Google</button>
+      </div>
+    </div>
   </div>
 
   <!-- Footer -->
-  <div class="footer"> 
+  <div class="footer">
     <div class="footer-contacts">
-      <p data-i18n="contact">Contact</p>
       <p><a href="https://www.linkedin.com/in/alina-galeeva/" target="_blank" rel="noopener noreferrer">Linkedin</a></p>
       <p><a href="https://github.com/md95md" target="_blank" rel="noopener noreferrer">GitHub</a></p>
-    </div>  
-  <p>&copy; 2026 Flash Card Game</p>
+      <p><a href="#" onclick="goToLanding()">Register</a></p>
+      <p><a href="#" onclick="goToSignIn()">Sign In</a></p>
+    </div>
+    <p data-i18n="copyright">© 2026 Flash Card Game</p>
   </div>
 
-  </div>
 </div>
 
 <!-- ─── App ───────────────────────────────────────── -->

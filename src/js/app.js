@@ -3,24 +3,35 @@ import { translations } from './lang.js';
 
 let currentUser = null;
 
+
+/* Bootstrap: load sign.html fragment then init auth */
+
 onAuthChange(user => {
-  if (user) {
-    currentUser = user;
-    document.getElementById('auth-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    loadDecks(currentUser.uid).then(async data => {
-      decks = data;
-      const seeded = await getSeeded(currentUser.uid);
-      if (!seeded) await seedDefaultDecks();
-      renderDecks();
-      switchTab('decks');
-    });
-  } else {
-    currentUser = null;
-    document.getElementById('auth-screen').style.display = 'flex';
-    document.getElementById('app').style.display = 'none';
-  }
-});
+    if (user) {
+      currentUser = user;
+      localStorage.setItem('hasLoggedIn', 'true');
+      document.getElementById('auth-screen').style.display = 'none';
+      document.getElementById('signin-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      loadDecks(currentUser.uid).then(async data => {
+        decks = data;
+        const seeded = await getSeeded(currentUser.uid);
+        if (!seeded) await seedDefaultDecks();
+        renderDecks();
+        switchTab('decks');
+      });
+    } else {
+      currentUser = null;
+      document.getElementById('app').style.display = 'none';
+      if (localStorage.getItem('hasLoggedIn')) {
+        document.getElementById('signin-screen').style.display = 'flex';
+        document.getElementById('auth-screen').style.display = 'none';
+      } else {
+        document.getElementById('auth-screen').style.display = 'flex';
+        document.getElementById('signin-screen').style.display = 'none';
+      }
+    }
+  });
 
 async function seedDefaultDecks() {
   const deck = {
@@ -45,6 +56,7 @@ async function seedDefaultDecks() {
   await setSeeded(currentUser.uid);
 }
 
+// ─── Internationalization ────────────────────────────────────────────────────
 
 let lang = 'en';
 export function t(key) {
@@ -71,7 +83,7 @@ function cycleLang() {
   if (active === 'decks') renderDecks();
   if (active === 'stats') renderStats();
 }
-window.cycleLang = cycleLang;
+
 
 // ─── State ────────────────────────────────────────────────────────────────────
 
@@ -85,21 +97,6 @@ let isFlipped = false;
 let cardSequence = [];
 let cardSequenceIndex = 0;
 
-// ─── Init ─────────────────────────────────────────────────────────────────────
-
-
-// ─── Tabs ─────────────────────────────────────────────────────────────────────
-
-// function switchTab(tab) {
-//   document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
-//   document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-//   document.getElementById(tab).classList.add('active');
-//   document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
-
-//   if (tab === 'stats') renderStats();
-//   if (tab === 'decks') renderDecks();
-//   if (tab === 'study') renderStudyDecks();
-// }
 
 // ─── Deck list ────────────────────────────────────────────────────────────────
 
@@ -191,8 +188,6 @@ function renderDeckControls() {
 
   renderCardsList(deck);
 }
-
-
 
 
 function renderCardsList(deck) {
@@ -526,7 +521,6 @@ function renderStudyMode() {
   const totalCount = deck.cards.length;
   const progress = Math.round((learnedCount / totalCount) * 100);
 
-  // Header
   const header = document.createElement('div');
   header.className = 'study-header';
 
@@ -695,9 +689,12 @@ if (localStorage.getItem('theme') === 'dark') {
 
 
 /*** Authentication Functions */
+/* ------------------------- */
+
 /** Handle Login */
 
-async function handleLogin() {
+async function handleLogin()
+{
   const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPassword').value.trim();
   const errorEl = document.getElementById('auth-error');
@@ -718,18 +715,11 @@ async function handleLogin() {
   }
 }
 
-window.handleGoogleLogin = async function() {
-  try {
-    await loginWithGoogle();
-  } catch (e) {
-    if (e.code === 'auth/popup-closed-by-user') return;
-    document.getElementById('auth-error').textContent = e.message;
-  }
-}
 
 /* Handle Register ------ */
 
-async function handleRegister() {
+async function handleRegister()
+{
   const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPassword').value.trim();
   const errorEl = document.getElementById('auth-error');
@@ -755,7 +745,39 @@ async function handleRegister() {
   }
 }
 
-function handleLogout() {
+async function handleSignIn() {
+  const email = document.getElementById('signinEmail').value.trim();
+  const password = document.getElementById('signinPassword').value.trim();
+  const errorEl = document.getElementById('signin-error');
+
+  if (!email.includes('@')) {
+    errorEl.textContent = t('valid_emailAndPassword');
+    return;
+  }
+
+  if (password.length < 6) {
+    errorEl.textContent = t('password_length');
+    return;
+  }
+
+  try {
+    await loginUser(email, password);
+  } catch (e) {
+    if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password') {
+      errorEl.textContent = t('incorrect_email_or_password');
+    } else {
+      errorEl.textContent = t('something_went_wrong');
+    }
+  }
+}
+
+function showRegisterScreen() {
+  document.getElementById('signin-screen').style.display = 'none';
+  document.getElementById('auth-screen').style.display = 'flex';
+}
+
+function handleLogout()
+{
   logoutUser();
 }
 
@@ -806,22 +828,48 @@ function renderAccount() {
   container.appendChild(panel);
 }
 
-window.renderAccount = renderAccount;
+function goToSignIn() {
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('signin-screen').style.display = 'flex';
+}
 
 
+function goToLanding() {
+  if (currentUser) return;
+
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('signin-screen').style.display = 'none';
+  document.getElementById('auth-screen').style.display = 'flex';
+}
 
 
-
-
-
-window.handleLogin = handleLogin;
-window.handleRegister = handleRegister;
-window.handleLogout = handleLogout;
 
 
 
 // ─── Expose to window (required for onclick in HTML with type="module") ───────
 
+
+window.handleSignIn = handleSignIn;
+window.showRegisterScreen = showRegisterScreen;
+
+window.handleGoogleLogin = async function() {
+  try {
+    await loginWithGoogle();
+  } catch (e) {
+    if (e.code === 'auth/popup-closed-by-user') return;
+    const errEl = document.getElementById('signin-screen')?.style.display === 'flex'
+      ? document.getElementById('signin-error')
+      : document.getElementById('auth-error');
+    if (errEl) errEl.textContent = e.message;
+  }
+}
+
+window.cycleLang = cycleLang;
+window.renderAccount = renderAccount;
+window.handleLogin = handleLogin;
+window.handleRegister = handleRegister;
+window.handleLogout = handleLogout;
 window.switchTab = switchTab;
 window.showCreateDeckForm = showCreateDeckForm;
 window.hideDeckForm = hideDeckForm;
@@ -833,6 +881,7 @@ window.addCard = addCard;
 window.confirmYes = confirmYes;
 window.confirmNo = confirmNo;
 window.toggleTheme = toggleTheme;
-
+window.goToSignIn = goToSignIn;
+window.goToLanding = goToLanding;
 
 
