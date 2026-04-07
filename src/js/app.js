@@ -24,12 +24,7 @@ class AppFooter extends HTMLElement {
 class LottieHero extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
-      <dotlottie-wc
-        src="https://lottie.host/07b662ee-e7fb-43de-a377-caae5ac483c8/vBFfoavsKz.lottie"
-        style="width: 300px; height: 300px;"
-        autoplay
-        loop>
-      </dotlottie-wc>
+      <dotlottie-wc src="animations/study.lottie" autoplay loop></dotlottie-wc>
     `;
   }
 }
