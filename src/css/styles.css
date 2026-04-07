@@ -25,7 +25,7 @@ textarea {
   padding: 10px;
   box-sizing: border-box;
   border: 1px solid var(--input-border);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   background: var(--input-bg);
@@ -42,7 +42,7 @@ button {
   color: var(--btn-color);
   border: 1px solid var(--btn-border);
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -113,7 +113,6 @@ button:active { transform: scale(0.95); }
   color: var(--tab-color);
   font-size: 16px;
   font-weight: 500;
-  border-radius: 0;
 }
 
 .tab-btn.active {
@@ -148,7 +147,7 @@ button:active { transform: scale(0.95); }
 .deck-card {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   padding: 1.25rem 1rem;
   cursor: pointer;
   text-align: center;
@@ -183,7 +182,7 @@ button:active { transform: scale(0.95); }
   align-items: center;
   padding: 0.75rem;
   background: var(--surface-sunken);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 13px;
   cursor: pointer;
   transition: background-color 0.2s, border-color 0.2s;
@@ -206,7 +205,7 @@ button:active { transform: scale(0.95); }
   align-items: center;
   padding: 1rem;
   background: var(--surface);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border);
 }
 
@@ -276,7 +275,7 @@ button:active { transform: scale(0.95); }
 .panel {
   background: var(--surface-raised);
   padding: 1.5rem;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   margin-bottom: 1.5rem;
   border: 1px solid var(--border-accent);
 }
@@ -284,7 +283,7 @@ button:active { transform: scale(0.95); }
 .panel-center {
   background: var(--surface-raised);
   padding: 2rem;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-accent);
   text-align: center;
 }
@@ -295,7 +294,7 @@ button:active { transform: scale(0.95); }
 .panel-inner {
   background: var(--surface-sunken);
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   margin-bottom: 1rem;
 }
 
@@ -304,7 +303,7 @@ button:active { transform: scale(0.95); }
 .study-header {
   background: var(--surface);
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   margin-bottom: 1.5rem;
   border: 1px solid var(--border);
 }
@@ -322,7 +321,7 @@ button:active { transform: scale(0.95); }
 .progress-bar {
   height: 6px;
   background: var(--progress-bar-bg);
-  border-radius: 3px;
+  border-radius: var(--radius-pill);
   overflow: hidden;
   margin: 0.5rem 0;
 }
@@ -366,7 +365,7 @@ button:active { transform: scale(0.95); }
   -webkit-backface-visibility: hidden;
   background: var(--flashcard-bg);
   border: 1px solid var(--flashcard-border);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 2rem;
   box-sizing: border-box;
   display: flex;
@@ -448,7 +447,7 @@ button:active { transform: scale(0.95); }
 .stat-card {
   background: var(--surface);
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
 }
 
@@ -490,7 +489,7 @@ button:active { transform: scale(0.95); }
 
 .dialog-box {
   background: var(--dialog-bg);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 2rem;
   max-width: 320px;
   width: 100%;
@@ -526,7 +525,7 @@ button:active { transform: scale(0.95); }
 .logo {
   height: 40px;
   width: auto;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
 .header-controls {
@@ -542,7 +541,7 @@ button:active { transform: scale(0.95); }
   gap: 0.4rem;
   padding: 6px 12px;
   border: 1px solid var(--lang-border);
-  border-radius: 20px;
+  border-radius: var(--radius-pill);
   background: var(--lang-bg);
   color: var(--lang-color);
   font-size: 13px;
@@ -579,10 +578,34 @@ button:active { transform: scale(0.95); }
   flex: 1;
 }
 
+.hero {
+  font-size: 25px;
+  text-align: center;
+  padding: .5rem;
+}
+
+
+lottie-hero {
+  display: block;
+  margin: 0 auto;
+}
+
+
+dotlottie-wc {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+}
+
 
 .auth-hero {
   text-align: center;
   padding: 1rem;
+  background-color: var(--auth-hero-bg);
+  border: 1px solid var(--auth-hero-border);
+  border-radius: var(--radius-md);
+  margin: 1rem;
 }
 
 .auth-features {
@@ -590,14 +613,13 @@ button:active { transform: scale(0.95); }
   display: flex;
   gap: .5rem;
   justify-content: center;
-  margin-bottom: 1rem;
   flex-wrap: wrap;
 }
 
 .auth-feature {
   background: var(--auth-feature-bg);
   border: 1px solid var(--auth-feature-border);
-  border-radius: 20px;
+  border-radius: var(--radius-pill);
   padding: .5rem 1rem;
   font-size: 16px;
   display: flex;
@@ -613,13 +635,14 @@ button:active { transform: scale(0.95); }
 .auth-box {
   background: var(--auth-box-bg);
   border: 1px solid var(--auth-box-border);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: 2rem;
   margin-bottom: 2rem;
   width: 300px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+  margin-top: 2rem;
 }
 
 #auth-error {
@@ -646,7 +669,7 @@ button:active { transform: scale(0.95); }
   transition: background-color .3s, box-shadow .3s;
   padding: 12px 16px 12px 42px;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   box-shadow: 0 -1px 0 rgba(0,0,0,.04), 0 1px 1px rgba(0,0,0,.25);
   color: #757575;
   font-size: 14px;

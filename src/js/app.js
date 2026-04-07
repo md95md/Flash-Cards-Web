@@ -3,6 +3,40 @@ import { translations } from './lang.js';
 
 let currentUser = null;
 
+// ─── Web Components ───────────────────────────────────────────────────────────
+
+class AppFooter extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
+      <div class="footer">
+        <div class="footer-contacts">
+          <p><a href="https://www.linkedin.com/in/alina-galeeva/" target="_blank" rel="noopener noreferrer">Linkedin</a></p>
+          <p><a href="https://github.com/md95md" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+          <p><a href="#" onclick="goToLanding()">Register</a></p>
+          <p><a href="#" onclick="goToSignIn()">Sign In</a></p>
+        </div>
+        <p data-i18n="copyright">© 2026 Flash Card Game</p>
+      </div>
+    `;
+  }
+}
+
+class LottieHero extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
+      <dotlottie-wc
+        src="https://lottie.host/07b662ee-e7fb-43de-a377-caae5ac483c8/vBFfoavsKz.lottie"
+        style="width: 300px; height: 300px;"
+        autoplay
+        loop>
+      </dotlottie-wc>
+    `;
+  }
+}
+
+customElements.define('app-footer', AppFooter);
+customElements.define('lottie-hero', LottieHero);
+
 
 /* Bootstrap: load sign.html fragment then init auth */
 

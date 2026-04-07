@@ -86,6 +86,8 @@
   --auth-feature-bg:    #eef6fc;
   --auth-feature-border:#b8d9f0;
   --auth-hero-p:        #555770;
+  --auth-hero-border:     #e0e0e0;
+  --auth-hero-bg:         #ffffff;
 
   /* Footer */
   --footer-bg:          #F3F3F3;
@@ -94,6 +96,12 @@
 
   /* Dialog */
   --dialog-bg:          #ffffff;
+
+  /* Radius */
+  --radius-sm:          6px;
+  --radius-md:          10px;
+  --radius-lg:          16px;
+  --radius-pill:        20px;
 
   /* Misc */
   --error-color:        #c30f0f;

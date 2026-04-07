@@ -43,7 +43,7 @@ export const translations = {
     account: 'Account',
     // ─── Landing copy ───────────────────────────────
     hero_title: "POV: you're finally studying. For real this time.",
-    hero_sub: 'Stop saving videos "for later" and notes "for before the exam." Flash Card Game is a system that actually works. No subscription, no ads, no streak pressure.',
+    hero_sub: 'Stop saving videos "for later" and notes "for before the exam." Flash Card Game is a system that actually works',
     feature_create: 'Create decks',
     feature_study: 'Study & repeat',
     feature_track: 'Track progress',
@@ -113,7 +113,7 @@ export const translations = {
     account: 'Аккаунт',
     // ─── Landing copy ───────────────────────────────
     hero_title: 'POV: ты наконец учишься, а не делаешь вид.',
-    hero_sub: 'Хватит сохранять видео «посмотрю потом» и конспекты «прочитаю перед экзаменом». Flash Card Game — это система, которая реально работает. Без подписки, без рекламы, без стрика.',
+    hero_sub: 'Хватит сохранять видео «посмотрю потом» и конспекты «прочитаю перед экзаменом». Flash Card Game — это система, которая реально работает',
     feature_create: 'Создавай колоды',
     feature_study: 'Учи и повторяй',
     feature_track: 'Следи за прогрессом',
@@ -183,7 +183,7 @@ export const translations = {
     account: 'Cuenta',
     // ─── Landing copy ───────────────────────────────
     hero_title: 'POV: por fin estás estudiando. En serio.',
-    hero_sub: 'Deja de guardar videos "para después" y apuntes "para antes del examen". Flash Card Game es un sistema que realmente funciona. Sin suscripción, sin anuncios, sin racha.',
+    hero_sub: 'Deja de guardar videos "para después" y apuntes "para antes del examen". Flash Card Game es un sistema que realmente funciona',
     feature_create: 'Crear mazos',
     feature_study: 'Estudiar y repetir',
     feature_track: 'Seguir progreso',
