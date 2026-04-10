@@ -84,7 +84,7 @@
 
 
 <!-- ────── Sign-in screen ────────────────────────────── -->
-<div id="signin-screen" style="display:none">
+<div id="signin-screen">
 
   <div class="container">
         <!-- Lottie Animation -->
@@ -115,7 +115,7 @@
 
 <!-- ────── App ───────────────────────────────────────── -->
 <!------------------------------------------------------->
-<div id="app" style="display:none">
+<div id="app">
 <div class="container">
     <!-- Tabs -->
     <div class="tabs">
@@ -138,8 +138,8 @@
         <div class="dialog-box dialog-box--wide">
           <p id="import-preview-title" class="dialog-text"></p>
           <div id="import-preview-list" class="import-preview-list"></div>
-          <div class="button-row" style="justify-content:center; margin-top:1.25rem;">
-            <button onclick="cancelImport()" data-i18n="cancel">Cancel</button>
+          <div class="button-row">
+            <button class="btn-danger"onclick="cancelImport()" data-i18n="cancel">Cancel</button>
             <button class="btn-primary" id="import-confirm-btn" onclick="confirmImport()"></button>
           </div>
         </div>
@@ -150,14 +150,17 @@
         <div class="dialog-box">
           <p id="confirm-text" data-i18n="delete_confirm" class="dialog-text">Delete forever?</p>
           <div class="button-row">
-            <button data-i18n="cancel" onclick="confirmNo()">Cancel</button>
-            <button class="btn-danger" data-i18n="confirm" onclick="confirmYes()">Confirm</button>
+            <button class="btn-danger" data-i18n="cancel" onclick="confirmNo()">Cancel</button>
+            <button class="btn-secondary" data-i18n="confirm" onclick="confirmYes()">Confirm</button>
           </div>
         </div>
       </div>
 
+      <!-- Deck grid — filled by JS -->
+      <div id="decks-list" class="decks-grid"></div>
+
       <!-- Create deck form -->
-      <div id="create-deck-form" class="panel" style="display: none;">
+      <div id="create-deck-form" class="panel">
         <h3 data-i18n="create_deck">Create New Deck</h3>
         <div class="form-group">
           <label data-i18n="deck_name">Deck name</label>
@@ -168,29 +171,22 @@
           <textarea id="deckDescInput"></textarea>
         </div>
         <div class="button-row">
-          <button data-i18n="cancel" onclick="hideDeckForm()">Cancel</button>
+          <button class="btn-danger" data-i18n="cancel" onclick="hideDeckForm()">Cancel</button>
           <button class="btn-primary" data-i18n="create" onclick="createDeck()">Create</button>
         </div>
       </div>
-
-      <!-- Deck grid — filled by JS -->
-      <div id="decks-list" class="decks-grid"></div>
-
+      
       <!-- Hidden file input for JSON import -->
-      <input type="file" id="json-import-input" accept=".json" style="display:none" onchange="importJSON(event)">
+      <input type="file" id="json-import-input" accept=".json" onchange="importJSON(event)">
 
       <!-- Card management panel -->
-      <div class="panel" style="margin-top: 2rem;">
-
+      <div id="manage-cards-panel" class="panel">
         <div class="section-header">
           <h3 data-i18n="manage_cards">Manage Cards</h3>
         </div>
-
-        <div id="deck-controls" style="display: none;">
-
-          <div id="card-toolbar" class="button-row" style="margin-bottom: 1rem;"></div>
-
-          <div id="add-card-form" class="panel-inner" style="display: none;">
+        <div id="deck-controls">
+          <div id="card-toolbar" class="button-row"></div>
+          <div id="add-card-form" class="panel-inner">
             <h4 id="card-form-title"></h4>
             <div class="form-group">
               <label data-i18n="question">Question</label>
@@ -201,21 +197,19 @@
               <textarea id="answerInput"></textarea>
             </div>
             <div class="button-row">
-              <button data-i18n="cancel" onclick="hideAddCardForm()">Cancel</button>
+              <button class="btn-danger" data-i18n="cancel" onclick="hideAddCardForm()">Cancel</button>
               <button class="btn-primary" id="card-form-submit" data-i18n="add">Add</button>
             </div>
           </div>
-
           <div id="cards-list"></div>
-
         </div>
-
         <div id="no-deck-selected" class="empty-state">
           <p data-i18n="select_deck">Select a deck to add or edit cards</p>
         </div>
-
       </div>
     </div>
+
+
 
     <!-- ─── Study tab ─────────────────────────────── -->
     <div id="study" class="content">

@@ -43,9 +43,9 @@ body.dark {
 
   --btn-danger-bg:      transparent;
   --btn-danger-color:   #ED87A4;
-  --btn-danger-border:  #ED87A4;
+  --btn-danger-border:  #f187a5;
   --btn-danger-hover-bg:    #ED87A4;
-  --btn-danger-hover-color: #111820;
+  --btn-danger-hover-color: #894247;
 
   /* Inputs */
   --input-bg:           #1a2535;

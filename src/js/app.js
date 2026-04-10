@@ -116,10 +116,12 @@ function cycleLang() {
 
 // ─── State ────────────────────────────────────────────────────────────────────
 
+const CARDS_PAGE_SIZE = 10;
 let decks = [];
 let selectedDeckId = null;
 let selectedCardIdx = null;
 let editingCardIdx = null;
+let cardsPage = 0;
 let currentStudyDeckId = null;
 let currentReviewMode = false;
 let isFlipped = false;
@@ -159,6 +161,7 @@ function selectDeck(id) {
   selectedDeckId = selectedDeckId === id ? null : id;
   selectedCardIdx = null;
   editingCardIdx = null;
+  cardsPage = 0;
   renderDecks();
 }
 
@@ -181,17 +184,8 @@ function renderDeckControls() {
   const toolbar = document.getElementById('card-toolbar');
   toolbar.innerHTML = '';
 
-  const existingDelDeck = document.getElementById('delete-deck-btn');
-  if (existingDelDeck) existingDelDeck.remove();
-
-  if (selectedCardIdx === null) {
-    const delDeckBtn = document.createElement('button');
-    delDeckBtn.id = 'delete-deck-btn';
-    delDeckBtn.className = 'btn-danger';
-    delDeckBtn.textContent = t('delete_deck');
-    delDeckBtn.onclick = deleteDeck;
-    toolbar.appendChild(delDeckBtn);
-  }
+  const existingActionBtns = document.getElementById('deck-action-btns');
+  if (existingActionBtns) existingActionBtns.remove();
 
   if (selectedCardIdx !== null && selectedCardIdx < deck.cards.length) {
     const editBtn = document.createElement('button');
@@ -221,12 +215,34 @@ function renderDeckControls() {
   }
 
   renderCardsList(deck);
+
+  const actionBtns = document.createElement('div');
+  actionBtns.id = 'deck-action-btns';
+  actionBtns.className = 'button-row';
+
+  const editDeckBtn = document.createElement('button');
+  editDeckBtn.textContent = t('edit_deck_btn');
+  editDeckBtn.onclick = showEditDeckForm;
+
+  const delDeckBtn = document.createElement('button');
+  delDeckBtn.className = 'btn-danger';
+  delDeckBtn.textContent = t('delete_deck');
+  delDeckBtn.onclick = deleteDeck;
+
+  actionBtns.append(editDeckBtn, delDeckBtn);
+  document.getElementById('deck-controls').appendChild(actionBtns);
 }
 
 
 function renderCardsList(deck) {
   const cardsList = document.getElementById('cards-list');
   cardsList.innerHTML = '';
+
+  const totalPages = Math.ceil(deck.cards.length / CARDS_PAGE_SIZE);
+  if (cardsPage >= totalPages) cardsPage = Math.max(0, totalPages - 1);
+
+  const start = cardsPage * CARDS_PAGE_SIZE;
+  const pageCards = deck.cards.slice(start, start + CARDS_PAGE_SIZE);
 
   const wrapper = document.createElement('div');
   wrapper.className = 'cards-list-wrapper';
@@ -238,7 +254,8 @@ function renderCardsList(deck) {
   const grid = document.createElement('div');
   grid.className = 'cards-grid';
 
-  deck.cards.forEach((card, idx) => {
+  pageCards.forEach((card, pageIdx) => {
+    const idx = start + pageIdx;
     const item = document.createElement('div');
     item.className = 'card-list-item' + (selectedCardIdx === idx ? ' card-selected' : '');
     item.onclick = () => selectCard(idx);
@@ -252,6 +269,48 @@ function renderCardsList(deck) {
   });
 
   wrapper.appendChild(grid);
+
+  if (totalPages > 1) {
+    const pagination = document.createElement('div');
+    pagination.className = 'cards-pagination';
+
+    const makePageBtn = (pageNum) => {
+      const btn = document.createElement('button');
+      btn.textContent = pageNum + 1;
+      btn.className = 'cards-page-btn' + (cardsPage === pageNum ? ' cards-page-btn--active' : '');
+      if (cardsPage !== pageNum) {
+        btn.onclick = () => { cardsPage = pageNum; renderDeckControls(); };
+      }
+      return btn;
+    };
+
+    const addDots = () => {
+      const dots = document.createElement('span');
+      dots.className = 'cards-pagination-dots';
+      dots.textContent = '...';
+      pagination.appendChild(dots);
+    };
+
+    // Always show first page
+    pagination.appendChild(makePageBtn(0));
+
+    // Left dots: if current page is far from start
+    if (cardsPage > 2) addDots();
+
+    // Pages around current (prev, current, next) — skip if overlapping with first/last
+    for (let p = Math.max(1, cardsPage - 1); p <= Math.min(totalPages - 2, cardsPage + 1); p++) {
+      pagination.appendChild(makePageBtn(p));
+    }
+
+    // Right dots: if current page is far from end
+    if (cardsPage < totalPages - 3) addDots();
+
+    // Always show last page
+    if (totalPages > 1) pagination.appendChild(makePageBtn(totalPages - 1));
+
+    wrapper.appendChild(pagination);
+  }
+
   cardsList.appendChild(wrapper);
 }
 
@@ -288,7 +347,7 @@ function showEditCardForm() {
   submitBtn.onclick = saveEditCard;
 
   document.getElementById('add-card-form').style.display = 'block';
-  document.getElementById('delete-deck-btn').style.display = 'none';
+  document.getElementById('deck-action-btns').style.display = 'none';
   document.getElementById('card-toolbar').style.display = 'none';
 }
 
@@ -315,7 +374,13 @@ function saveEditCard() {
 // ─── Deck create / delete ─────────────────────────────────────────────────────
 
 function showCreateDeckForm() {
-  document.getElementById('create-deck-form').style.display = 'block';
+  const form = document.getElementById('create-deck-form');
+  form.querySelector('h3').textContent = t('create_deck');
+  const submitBtn = form.querySelector('.btn-primary');
+  submitBtn.textContent = t('create');
+  submitBtn.onclick = createDeck;
+  form.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function hideDeckForm() {
@@ -336,6 +401,37 @@ function createDeck() {
   const newDeck = { id: Date.now(), name, description: desc, cards: [] };
   decks.push(newDeck);
   saveDeck(currentUser.uid, newDeck);
+  renderDecks();
+  hideDeckForm();
+}
+
+function showEditDeckForm() {
+  const deck = decks.find(d => d.id === selectedDeckId);
+  document.getElementById('deckNameInput').value = deck.name;
+  document.getElementById('deckDescInput').value = deck.description || '';
+
+  const form = document.getElementById('create-deck-form');
+  form.querySelector('h3').textContent = t('edit_deck_title');
+  const submitBtn = form.querySelector('.btn-primary');
+  submitBtn.textContent = t('save');
+  submitBtn.onclick = saveEditDeck;
+  form.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function saveEditDeck() {
+  const name = document.getElementById('deckNameInput').value.trim();
+  const desc = document.getElementById('deckDescInput').value.trim();
+
+  if (!name) {
+    alert(t('deck_name'));
+    return;
+  }
+
+  const deck = decks.find(d => d.id === selectedDeckId);
+  deck.name = name;
+  deck.description = desc;
+  saveDeck(currentUser.uid, deck);
   renderDecks();
   hideDeckForm();
 }
@@ -382,7 +478,7 @@ function showAddCardForm() {
   submitBtn.onclick = addCard;
 
   document.getElementById('add-card-form').style.display = 'block';
-  document.getElementById('delete-deck-btn').style.display = 'none';
+  document.getElementById('deck-action-btns').style.display = 'none';
   document.getElementById('card-toolbar').style.display = 'none';
 }
 
@@ -390,8 +486,8 @@ function hideAddCardForm() {
   document.getElementById('add-card-form').style.display = 'none';
   document.getElementById('questionInput').value = '';
   document.getElementById('answerInput').value = '';
- document.getElementById('delete-deck-btn')?.style && 
-  (document.getElementById('delete-deck-btn').style.display = 'block');
+  document.getElementById('deck-action-btns')?.style &&
+    (document.getElementById('deck-action-btns').style.display = 'flex');
   document.getElementById('card-toolbar').style.display = 'flex';
 }
 
@@ -1005,6 +1101,8 @@ window.hideAddCardForm = hideAddCardForm;
 window.addCard = addCard;
 window.confirmYes = confirmYes;
 window.confirmNo = confirmNo;
+window.showEditDeckForm = showEditDeckForm;
+window.saveEditDeck = saveEditDeck;
 window.toggleTheme = toggleTheme;
 window.goToSignIn = goToSignIn;
 window.goToLanding = goToLanding;
