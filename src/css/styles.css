@@ -161,8 +161,17 @@ button:active { transform: scale(0.95); }
 .deck-card.selected .deck-name { color: var(--accent); }
 
 .deck-count    { font-size: 28px; font-weight: 500; color: var(--text-primary); margin: 0.5rem 0; }
-.deck-name     { font-size: 20px; color: var(--deck-name-color); margin: 1rem 0; }
-.deck-progress { font-size: 11px; color: var(--text-muted); margin-top: 0.5rem; }
+.deck-name     {
+  font-size: 20px;
+  color: var(--deck-name-color);
+  margin: 1rem 0; 
+}
+
+.deck-progress { 
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 0.5rem; 
+}
 
 /* ─── Cards list ─────────────────────────────────────────────────────────────── */
 
@@ -304,10 +313,11 @@ button:active { transform: scale(0.95); }
 
 .study-header {
   background: var(--surface);
-  padding: 1rem;
+  padding: .8rem;
   border-radius: var(--radius-md);
-  margin-bottom: 1.5rem;
   border: 1px solid var(--border);
+  max-width: 500px;
+  margin: 0 auto 1.5rem;
 }
 
 .study-header-top {
@@ -317,8 +327,16 @@ button:active { transform: scale(0.95); }
   margin-bottom: 0.5rem;
 }
 
-.study-title      { font-size: 18px; font-weight: 500; }
-.progress-percent { font-size: 28px; font-weight: 600; color: var(--progress-color); }
+.study-title      {
+   font-size: 16px;
+    font-weight: 500; 
+  }
+
+.progress-percent {
+   font-size: 20px; 
+   font-weight: 600; 
+   color: var(--progress-color); 
+  }
 
 .progress-bar {
   height: 6px;
@@ -347,7 +365,7 @@ button:active { transform: scale(0.95); }
 
 .flashcard {
   width: 100%;
-  max-width: 500px;
+  max-width: 320px;
   min-height: 320px;
   position: relative;
   cursor: pointer;
@@ -355,7 +373,9 @@ button:active { transform: scale(0.95); }
   transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
 
-.flashcard.flipped { transform: rotateY(180deg); }
+.flashcard.flipped {
+  transform: rotateY(180deg);
+}
 
 .flashcard-content,
 .flashcard-back {
@@ -372,9 +392,6 @@ button:active { transform: scale(0.95); }
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  text-align: left;
 }
 
 .flashcard-back {
@@ -383,19 +400,21 @@ button:active { transform: scale(0.95); }
 }
 
 .card-label {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--accent);
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 500;
 }
 
 .card-text {
-  font-size: 20px;
+  margin-top: 2.5rem;
+  font-size: 28px;
   font-weight: 500;
   color: var(--text-primary);
   line-height: 1.6;
+  text-align: center;
 }
 
 .card-hint {
@@ -501,6 +520,24 @@ button:active { transform: scale(0.95); }
 .dialog-text { margin: 0 0 1.5rem; }
 
 .dialog-box .button-row { justify-content: center; }
+
+.dialog-box--wide {
+  max-width: 520px;
+  width: 90vw;
+  text-align: left;
+}
+
+.import-preview-list {
+  max-height: 340px;
+  overflow-y: auto;
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.import-preview-list .card-list-item {
+  cursor: default;
+}
 
 /* ─── Header & lang switcher ─────────────────────────────────────────────────── */
 
@@ -763,11 +800,11 @@ body.dark .btn-google:focus  { box-shadow: 0 -1px 0 rgba(255,255,255,.04), 0 2px
   }
 
   .flashcard {
-    min-height: 220px;
+    min-height: 320px;
   }
 
   .card-text {
-    font-size: 16px;
+    font-size: 28px;
   }
 
     #auth-screen {

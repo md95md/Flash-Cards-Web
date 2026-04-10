@@ -212,7 +212,12 @@ function renderDeckControls() {
     const addBtn = document.createElement('button');
     addBtn.textContent = t('add_card_btn');
     addBtn.onclick = showAddCardForm;
-    toolbar.appendChild(addBtn);
+
+    const importBtn = document.createElement('button');
+    importBtn.textContent = t('import_json_btn');
+    importBtn.onclick = triggerImportJSON;
+
+    toolbar.append(addBtn, importBtn);
   }
 
   renderCardsList(deck);
@@ -388,6 +393,97 @@ function hideAddCardForm() {
  document.getElementById('delete-deck-btn')?.style && 
   (document.getElementById('delete-deck-btn').style.display = 'block');
   document.getElementById('card-toolbar').style.display = 'flex';
+}
+
+function triggerImportJSON() {
+  if (!selectedDeckId) {
+    alert(t('select_deck'));
+    return;
+  }
+  const input = document.getElementById('json-import-input');
+  input.value = '';
+  input.click();
+}
+
+let pendingImportCards = [];
+
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    let data;
+    try {
+      data = JSON.parse(e.target.result);
+    } catch {
+      alert(t('import_json_invalid'));
+      return;
+    }
+
+    if (!Array.isArray(data)) {
+      alert(t('import_json_invalid'));
+      return;
+    }
+
+    const parsed = [];
+    for (const item of data) {
+      const question = (item.question || item.front || '').toString().trim();
+      const answer = (item.answer || item.back || '').toString().trim();
+      if (!question || !answer) continue;
+      parsed.push({ question, answer });
+    }
+
+    if (parsed.length === 0) {
+      alert(t('import_json_invalid'));
+      return;
+    }
+
+    pendingImportCards = parsed;
+    showImportPreview(parsed);
+  };
+  reader.readAsText(file);
+}
+
+function showImportPreview(cards) {
+  const title = document.getElementById('import-preview-title');
+  title.textContent = cards.length + ' ' + t('import_json_success');
+
+  const list = document.getElementById('import-preview-list');
+  list.innerHTML = '';
+
+  cards.forEach(card => {
+    const item = document.createElement('div');
+    item.className = 'card-list-item';
+
+    const text = document.createElement('span');
+    const q = document.createElement('strong');
+    q.textContent = card.question;
+    text.append(q, ' — ' + card.answer);
+    item.appendChild(text);
+    list.appendChild(item);
+  });
+
+  const confirmBtn = document.getElementById('import-confirm-btn');
+  confirmBtn.textContent = t('import_json_add_btn');
+
+  document.getElementById('import-preview-dialog').style.display = 'flex';
+}
+
+function confirmImport() {
+  const deck = decks.find(d => d.id === selectedDeckId);
+  pendingImportCards.forEach((card, i) => {
+    deck.cards.push({ id: Date.now() + i, question: card.question, answer: card.answer, correct: 0, total: 0 });
+  });
+  saveDeck(currentUser.uid, deck);
+  pendingImportCards = [];
+  document.getElementById('import-preview-dialog').style.display = 'none';
+  renderDeckControls();
+}
+
+function cancelImport() {
+  pendingImportCards = [];
+  document.getElementById('import-preview-dialog').style.display = 'none';
 }
 
 function addCard() {
@@ -912,5 +1008,9 @@ window.confirmNo = confirmNo;
 window.toggleTheme = toggleTheme;
 window.goToSignIn = goToSignIn;
 window.goToLanding = goToLanding;
+window.triggerImportJSON = triggerImportJSON;
+window.importJSON = importJSON;
+window.confirmImport = confirmImport;
+window.cancelImport = cancelImport;
 
 

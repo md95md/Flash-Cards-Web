@@ -133,6 +133,18 @@
         <button class="btn-primary" data-i18n="add_deck" onclick="showCreateDeckForm()">+ New Deck</button>
       </div>
 
+      <!-- Import preview dialog -->
+      <div id="import-preview-dialog" class="dialog-overlay">
+        <div class="dialog-box dialog-box--wide">
+          <p id="import-preview-title" class="dialog-text"></p>
+          <div id="import-preview-list" class="import-preview-list"></div>
+          <div class="button-row" style="justify-content:center; margin-top:1.25rem;">
+            <button onclick="cancelImport()" data-i18n="cancel">Cancel</button>
+            <button class="btn-primary" id="import-confirm-btn" onclick="confirmImport()"></button>
+          </div>
+        </div>
+      </div>
+
       <!-- Confirm delete dialog -->
       <div id="confirm-dialog" class="dialog-overlay">
         <div class="dialog-box">
@@ -163,6 +175,9 @@
 
       <!-- Deck grid — filled by JS -->
       <div id="decks-list" class="decks-grid"></div>
+
+      <!-- Hidden file input for JSON import -->
+      <input type="file" id="json-import-input" accept=".json" style="display:none" onchange="importJSON(event)">
 
       <!-- Card management panel -->
       <div class="panel" style="margin-top: 2rem;">

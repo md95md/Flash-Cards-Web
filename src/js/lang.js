@@ -67,7 +67,11 @@ export const translations = {
     or: 'or',
     enter_emailAndPassword: 'Please enter your email and password',
     incorrect_email_or_password: 'Incorrect email or password',
-    valid_emailAndPassword: 'Please enter a valid email address'
+    valid_emailAndPassword: 'Please enter a valid email address',
+    import_json_btn: 'Import JSON',
+    import_json_success: 'cards found',
+    import_json_add_btn: 'Add to deck',
+    import_json_invalid: 'Invalid JSON. Expected an array of objects with "question" and "answer" fields.'
   },
   ru: {
     my_decks: 'Мои колоды',
@@ -137,7 +141,11 @@ export const translations = {
     or: 'или',
     enter_emailAndPassword: 'Пожалуйста, введите ваш email и пароль',
     incorrect_email_or_password: 'Неверный email или пароль',
-    valid_emailAndPassword: 'Пожалуйста, введите действительный адрес электронной почты'
+    valid_emailAndPassword: 'Пожалуйста, введите действительный адрес электронной почты',
+    import_json_btn: 'Импорт JSON',
+    import_json_success: 'карточек найдено',
+    import_json_add_btn: 'Добавить в колоду',
+    import_json_invalid: 'Неверный JSON. Ожидается массив объектов с полями "question" и "answer".'
   },
   es: {
     my_decks: 'Mis mazos',
@@ -207,6 +215,10 @@ export const translations = {
     or: 'o',
     enter_emailAndPassword: 'Por favor, ingresa tu correo electrónico y contraseña',
     valid_emailAndPassword: 'Por favor, ingresa una dirección de correo electrónico válida',
-    incorrect_email_or_password: 'Correo electrónico o contraseña incorrectos'
+    incorrect_email_or_password: 'Correo electrónico o contraseña incorrectos',
+    import_json_btn: 'Importar JSON',
+    import_json_success: 'tarjetas encontradas',
+    import_json_add_btn: 'Añadir al mazo',
+    import_json_invalid: 'JSON inválido. Se espera un array de objetos con campos "question" y "answer".'
   }
 };
