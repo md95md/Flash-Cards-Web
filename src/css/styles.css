@@ -72,9 +72,24 @@ button:active { transform: scale(0.95); }
   margin-bottom: 1.5rem;
 }
 
+.panel-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 2px 6px;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+.panel-close-btn:hover {
+  color: var(--text-primary);
+  background: none;
+}
+
 .button-row {
   display: flex;
   gap: 1rem;
+  align-items: center;
 }
 
 .auth-box .button-row {
@@ -209,8 +224,9 @@ button:active { transform: scale(0.95); }
   justify-content: center;
   gap: 0.4rem;
   padding-top: 0.75rem;
-  margin-top: 0.25rem;
+  margin-top: 1rem;
   border-top: 1px solid var(--border);
+  margin-bottom: 1rem;
 }
 
 .cards-page-btn {
@@ -562,9 +578,15 @@ button:active { transform: scale(0.95); }
 #deck-controls { display: none; }
 #add-card-form { display: none; }
 #json-import-input { display: none; }
-#manage-cards-panel { margin-top: 2rem; }
+#manage-cards-panel { 
+  margin-top: 2rem;
+}
+#deck-action-btns { margin-top: 2rem; display: flex; flex-direction: column; align-items: flex-start; gap: 0; }
 #delete-deck-btn { margin-top: 1rem; }
 #card-toolbar { margin-bottom: 1rem; }
+#cards-search-wrapper { position: relative; width: 100%; margin-bottom: 0.75rem; }
+.cards-search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); pointer-events: none; display: flex; }
+#cards-search { width: 100%; box-sizing: border-box; padding-left: 2.25rem; }
 #import-preview-dialog .button-row { justify-content: center; margin-top: 1.25rem; }
 
 .dialog-box--wide {
@@ -850,7 +872,7 @@ body.dark .btn-google:focus  { box-shadow: 0 -1px 0 rgba(255,255,255,.04), 0 2px
   }
 
   .card-text {
-    font-size: 28px;
+    font-size: 22px;
   }
 
     #auth-screen {

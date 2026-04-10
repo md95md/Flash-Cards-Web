@@ -122,6 +122,7 @@ let selectedDeckId = null;
 let selectedCardIdx = null;
 let editingCardIdx = null;
 let cardsPage = 0;
+let cardSearchQuery = '';
 let currentStudyDeckId = null;
 let currentReviewMode = false;
 let isFlipped = false;
@@ -169,6 +170,7 @@ function selectDeck(id) {
   selectedCardIdx = null;
   editingCardIdx = null;
   cardsPage = 0;
+  cardSearchQuery = '';
   renderDecks();
 }
 
@@ -179,13 +181,11 @@ function renderDeckControls() {
   if (!selectedDeckId) {
     controls.style.display = 'none';
     noDeck.style.display = 'block';
-    
     return;
   }
 
   controls.style.display = 'block';
   noDeck.style.display = 'none';
-  
 
   const deck = decks.find(d => d.id === selectedDeckId);
   const toolbar = document.getElementById('card-toolbar');
@@ -194,7 +194,9 @@ function renderDeckControls() {
   const existingActionBtns = document.getElementById('deck-action-btns');
   if (existingActionBtns) existingActionBtns.remove();
 
-  if (selectedCardIdx !== null && selectedCardIdx < deck.cards.length) {
+  const isCardSelected = selectedCardIdx !== null && selectedCardIdx < deck.cards.length;
+
+  if (isCardSelected) {
     const editBtn = document.createElement('button');
     editBtn.textContent = t('edit_card_btn');
     editBtn.onclick = showEditCardForm;
@@ -203,9 +205,9 @@ function renderDeckControls() {
     delBtn.className = 'btn-danger';
     delBtn.textContent = t('delete_card_btn');
     delBtn.onclick = () => {
-    document.getElementById('confirm-dialog').style.display = 'flex';
-    confirmCallback = deleteSelectedCard;
-    }
+      document.getElementById('confirm-dialog').style.display = 'flex';
+      confirmCallback = deleteSelectedCard;
+    };
 
     toolbar.append(editBtn, delBtn);
   } else {
@@ -223,8 +225,14 @@ function renderDeckControls() {
 
   renderCardsList(deck);
 
+  const manageDeckSection = document.createElement('div');
+  manageDeckSection.id = 'deck-action-btns';
+
+  const manageDeckTitle = document.createElement('h3');
+  manageDeckTitle.textContent = t('manage_deck') || 'Manage deck';
+  manageDeckTitle.className = 'manage-deck-title';
+
   const actionBtns = document.createElement('div');
-  actionBtns.id = 'deck-action-btns';
   actionBtns.className = 'button-row';
 
   const editDeckBtn = document.createElement('button');
@@ -237,22 +245,51 @@ function renderDeckControls() {
   delDeckBtn.onclick = deleteDeck;
 
   actionBtns.append(editDeckBtn, delDeckBtn);
-  document.getElementById('deck-controls').appendChild(actionBtns);
+  manageDeckSection.append(manageDeckTitle, actionBtns);
+  document.getElementById('deck-controls').appendChild(manageDeckSection);
+  manageDeckSection.style.display = isCardSelected ? 'none' : 'block';
 }
-
 
 function renderCardsList(deck) {
   const cardsList = document.getElementById('cards-list');
   cardsList.innerHTML = '';
 
-  const totalPages = Math.ceil(deck.cards.length / CARDS_PAGE_SIZE);
+  const query = cardSearchQuery.trim().toLowerCase();
+  const filteredCards = query
+    ? deck.cards.map((card, idx) => ({ card, idx }))
+        .filter(({ card }) => card.question.toLowerCase().includes(query) || card.answer.toLowerCase().includes(query))
+    : deck.cards.map((card, idx) => ({ card, idx }));
+
+  const totalPages = Math.ceil(filteredCards.length / CARDS_PAGE_SIZE);
   if (cardsPage >= totalPages) cardsPage = Math.max(0, totalPages - 1);
 
   const start = cardsPage * CARDS_PAGE_SIZE;
-  const pageCards = deck.cards.slice(start, start + CARDS_PAGE_SIZE);
+  const pageCards = filteredCards.slice(start, start + CARDS_PAGE_SIZE);
 
   const wrapper = document.createElement('div');
   wrapper.className = 'cards-list-wrapper';
+
+  const searchWrapper = document.createElement('div');
+  searchWrapper.id = 'cards-search-wrapper';
+
+  const searchIcon = document.createElement('span');
+  searchIcon.className = 'cards-search-icon';
+  searchIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.id = 'cards-search';
+  searchInput.placeholder = t('search_cards') || 'Search';
+  searchInput.value = cardSearchQuery;
+  searchInput.oninput = () => {
+    cardSearchQuery = searchInput.value;
+    cardsPage = 0;
+    selectedCardIdx = null;
+    renderCardsList(deck);
+  };
+
+  searchWrapper.append(searchIcon, searchInput);
+  wrapper.appendChild(searchWrapper);
 
   const heading = document.createElement('h4');
   wrapper.appendChild(heading);
@@ -260,8 +297,7 @@ function renderCardsList(deck) {
   const grid = document.createElement('div');
   grid.className = 'cards-grid';
 
-  pageCards.forEach((card, pageIdx) => {
-    const idx = start + pageIdx;
+  pageCards.forEach(({ card, idx }) => {
     const item = document.createElement('div');
     item.className = 'card-list-item' + (selectedCardIdx === idx ? ' card-selected' : '');
     item.onclick = () => selectCard(idx);
@@ -319,6 +355,18 @@ function renderCardsList(deck) {
 
   cardsList.appendChild(wrapper);
 }
+
+function closeDeckPanel() {
+  selectedDeckId = null;
+  selectedCardIdx = null;
+  editingCardIdx = null;
+  cardsPage = 0;
+  cardSearchQuery = '';
+  renderDecks();
+}
+
+
+
 
 // ─── Card selection / edit / delete ──────────────────────────────────────────
 
@@ -1128,5 +1176,7 @@ window.triggerImportJSON = triggerImportJSON;
 window.importJSON = importJSON;
 window.confirmImport = confirmImport;
 window.cancelImport = cancelImport;
+window.selectDeck = selectDeck;
+Object.defineProperty(window, 'selectedDeckId', { get: () => selectedDeckId });
 
 
