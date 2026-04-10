@@ -73,7 +73,8 @@ export const translations = {
     import_json_btn: 'Import JSON',
     import_json_success: 'cards found',
     import_json_add_btn: 'Add to deck',
-    import_json_invalid: 'Invalid JSON. Expected an array of objects with "question" and "answer" fields.'
+    import_json_invalid: 'Invalid JSON. Expected an array of objects with "question" and "answer" fields.',
+    repeat: 'Repeat'
   },
   ru: {
     my_decks: 'Мои колоды',
@@ -149,7 +150,8 @@ export const translations = {
     import_json_btn: 'Импорт JSON',
     import_json_success: 'карточек найдено',
     import_json_add_btn: 'Добавить в колоду',
-    import_json_invalid: 'Неверный JSON. Ожидается массив объектов с полями "question" и "answer".'
+    import_json_invalid: 'Неверный JSON. Ожидается массив объектов с полями "question" и "answer".',
+    repeat: 'Повторить'
   },
   es: {
     my_decks: 'Mis mazos',
@@ -225,6 +227,7 @@ export const translations = {
     import_json_btn: 'Importar JSON',
     import_json_success: 'tarjetas encontradas',
     import_json_add_btn: 'Añadir al mazo',
-    import_json_invalid: 'JSON inválido. Se espera un array de objetos con campos "question" y "answer".'
+    import_json_invalid: 'JSON inválido. Se espera un array de objetos con campos "question" y "answer".',
+    repeat: 'Repetir'
   }
 };

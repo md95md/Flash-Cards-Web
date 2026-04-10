@@ -157,21 +157,21 @@ button:active { transform: scale(0.95); }
 }
 
 .deck-card:hover          { border-color: var(--accent); background: var(--card-hover-bg); }
+.deck-card-description:hover { border-color: var(--accent); background: var(--card-hover-bg); }
 .deck-card.selected       { border: 1px solid var(--accent); outline: 1px solid var(--accent); background: var(--card-selected-bg); }
 .deck-card.selected .deck-name { color: var(--accent); }
-
-.deck-count    { font-size: 28px; font-weight: 500; color: var(--text-primary); margin: 0.5rem 0; }
-.deck-name     {
-  font-size: 20px;
-  color: var(--deck-name-color);
-  margin: 1rem 0; 
-}
-
-.deck-progress {
-  font-size: 11px;
-  color: var(--text-muted);
+.deck-card .deck-description {
+  font-size: 12px;
+  word-break: break-word;
   margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+  line-height: 1.4;
 }
+
+.deck-count { font-size: 28px; font-weight: 500; color: var(--text-primary); margin: 0.5rem 0; }
+.deck-name  { font-size: 20px; color: var(--deck-name-color); margin: 1rem 0; }
+.deck-progress { font-size: 11px; color: var(--text-muted); margin-top: 0.5rem; }
 
 /* ─── Cards list ─────────────────────────────────────────────────────────────── */
 
@@ -445,7 +445,7 @@ button:active { transform: scale(0.95); }
 
 .card-text {
   margin-top: 2.5rem;
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 500;
   color: var(--text-primary);
   line-height: 1.6;

@@ -149,7 +149,14 @@ decks.forEach(deck => {
   count.className = 'deck-progress';
   count.textContent = deck.cards.length + ' ' + t('cards_count');
 
-  div.append(name, count);
+  if (deck.description) {
+    const desc = document.createElement('div');
+    desc.className = 'deck-description';
+    desc.textContent = deck.description;
+    div.append(name, desc, count);
+  } else {
+    div.append(name, count);
+  }
   list.appendChild(div);
 });
 
@@ -248,7 +255,6 @@ function renderCardsList(deck) {
   wrapper.className = 'cards-list-wrapper';
 
   const heading = document.createElement('h4');
-  heading.textContent = t('cards_in_deck');
   wrapper.appendChild(heading);
 
   const grid = document.createElement('div');
@@ -645,9 +651,12 @@ function renderStudyDecks() {
     title.className = 'deck-item-title';
     title.textContent = deck.name;
 
+    const learned = deck.cards.filter(c => c.correct > 0).length;
+    const total = deck.cards.length;
+
     const stats = document.createElement('div');
     stats.className = 'deck-item-stats';
-    stats.textContent = deck.cards.length + ' ' + t('cards_count');
+    stats.textContent = total + ' ' + t('cards_count') + ' · ' + learned + ' ' + t('learned_count');
 
     info.append(title, stats);
 
@@ -673,8 +682,8 @@ function renderStudyDecks() {
       }
 
       const reviewBtn = document.createElement('button');
-      reviewBtn.className = 'btn-primary';
-      reviewBtn.textContent = '↺';
+      reviewBtn.className = 'btn-secondary';
+      reviewBtn.textContent = t('repeat');
       reviewBtn.onclick = () => startStudy(deck.id, true);
       actions.appendChild(reviewBtn);
     }
@@ -740,9 +749,8 @@ function renderStudyMode() {
   const currentCard = deck.cards[currentCardIdx];
   const learnedCount = deck.cards.filter(c => c.correct > 0).length;
   const totalCount = deck.cards.length;
-  const progress = Math.round((learnedCount / totalCount) * 100);
 
-  const header = document.createElement('div');
+ const header = document.createElement('div');
   header.className = 'study-header';
 
   const headerTop = document.createElement('div');
@@ -752,20 +760,30 @@ function renderStudyMode() {
   titleEl.className = 'study-title';
   titleEl.textContent = deck.name;
 
-  const pct = document.createElement('div');
-  pct.className = 'progress-percent';
-  pct.textContent = progress + '%';
+  headerTop.appendChild(titleEl);
 
-  headerTop.append(titleEl, pct);
+  if (currentReviewMode) {
+    const counter = document.createElement('div');
+    counter.className = 'progress-percent';
+    counter.textContent = `${cardSequenceIndex + 1} / ${cardSequence.length}`;
+    headerTop.appendChild(counter);
+    header.appendChild(headerTop);
+  } else {
+    const progress = Math.round((learnedCount / totalCount) * 100);
+    const pct = document.createElement('div');
+    pct.className = 'progress-percent';
+    pct.textContent = progress + '%';
+    headerTop.appendChild(pct);
 
-  const progressBar = document.createElement('div');
-  progressBar.className = 'progress-bar';
-  const progressFill = document.createElement('div');
-  progressFill.className = 'progress-fill';
-  progressFill.style.width = progress + '%';
-  progressBar.appendChild(progressFill);
+    const progressBar = document.createElement('div');
+    progressBar.className = 'progress-bar';
+    const progressFill = document.createElement('div');
+    progressFill.className = 'progress-fill';
+    progressFill.style.width = progress + '%';
+    progressBar.appendChild(progressFill);
 
-  header.append(headerTop, progressBar);
+    header.append(headerTop, progressBar);
+  }
 
   // Flashcard
   const cardContainer = document.createElement('div');
