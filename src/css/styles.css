@@ -3,7 +3,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Nunito', 'Quicksand', sans-serif;
   --color: var(--grid-line);
   background-color: var(--bg-page);
   background-image:
@@ -14,10 +14,27 @@ body {
   overflow-y: scroll;
 }
 
-h1 { font-size: 22px; font-weight: 500; margin: 1rem; padding-top: 0.5rem; }
-h2 { font-size: 16px; font-weight: 500; }
-h3 { font-size: 14px; font-weight: 500; margin-bottom: 1rem; }
-h4 { font-size: 13px; color: var(--text-secondary); margin-bottom: 0.75rem; }
+h1 { 
+  font-size: 24px; 
+  font-weight: 700; 
+  letter-spacing: 0.2px;
+}
+
+h2 { 
+  font-size: 18px; 
+  font-weight: 600; 
+}
+
+h3 { 
+  font-size: 15px; 
+  font-weight: 600; 
+}
+
+h4 { 
+  font-size: 13px; 
+  font-weight: 500;
+  color: var(--text-secondary); 
+}
 
 input,
 textarea {
@@ -44,9 +61,13 @@ button {
   padding: 8px 16px;
   border-radius: var(--radius-sm);
   font-size: 14px;
-  font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.1s;
+  button {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
 }
 
 button:hover {
@@ -460,12 +481,17 @@ button:active { transform: scale(0.95); }
 }
 
 .card-text {
-  margin-top: 2.5rem;
+  margin-top: 1rem;
   font-size: 22px;
-  font-weight: 500;
   color: var(--text-primary);
   line-height: 1.6;
   text-align: center;
+  .card-text {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
 }
 
 .card-hint {
