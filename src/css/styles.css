@@ -207,7 +207,12 @@ button:active { transform: scale(0.95); }
 
 .deck-count { font-size: 28px; font-weight: 500; color: var(--text-primary); margin: 0.5rem 0; }
 .deck-name  { font-size: 20px; color: var(--deck-name-color); margin: 1rem 0; }
-.deck-progress { font-size: 11px; color: var(--text-muted); margin-top: 0.5rem; }
+
+.deck-progress {
+  font-size: 11px; 
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  }
 
 /* ─── Cards list ─────────────────────────────────────────────────────────────── */
 
@@ -326,7 +331,7 @@ button:active { transform: scale(0.95); }
 .panel {
   background: var(--surface-raised);
   padding: 1.5rem;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   margin-bottom: 1.5rem;
   border: 1px solid var(--border-accent);
 }
@@ -352,11 +357,12 @@ button:active { transform: scale(0.95); }
 /* ─── Study mode ─────────────────────────────────────────────────────────────── */
 
 .study-header {
-  background: var(--surface);
-  padding: .8rem;
-  border-radius: var(--radius-md);
+  /* background: var(--surface);
   border: 1px solid var(--border);
-  max-width: 320px;
+  border-radius: var(--radius-md); */ 
+  padding: .5rem 1.5rem;
+  
+  width: 420px;
   margin: 0 auto 1.5rem;
 }
 
@@ -364,22 +370,21 @@ button:active { transform: scale(0.95); }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
 }
 
 .study-title      {
-   font-size: 16px;
+   font-size: 14px;
     font-weight: 500; 
   }
 
 .progress-percent {
-   font-size: 20px; 
+   font-size: 16px; 
    font-weight: 600; 
    color: var(--progress-color); 
   }
 
 .progress-bar {
-  height: 6px;
+  height: 4px;
   background: var(--progress-bar-bg);
   border-radius: var(--radius-pill);
   overflow: hidden;
@@ -417,7 +422,7 @@ button:active { transform: scale(0.95); }
 
 .flashcard {
   width: 100%;
-  max-width: 320px;
+  max-width: 420px;
   min-height: 320px;
   position: relative;
   cursor: pointer;
@@ -547,6 +552,8 @@ button:active { transform: scale(0.95); }
 
 .stat-history-panel {
   margin-top: 2rem;
+  max-height: 420px;
+  overflow-y: auto;
 }
 
 .stat-history-header {
@@ -566,29 +573,63 @@ button:active { transform: scale(0.95); }
   flex-shrink: 0;
 }
 
-.stat-history-row {
+.stat-table-wrap {
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+
+.stat-table-wrap:last-of-type { margin-bottom: 0; }
+
+.stat-table-edit-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--text-muted);
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  padding: 0.5rem 0;
+  box-shadow: none;
+}
+
+.stat-table-edit-btn:hover,
+.stat-table-edit-btn.active { color: var(--accent); }
+
+.stat-history-date-cell {
+  color: var(--text-secondary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.stat-history-table {
+  width: 100%;
+  border-collapse: collapse;
   font-size: 13px;
 }
 
-.stat-history-date {
+.stat-history-table th {
+  text-align: left;
+  padding: 0.4rem 0.75rem;
   color: var(--text-secondary);
-  min-width: 100px;
+  font-weight: 600;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border);
 }
 
-.stat-history-learned { color: var(--text-primary); font-weight: 600; }
+.stat-history-table td {
+  padding: 0.45rem 0.75rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border);
+}
 
-.stat-history-wrong   { color: var(--text-secondary); }
-.stat-history-repeat  { color: var(--text-secondary); }
-.stat-history-duration { color: var(--text-muted); margin-left: auto; }
+.stat-history-table tbody tr:last-child td { border-bottom: none; }
 
-.stat-history-divider {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 0.25rem 0;
+.stat-history-table td:last-child,
+.stat-history-table th:last-child {
+  width: 1%;
+  white-space: nowrap;
 }
 
 .stat-history-empty {

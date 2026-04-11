@@ -131,6 +131,7 @@ let sessionWrongCount = 0;
 let sessionRepeatCount = 0;
 let sessionStartTime = 0;
 let selectedStatDeckId = null;
+const editingStatDays = new Set();
 
 
 // ─── Deck list ────────────────────────────────────────────────────────────────
@@ -1021,6 +1022,7 @@ function renderStats() {
     card.style.cursor = 'pointer';
     card.onclick = () => {
       selectedStatDeckId = isSelected ? null : deck.id;
+      editingStatDays.clear();
       renderStats();
     };
 
@@ -1062,61 +1064,91 @@ function renderStats() {
 
   panel.appendChild(panelHeader);
 
-  const reversed = [...sessions].reverse();
-
-  if (reversed.length === 0) {
+  if (sessions.length === 0) {
     const empty = document.createElement('p');
     empty.className = 'stat-history-empty';
     empty.textContent = t('no_sessions');
     panel.appendChild(empty);
   } else {
-    let prevDay = null;
-    reversed.forEach((s, i) => {
+    // Group sessions by day, newest day first
+    const byDay = new Map();
+    [...sessions].reverse().forEach((s, i) => {
       const originalIdx = sessions.length - 1 - i;
       const day = new Date(s.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+      if (!byDay.has(day)) byDay.set(day, []);
+      byDay.get(day).push({ s, originalIdx });
+    });
 
-      if (prevDay !== null && day !== prevDay) {
-        const hr = document.createElement('hr');
-        hr.className = 'stat-history-divider';
-        panel.appendChild(hr);
-      }
+    byDay.forEach((entries, day) => {
+      const isEditing = editingStatDays.has(day);
 
-      const row = document.createElement('div');
-      row.className = 'stat-history-row';
+      const tableWrap = document.createElement('div');
+      tableWrap.className = 'stat-table-wrap';
 
-      const dateEl = document.createElement('span');
-      dateEl.className = 'stat-history-date';
-      dateEl.textContent = day;
-
-      const learnedEl = document.createElement('span');
-      learnedEl.className = 'stat-history-learned';
-      learnedEl.textContent = t('session_learned') + ': ' + s.learned;
-
-      const wrongEl = document.createElement('span');
-      wrongEl.className = 'stat-history-wrong';
-      wrongEl.textContent = t('not_known') + ': ' + s.notKnown;
-
-      const repeatEl = document.createElement('span');
-      repeatEl.className = 'stat-history-repeat';
-      repeatEl.textContent = t('session_repeated') + ': ' + (s.repeated ?? 0);
-
-      const durEl = document.createElement('span');
-      durEl.className = 'stat-history-duration';
-      durEl.textContent = formatDuration(s.duration);
-
-      const delBtn = document.createElement('button');
-      delBtn.className = 'btn-danger stat-session-del-btn';
-      delBtn.textContent = '✕';
-      delBtn.onclick = () => {
-        deck.sessions.splice(originalIdx, 1);
-        saveDeck(currentUser.uid, deck);
+      const editBtn = document.createElement('button');
+      editBtn.className = 'stat-table-edit-btn' + (isEditing ? ' active' : '');
+      editBtn.title = 'edit';
+      editBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+      editBtn.onclick = () => {
+        if (editingStatDays.has(day)) editingStatDays.delete(day);
+        else editingStatDays.add(day);
         renderStats();
       };
+      tableWrap.appendChild(editBtn);
 
-      row.append(dateEl, learnedEl, wrongEl, repeatEl, durEl, delBtn);
-      panel.appendChild(row);
+      const table = document.createElement('table');
+      table.className = 'stat-history-table';
 
-      prevDay = day;
+      const thead = document.createElement('thead');
+      const headerRow = document.createElement('tr');
+      const headers = [t('col_date'), t('col_learned'), t('col_not_known'), t('col_repeated'), t('col_duration'), ''];
+      headers.forEach(label => {
+        const th = document.createElement('th');
+        th.textContent = label;
+        headerRow.appendChild(th);
+      });
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+      entries.forEach(({ s, originalIdx }, rowIdx) => {
+        const tr = document.createElement('tr');
+
+        const tdDate = document.createElement('td');
+        tdDate.className = 'stat-history-date-cell';
+        tdDate.textContent = rowIdx === 0 ? day : '';
+        tr.appendChild(tdDate);
+
+        [s.learned, s.notKnown, s.repeated ?? 0, formatDuration(s.duration)].forEach(val => {
+          const td = document.createElement('td');
+          td.textContent = val;
+          tr.appendChild(td);
+        });
+
+        const tdDel = document.createElement('td');
+        const delBtn = document.createElement('button');
+        delBtn.className = 'btn-danger stat-session-del-btn';
+        delBtn.textContent = '✕';
+        delBtn.style.visibility = isEditing ? 'visible' : 'hidden';
+        delBtn.onclick = () => {
+          deck.sessions.splice(originalIdx, 1);
+          const remaining = deck.sessions.filter(s2 => {
+            const d = new Date(s2.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+            return d === day;
+          });
+          if (remaining.length === 0) editingStatDays.delete(day);
+          saveDeck(currentUser.uid, deck);
+          renderStats();
+        };
+        tdDel.appendChild(delBtn);
+        tr.appendChild(tdDel);
+
+        tbody.appendChild(tr);
+      });
+
+      table.appendChild(tbody);
+      tableWrap.appendChild(table);
+      panel.appendChild(tableWrap);
     });
   }
 

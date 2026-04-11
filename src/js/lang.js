@@ -85,6 +85,11 @@ export const translations = {
     never: 'never',
     no_sessions: 'no study sessions yet',
     session_repeated: 'repeated',
+    col_date: 'session date',
+    col_learned: 'learned',
+    col_not_known: 'not known',
+    col_repeated: 'repeated',
+    col_duration: 'duration',
     repeat: 'Repeat'
   },
   ru: {
@@ -173,6 +178,11 @@ export const translations = {
     never: 'никогда',
     no_sessions: 'сеансов пока нет',
     session_repeated: 'повторено',
+    col_date: 'дата сессии',
+    col_learned: 'выучено',
+    col_not_known: 'не знаю',
+    col_repeated: 'повторено',
+    col_duration: 'длительность',
     repeat: 'Повторить'
   },
   es: {
@@ -261,6 +271,11 @@ export const translations = {
     never: 'nunca',
     no_sessions: 'aún no hay sesiones',
     session_repeated: 'repetidas',
+    col_date: 'fecha de sesión',
+    col_learned: 'aprendidas',
+    col_not_known: 'no sé',
+    col_repeated: 'repetidas',
+    col_duration: 'duración',
     repeat: 'Repetir'
   }
 };
