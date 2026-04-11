@@ -403,6 +403,18 @@ button:active { transform: scale(0.95); }
   justify-content: center;
 }
 
+.flip-hint {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  color: var(--text-muted);
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+}
+
 .flashcard {
   width: 100%;
   max-width: 320px;
@@ -531,6 +543,58 @@ button:active { transform: scale(0.95); }
   font-size: 14px;
   font-weight: 400;
   color: var(--text-secondary);
+}
+
+.stat-history-panel {
+  margin-top: 2rem;
+}
+
+.stat-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.stat-history-header h3 { margin: 0; }
+
+
+.stat-session-del-btn {
+  font-size: 12px;
+  padding: 2px 7px;
+  margin-left: 0.5rem;
+  flex-shrink: 0;
+}
+
+.stat-history-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+  font-size: 13px;
+}
+
+.stat-history-date {
+  color: var(--text-secondary);
+  min-width: 100px;
+}
+
+.stat-history-learned { color: var(--text-primary); font-weight: 600; }
+
+.stat-history-wrong   { color: var(--text-secondary); }
+.stat-history-repeat  { color: var(--text-secondary); }
+.stat-history-duration { color: var(--text-muted); margin-left: auto; }
+
+.stat-history-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0.25rem 0;
+}
+
+.stat-history-empty {
+  color: var(--text-secondary);
+  font-size: 13px;
+  margin: 0;
 }
 
 /* ─── Empty state ────────────────────────────────────────────────────────────── */

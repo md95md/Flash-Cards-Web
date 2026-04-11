@@ -126,6 +126,11 @@ let currentReviewMode = false;
 let isFlipped = false;
 let cardSequence = [];
 let cardSequenceIndex = 0;
+let sessionCorrectCount = 0;
+let sessionWrongCount = 0;
+let sessionRepeatCount = 0;
+let sessionStartTime = 0;
+let selectedStatDeckId = null;
 
 
 // ─── Deck list ────────────────────────────────────────────────────────────────
@@ -775,6 +780,10 @@ function startStudy(deckId, reviewMode = false) {
   buildCardSequence(deckId);
   cardSequenceIndex = 0;
   isFlipped = false;
+  sessionCorrectCount = 0;
+  sessionWrongCount = 0;
+  sessionRepeatCount = 0;
+  sessionStartTime = Date.now();
   renderStudyMode();
 }
 
@@ -880,6 +889,16 @@ function renderStudyMode() {
   backText.textContent = currentCard.answer;
   back.append(backLabel, backText);
 
+  const makeFlipHint = () => {
+    const h = document.createElement('div');
+    h.className = 'flip-hint';
+    h.textContent = '↑ hint';
+    return h;
+  };
+
+  front.appendChild(makeFlipHint());
+  back.appendChild(makeFlipHint());
+
   flashcard.append(front, back);
   cardContainer.appendChild(flashcard);
 
@@ -918,6 +937,8 @@ function markCorrect() {
   const deck = decks.find(d => d.id === currentStudyDeckId);
   deck.cards[idx].correct++;
   deck.cards[idx].total++;
+  sessionCorrectCount++;
+  if (currentReviewMode) sessionRepeatCount++;
   saveDeck(currentUser.uid, deck);
   nextCard();
 }
@@ -926,6 +947,8 @@ function markWrong() {
   const idx = cardSequence[cardSequenceIndex];
   const deck = decks.find(d => d.id === currentStudyDeckId);
   deck.cards[idx].total++;
+  sessionWrongCount++;
+  if (currentReviewMode) sessionRepeatCount++;
   saveDeck(currentUser.uid, deck);
   cardSequence.push(idx);
   nextCard();
@@ -938,6 +961,22 @@ function nextCard() {
 }
 
 function exitStudy() {
+  if (currentStudyDeckId) {
+    const deck = decks.find(d => d.id === currentStudyDeckId);
+    if (deck && (sessionCorrectCount > 0 || sessionWrongCount > 0 || sessionRepeatCount > 0)) {
+      if (!Array.isArray(deck.sessions)) deck.sessions = [];
+      const durationSec = Math.round((Date.now() - sessionStartTime) / 1000);
+      deck.sessions.push({
+        date: Date.now(),
+        learned: sessionCorrectCount,
+        notKnown: sessionWrongCount,
+        repeated: sessionRepeatCount,
+        duration: durationSec,
+      });
+      saveDeck(currentUser.uid, deck);
+    }
+  }
+  currentStudyDeckId = null;
   switchTab('study');
 }
 
@@ -952,20 +991,38 @@ document.addEventListener('keydown', e => {
 
 // ─── Stats ────────────────────────────────────────────────────────────────────
 
+function formatDuration(sec) {
+  if (!sec) return '0m';
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return m > 0 ? `${m}m ${s}s` : `${s}s`;
+}
+
+function formatDate(ts) {
+  if (!ts) return t('never');
+  return new Date(ts).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
 function renderStats() {
   const container = document.getElementById('stats-content');
   container.innerHTML = '';
 
   const deckList = document.createElement('div');
- deckList.className = 'decks-grid';
+  deckList.className = 'decks-grid';
 
   decks.forEach(deck => {
     const learned = deck.cards.filter(c => c.correct > 0).length;
     const total = deck.cards.length;
     const pct = total > 0 ? Math.round((learned / total) * 100) : 0;
+    const isSelected = selectedStatDeckId === deck.id;
 
     const card = document.createElement('div');
-    card.className = 'deck-card';
+    card.className = 'deck-card' + (isSelected ? ' selected' : '');
+    card.style.cursor = 'pointer';
+    card.onclick = () => {
+      selectedStatDeckId = isSelected ? null : deck.id;
+      renderStats();
+    };
 
     const name = document.createElement('div');
     name.className = 'deck-name';
@@ -984,6 +1041,86 @@ function renderStats() {
   });
 
   container.appendChild(deckList);
+
+  if (!selectedStatDeckId) return;
+
+  const deck = decks.find(d => d.id === selectedStatDeckId);
+  if (!deck) return;
+
+  const panel = document.createElement('div');
+  panel.className = 'panel stat-history-panel';
+
+  const panelHeader = document.createElement('div');
+  panelHeader.className = 'stat-history-header';
+
+  const heading = document.createElement('h3');
+  heading.textContent = deck.name;
+
+  panelHeader.appendChild(heading);
+
+  const sessions = deck.sessions || [];
+
+  panel.appendChild(panelHeader);
+
+  const reversed = [...sessions].reverse();
+
+  if (reversed.length === 0) {
+    const empty = document.createElement('p');
+    empty.className = 'stat-history-empty';
+    empty.textContent = t('no_sessions');
+    panel.appendChild(empty);
+  } else {
+    let prevDay = null;
+    reversed.forEach((s, i) => {
+      const originalIdx = sessions.length - 1 - i;
+      const day = new Date(s.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+
+      if (prevDay !== null && day !== prevDay) {
+        const hr = document.createElement('hr');
+        hr.className = 'stat-history-divider';
+        panel.appendChild(hr);
+      }
+
+      const row = document.createElement('div');
+      row.className = 'stat-history-row';
+
+      const dateEl = document.createElement('span');
+      dateEl.className = 'stat-history-date';
+      dateEl.textContent = day;
+
+      const learnedEl = document.createElement('span');
+      learnedEl.className = 'stat-history-learned';
+      learnedEl.textContent = t('session_learned') + ': ' + s.learned;
+
+      const wrongEl = document.createElement('span');
+      wrongEl.className = 'stat-history-wrong';
+      wrongEl.textContent = t('not_known') + ': ' + s.notKnown;
+
+      const repeatEl = document.createElement('span');
+      repeatEl.className = 'stat-history-repeat';
+      repeatEl.textContent = t('session_repeated') + ': ' + (s.repeated ?? 0);
+
+      const durEl = document.createElement('span');
+      durEl.className = 'stat-history-duration';
+      durEl.textContent = formatDuration(s.duration);
+
+      const delBtn = document.createElement('button');
+      delBtn.className = 'btn-danger stat-session-del-btn';
+      delBtn.textContent = '✕';
+      delBtn.onclick = () => {
+        deck.sessions.splice(originalIdx, 1);
+        saveDeck(currentUser.uid, deck);
+        renderStats();
+      };
+
+      row.append(dateEl, learnedEl, wrongEl, repeatEl, durEl, delBtn);
+      panel.appendChild(row);
+
+      prevDay = day;
+    });
+  }
+
+  container.appendChild(panel);
 }
 
 
@@ -1106,6 +1243,7 @@ function switchTab(tab) {
   document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
 
   if (tab === 'stats') renderStats();
+  if (tab !== 'stats') selectedStatDeckId = null;
   if (tab === 'decks') renderDecks();
   if (tab === 'study') renderStudyDecks();
   if (tab === 'account') renderAccount(); 
