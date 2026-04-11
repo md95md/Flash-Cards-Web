@@ -356,7 +356,7 @@ button:active { transform: scale(0.95); }
   padding: .8rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
-  max-width: 500px;
+  max-width: 320px;
   margin: 0 auto 1.5rem;
 }
 
@@ -604,6 +604,14 @@ button:active { transform: scale(0.95); }
 
 .import-preview-list .card-list-item {
   cursor: default;
+}
+
+.export-delete-btn {
+  flex-shrink: 0;
+  padding: 2px 7px;
+  font-size: 12px;
+  line-height: 1;
+  margin-left: 0.75rem;
 }
 
 /* ─── Header & lang switcher ─────────────────────────────────────────────────── */

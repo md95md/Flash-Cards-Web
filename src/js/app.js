@@ -291,7 +291,11 @@ function renderCardsList(deck) {
   const grid = document.createElement('div');
   grid.className = 'cards-grid';
 
-  filteredCards.forEach(({ card, idx }) => {
+  const orderedCards = selectedCardIdx !== null
+    ? [...filteredCards.filter(e => e.idx === selectedCardIdx), ...filteredCards.filter(e => e.idx !== selectedCardIdx)]
+    : filteredCards;
+
+  orderedCards.forEach(({ card, idx }) => {
     const item = document.createElement('div');
     item.className = 'card-list-item' + (selectedCardIdx === idx ? ' card-selected' : '');
     item.onclick = () => selectCard(idx);
@@ -587,18 +591,13 @@ function cancelImport() {
   document.getElementById('import-preview-dialog').style.display = 'none';
 }
 
-function triggerExportJSON() {
-  if (!selectedDeckId) return;
-  const deck = decks.find(d => d.id === selectedDeckId);
-  if (!deck || deck.cards.length === 0) return;
+let pendingExportCards = [];
 
-  const title = document.getElementById('export-preview-title');
-  title.textContent = deck.cards.length + ' ' + t('export_json_title');
-
+function renderExportPreviewList() {
   const list = document.getElementById('export-preview-list');
   list.innerHTML = '';
 
-  deck.cards.forEach(card => {
+  pendingExportCards.forEach((card, i) => {
     const item = document.createElement('div');
     item.className = 'card-list-item';
 
@@ -606,28 +605,53 @@ function triggerExportJSON() {
     const q = document.createElement('strong');
     q.textContent = card.question;
     text.append(q, ' — ' + card.answer);
-    item.appendChild(text);
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'btn-danger export-delete-btn';
+    delBtn.textContent = '✕';
+    delBtn.onclick = () => {
+      pendingExportCards.splice(i, 1);
+      document.getElementById('export-preview-title').textContent =
+        pendingExportCards.length + ' ' + t('export_json_title');
+      renderExportPreviewList();
+    };
+
+    item.append(text, delBtn);
     list.appendChild(item);
   });
+}
 
+function triggerExportJSON() {
+  if (!selectedDeckId) return;
+  const deck = decks.find(d => d.id === selectedDeckId);
+  if (!deck || deck.cards.length === 0) return;
+
+  pendingExportCards = deck.cards.map(({ question, answer }) => ({ question, answer }));
+
+  document.getElementById('export-preview-title').textContent =
+    pendingExportCards.length + ' ' + t('export_json_title');
   document.getElementById('export-confirm-btn').textContent = t('export_json_download_btn');
+
+  renderExportPreviewList();
   document.getElementById('export-preview-dialog').style.display = 'flex';
 }
 
 function confirmExport() {
+  if (pendingExportCards.length === 0) return;
   const deck = decks.find(d => d.id === selectedDeckId);
-  const data = deck.cards.map(({ question, answer }) => ({ question, answer }));
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const blob = new Blob([JSON.stringify(pendingExportCards, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
   a.download = deck.name.replace(/[^a-z0-9_\-]/gi, '_') + '.json';
   a.click();
   URL.revokeObjectURL(url);
+  pendingExportCards = [];
   document.getElementById('export-preview-dialog').style.display = 'none';
 }
 
 function cancelExport() {
+  pendingExportCards = [];
   document.getElementById('export-preview-dialog').style.display = 'none';
 }
 
@@ -916,6 +940,15 @@ function nextCard() {
 function exitStudy() {
   switchTab('study');
 }
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (!currentStudyDeckId) return;
+  if (e.key === 'ArrowLeft') markWrong();
+  if (e.key === 'ArrowRight') markCorrect();
+  if (e.key === 'ArrowUp') { e.preventDefault(); toggleFlip(); }
+  if (e.key === 'ArrowDown') { e.preventDefault(); exitStudy(); }
+});
 
 // ─── Stats ────────────────────────────────────────────────────────────────────
 
