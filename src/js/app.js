@@ -116,12 +116,10 @@ function cycleLang() {
 
 // ─── State ────────────────────────────────────────────────────────────────────
 
-const CARDS_PAGE_SIZE = 10;
 let decks = [];
 let selectedDeckId = null;
 let selectedCardIdx = null;
 let editingCardIdx = null;
-let cardsPage = 0;
 let cardSearchQuery = '';
 let currentStudyDeckId = null;
 let currentReviewMode = false;
@@ -169,7 +167,6 @@ function selectDeck(id) {
   selectedDeckId = selectedDeckId === id ? null : id;
   selectedCardIdx = null;
   editingCardIdx = null;
-  cardsPage = 0;
   cardSearchQuery = '';
   renderDecks();
 }
@@ -220,7 +217,11 @@ function renderDeckControls() {
     importBtn.textContent = t('import_json_btn');
     importBtn.onclick = triggerImportJSON;
 
-    toolbar.append(addBtn, importBtn);
+    const exportBtn = document.createElement('button');
+    exportBtn.textContent = t('export_json_btn');
+    exportBtn.onclick = triggerExportJSON;
+
+    toolbar.append(addBtn, importBtn, exportBtn);
   }
 
   renderCardsList(deck);
@@ -260,12 +261,6 @@ function renderCardsList(deck) {
         .filter(({ card }) => card.question.toLowerCase().includes(query) || card.answer.toLowerCase().includes(query))
     : deck.cards.map((card, idx) => ({ card, idx }));
 
-  const totalPages = Math.ceil(filteredCards.length / CARDS_PAGE_SIZE);
-  if (cardsPage >= totalPages) cardsPage = Math.max(0, totalPages - 1);
-
-  const start = cardsPage * CARDS_PAGE_SIZE;
-  const pageCards = filteredCards.slice(start, start + CARDS_PAGE_SIZE);
-
   const wrapper = document.createElement('div');
   wrapper.className = 'cards-list-wrapper';
 
@@ -283,7 +278,6 @@ function renderCardsList(deck) {
   searchInput.value = cardSearchQuery;
   searchInput.oninput = () => {
     cardSearchQuery = searchInput.value;
-    cardsPage = 0;
     selectedCardIdx = null;
     renderCardsList(deck);
   };
@@ -297,7 +291,7 @@ function renderCardsList(deck) {
   const grid = document.createElement('div');
   grid.className = 'cards-grid';
 
-  pageCards.forEach(({ card, idx }) => {
+  filteredCards.forEach(({ card, idx }) => {
     const item = document.createElement('div');
     item.className = 'card-list-item' + (selectedCardIdx === idx ? ' card-selected' : '');
     item.onclick = () => selectCard(idx);
@@ -311,48 +305,6 @@ function renderCardsList(deck) {
   });
 
   wrapper.appendChild(grid);
-
-  if (totalPages > 1) {
-    const pagination = document.createElement('div');
-    pagination.className = 'cards-pagination';
-
-    const makePageBtn = (pageNum) => {
-      const btn = document.createElement('button');
-      btn.textContent = pageNum + 1;
-      btn.className = 'cards-page-btn' + (cardsPage === pageNum ? ' cards-page-btn--active' : '');
-      if (cardsPage !== pageNum) {
-        btn.onclick = () => { cardsPage = pageNum; renderDeckControls(); };
-      }
-      return btn;
-    };
-
-    const addDots = () => {
-      const dots = document.createElement('span');
-      dots.className = 'cards-pagination-dots';
-      dots.textContent = '...';
-      pagination.appendChild(dots);
-    };
-
-    // Always show first page
-    pagination.appendChild(makePageBtn(0));
-
-    // Left dots: if current page is far from start
-    if (cardsPage > 2) addDots();
-
-    // Pages around current (prev, current, next) — skip if overlapping with first/last
-    for (let p = Math.max(1, cardsPage - 1); p <= Math.min(totalPages - 2, cardsPage + 1); p++) {
-      pagination.appendChild(makePageBtn(p));
-    }
-
-    // Right dots: if current page is far from end
-    if (cardsPage < totalPages - 3) addDots();
-
-    // Always show last page
-    if (totalPages > 1) pagination.appendChild(makePageBtn(totalPages - 1));
-
-    wrapper.appendChild(pagination);
-  }
-
   cardsList.appendChild(wrapper);
 }
 
@@ -360,7 +312,6 @@ function closeDeckPanel() {
   selectedDeckId = null;
   selectedCardIdx = null;
   editingCardIdx = null;
-  cardsPage = 0;
   cardSearchQuery = '';
   renderDecks();
 }
@@ -634,6 +585,50 @@ function confirmImport() {
 function cancelImport() {
   pendingImportCards = [];
   document.getElementById('import-preview-dialog').style.display = 'none';
+}
+
+function triggerExportJSON() {
+  if (!selectedDeckId) return;
+  const deck = decks.find(d => d.id === selectedDeckId);
+  if (!deck || deck.cards.length === 0) return;
+
+  const title = document.getElementById('export-preview-title');
+  title.textContent = deck.cards.length + ' ' + t('export_json_title');
+
+  const list = document.getElementById('export-preview-list');
+  list.innerHTML = '';
+
+  deck.cards.forEach(card => {
+    const item = document.createElement('div');
+    item.className = 'card-list-item';
+
+    const text = document.createElement('span');
+    const q = document.createElement('strong');
+    q.textContent = card.question;
+    text.append(q, ' — ' + card.answer);
+    item.appendChild(text);
+    list.appendChild(item);
+  });
+
+  document.getElementById('export-confirm-btn').textContent = t('export_json_download_btn');
+  document.getElementById('export-preview-dialog').style.display = 'flex';
+}
+
+function confirmExport() {
+  const deck = decks.find(d => d.id === selectedDeckId);
+  const data = deck.cards.map(({ question, answer }) => ({ question, answer }));
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = deck.name.replace(/[^a-z0-9_\-]/gi, '_') + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  document.getElementById('export-preview-dialog').style.display = 'none';
+}
+
+function cancelExport() {
+  document.getElementById('export-preview-dialog').style.display = 'none';
 }
 
 function addCard() {
@@ -1176,6 +1171,9 @@ window.triggerImportJSON = triggerImportJSON;
 window.importJSON = importJSON;
 window.confirmImport = confirmImport;
 window.cancelImport = cancelImport;
+window.triggerExportJSON = triggerExportJSON;
+window.confirmExport = confirmExport;
+window.cancelExport = cancelExport;
 window.selectDeck = selectDeck;
 Object.defineProperty(window, 'selectedDeckId', { get: () => selectedDeckId });
 

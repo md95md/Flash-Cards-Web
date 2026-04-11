@@ -221,6 +221,9 @@ button:active { transform: scale(0.95); }
 .cards-grid {
   display: grid;
   gap: 0.5rem;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
 .card-list-item {
@@ -239,41 +242,6 @@ button:active { transform: scale(0.95); }
 .card-list-item:hover         { background: var(--surface-deep); }
 .card-list-item.card-selected { background: var(--surface-selected); border-color: var(--accent); }
 
-.cards-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  padding-top: 0.75rem;
-  margin-top: 1rem;
-  border-top: 1px solid var(--border);
-  margin-bottom: 1rem;
-}
-
-.cards-page-btn {
-  min-width: 32px;
-  padding: 4px 8px;
-  font-size: 13px;
-}
-
-.cards-page-btn--active {
-  background: var(--btn-primary-bg);
-  color: var(--btn-primary-color);
-  border-color: var(--btn-primary-border);
-  cursor: default;
-}
-
-.cards-page-btn--active:hover {
-  background: var(--btn-primary-bg);
-  color: var(--btn-primary-color);
-  border-color: var(--btn-primary-border);
-}
-
-.cards-pagination-dots {
-  font-size: 13px;
-  color: var(--text-secondary);
-  padding: 0 2px;
-}
 
 /* ─── Deck item rows ─────────────────────────────────────────────────────────── */
 
@@ -613,16 +581,21 @@ button:active { transform: scale(0.95); }
 #cards-search-wrapper { position: relative; width: 100%; margin-bottom: 0.75rem; }
 .cards-search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); pointer-events: none; display: flex; }
 #cards-search { width: 100%; box-sizing: border-box; padding-left: 2.25rem; }
-#import-preview-dialog .button-row { justify-content: center; margin-top: 1.25rem; }
+#import-preview-dialog .button-row,
+#export-preview-dialog .button-row { justify-content: center; margin-top: 1.25rem; flex-shrink: 0; }
 
 .dialog-box--wide {
   max-width: 520px;
   width: 90vw;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
 }
 
 .import-preview-list {
-  max-height: 340px;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
   display: grid;
   gap: 0.5rem;

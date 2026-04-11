@@ -1,96 +1,98 @@
+/* ─── Light Theme Variables ──────────────────────────────────────────────────── */
+
 :root {
   /* Grid background */
-  --grid-line:          #E6E6E6;
-  --bg-page:            #F7F8FA;
+  --grid-line:          #E1E1E1;
+  --bg-page:            #F3F3F3;
 
   /* Text */
-  --text-primary:       #1a1a1a;
-  --text-secondary:     #555555;
-  --text-muted:         #8a8a8a;
+  --text-primary:       #1a1a2e;
+  --text-secondary:     #555770;
+  --text-muted:         #8b8da3;
 
-  /* Accent (Okabe–Ito blue) */
-  --accent:             #0072B2;
-  --accent-light:       #56B4E9;
-  --accent-hover:       #005b8f;
+  /* Accent (blue) */
+  --accent:             #5a9fd4;
+  --accent-light:       #7ab8e8;
+  --accent-hover:       #3a82be;
 
   /* Surfaces */
   --surface:            #ffffff;
-  --surface-raised:     #f0f7fc;
-  --surface-sunken:     #e6f2fa;
-  --surface-deep:       #d9ecf7;
-  --surface-selected:   #cce5f5;
+  --surface-raised:     #eef6fc;
+  --surface-sunken:     #ddeef8;
+  --surface-deep:       #cce4f4;
+  --surface-selected:   #b8d9f0;
 
   /* Borders */
   --border:             #e0e0e0;
-  --border-accent:      #cce5f5;
-  --border-strong:      #0072B2;
+  --border-accent:      #b8d9f0;
+  --border-strong:      #5a9fd4;
 
   /* Buttons */
   --btn-bg:             #ffffff;
-  --btn-color:          #1a1a1a;
-  --btn-border:         #56B4E9;
-  --btn-hover-bg:       #e6f2fa;
-  --btn-hover-color:    #003f66;
-  --btn-hover-border:   #0072B2;
+  --btn-color:          #1a1a2e;
+  --btn-border:         #7ab8e8;
+  --btn-hover-bg:       #ddeef8;
+  --btn-hover-color:    #1a3a52;
+  --btn-hover-border:   #5a9fd4;
 
-  --btn-primary-bg:     #0072B2;
-  --btn-primary-color:  #ffffff;
-  --btn-primary-border: #0072B2;
-  --btn-primary-hover-bg:     #005b8f;
-  --btn-primary-hover-border: #005b8f;
+  --btn-primary-bg:     #c6e0f5;
+  --btn-primary-color:  #1a3a52;
+  --btn-primary-border: #7ab8e8;
+  --btn-primary-hover-bg:     #a8d0ee;
+  --btn-primary-hover-border: #3a82be;
 
   --btn-danger-bg:      #ffffff;
-  --btn-danger-color:   #D55E00; /* vermillion */
-  --btn-danger-border:  #D55E00;
-  --btn-danger-hover-bg:    #D55E00;
-  --btn-danger-hover-color: #ffffff;
+  --btn-danger-color:   #ED87A4;
+  --btn-danger-border:  #ED87A4;
+  --btn-danger-hover-bg:    #ED87A4;
+  --btn-danger-hover-color: #2d1111;
 
   /* Inputs */
   --input-bg:           #ffffff;
-  --input-color:        #1a1a1a;
-  --input-border:       #56B4E9;
+  --input-color:        #1a1a2e;
+  --input-border:       #5a9fd4;
 
   /* Header / nav */
   --header-bg:          #ffffff;
-  --header-border:      #56B4E9;
-  --tab-color:          #555555;
+  --header-border:      #5a9fd4;
+  --tab-color:          #555770;
   --tabs-border:        #e0e0e0;
 
   /* Cards */
   --card-bg:            #ffffff;
   --card-border:        #e0e0e0;
-  --card-hover-bg:      #f0f7fc;
-  --card-selected-bg:   #e6f2fa;
+  --card-hover-bg:      #eef6fc;
+  --card-selected-bg:   #ddeef8;
   --deck-name-color:    #0f0f12;
 
   /* Flashcard */
   --flashcard-bg:       #ffffff;
-  --flashcard-back-bg:  #f0f7fc;
-  --flashcard-border:   #0072B2;
+  --flashcard-back-bg:  #eef6fc;
+  --flashcard-border:   #5a9fd4;
 
-  /* Progress (use green for motivation) */
+  /* Progress */
   --progress-bar-bg:    #e0e0e0;
-  --progress-fill:      #009E73;
-  --progress-color:     #009E73;
+  --progress-fill:      #5a9fd4;
+  --progress-color:     #5a9fd4;
 
   /* Lang switcher */
   --lang-bg:            #ffffff;
-  --lang-color:         #555555;
+  --lang-color:         #555770;
   --lang-border:        #e0e0e0;
 
   /* Auth */
   --auth-box-bg:        #ffffff;
   --auth-box-border:    #e0e0e0;
-  --auth-feature-bg:    #f0f7fc;
-  --auth-feature-border:#cce5f5;
-  --auth-hero-p:        #555555;
-  --auth-hero-border:   #e0e0e0;
-  --auth-hero-bg:       #ffffff;
+  --auth-feature-bg:    #eef6fc;
+  --auth-feature-border:#b8d9f0;
+  --auth-hero-p:        #555770;
+  --auth-hero-border:     #e0e0e0;
+  --auth-hero-bg:         #ffffff;
 
   /* Footer */
-  --footer-bg:          #F7F8FA;
+  --footer-bg:          #F3F3F3;
   --footer-border:      #e0e0e0;
-  --footer-color:       #8a8a8a;
+  --footer-color:       #8b8da3;
 
   /* Dialog */
   --dialog-bg:          #ffffff;
@@ -102,7 +104,7 @@
   --radius-pill:        20px;
 
   /* Misc */
-  --error-color:        #D55E00;
-  --hint-color:         #8a8a8a;
-  --empty-color:        #555555;
+  --error-color:        #c30f0f;
+  --hint-color:         #8b8da3;
+  --empty-color:        #555770;
 }

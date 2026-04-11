@@ -76,6 +76,9 @@ export const translations = {
     import_json_success: 'cards found',
     import_json_add_btn: 'Add to deck',
     import_json_invalid: 'Invalid JSON. Expected an array of objects with "question" and "answer" fields.',
+    export_json_btn: 'Export JSON',
+    export_json_title: 'cards to export',
+    export_json_download_btn: 'Download',
     repeat: 'Repeat'
   },
   ru: {
@@ -155,6 +158,9 @@ export const translations = {
     import_json_success: 'карточек найдено',
     import_json_add_btn: 'Добавить в колоду',
     import_json_invalid: 'Неверный JSON. Ожидается массив объектов с полями "question" и "answer".',
+    export_json_btn: 'Экспорт JSON',
+    export_json_title: 'карточек для экспорта',
+    export_json_download_btn: 'Скачать',
     repeat: 'Повторить'
   },
   es: {
@@ -234,6 +240,9 @@ export const translations = {
     import_json_success: 'tarjetas encontradas',
     import_json_add_btn: 'Añadir al mazo',
     import_json_invalid: 'JSON inválido. Se espera un array de objetos con campos "question" y "answer".',
+    export_json_btn: 'Exportar JSON',
+    export_json_title: 'tarjetas para exportar',
+    export_json_download_btn: 'Descargar',
     repeat: 'Repetir'
   }
 };

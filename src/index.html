@@ -145,6 +145,18 @@
         </div>
       </div>
 
+      <!-- Export preview dialog -->
+      <div id="export-preview-dialog" class="dialog-overlay">
+        <div class="dialog-box dialog-box--wide">
+          <p id="export-preview-title" class="dialog-text"></p>
+          <div id="export-preview-list" class="import-preview-list"></div>
+          <div class="button-row">
+            <button class="btn-danger" onclick="cancelExport()" data-i18n="cancel">Cancel</button>
+            <button class="btn-primary" id="export-confirm-btn" onclick="confirmExport()"></button>
+          </div>
+        </div>
+      </div>
+
       <!-- Confirm delete dialog -->
       <div id="confirm-dialog" class="dialog-overlay">
         <div class="dialog-box">
