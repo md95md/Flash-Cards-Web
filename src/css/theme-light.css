@@ -1,110 +1,113 @@
-/* ─── Light Theme Variables ──────────────────────────────────────────────────── */
+/* ─── Light Theme ────────────────────────────────────────────────────────────
+   Change only these 3 to retheme the entire site:
+   --c-bg      primary surface  (white)
+   --c-muted   secondary / grey
+   --c-accent  accent / action  (black)
+   ──────────────────────────────────────────────────────────────────────────── */
 
 :root {
-  /* Grid background */
-  --grid-line:          #E1E1E1;
-  --bg-page:            #F3F3F3;
+  --c-bg:     #ffffff;
+  --c-muted:  #9ca3af;
+  --c-accent: #111111;
 
-  /* Text */
-  --text-primary:       #1a1a2e;
-  --text-secondary:     #555770;
-  --text-muted:         #8b8da3;
+  /* ── Page ── */
+  --bg-page:   color-mix(in srgb, var(--c-bg) 96%, var(--c-muted));
+  --grid-line: color-mix(in srgb, var(--c-bg) 84%, var(--c-muted));
 
-  /* Accent (blue) */
-  --accent:             #5a9fd4;
-  --accent-light:       #7ab8e8;
-  --accent-hover:       #3a82be;
+  /* ── Surfaces ── */
+  --surface:          var(--c-bg);
+  --surface-raised:   color-mix(in srgb, var(--c-bg) 94%, var(--c-muted));
+  --surface-sunken:   color-mix(in srgb, var(--c-bg) 87%, var(--c-muted));
+  --surface-deep:     color-mix(in srgb, var(--c-bg) 78%, var(--c-muted));
+  --surface-selected: color-mix(in srgb, var(--c-bg) 85%, var(--c-accent));
 
-  /* Surfaces */
-  --surface:            #ffffff;
-  --surface-raised:     #eef6fc;
-  --surface-sunken:     #ddeef8;
-  --surface-deep:       #cce4f4;
-  --surface-selected:   #b8d9f0;
+  /* ── Text ── */
+  --text-primary:   color-mix(in srgb, var(--c-accent) 92%, var(--c-bg));
+  --text-secondary: var(--c-muted);
+  --text-muted:     color-mix(in srgb, var(--c-muted) 60%, var(--c-bg));
+  --hint-color:     color-mix(in srgb, var(--c-muted) 60%, var(--c-bg));
 
-  /* Borders */
-  --border:             #e0e0e0;
-  --border-accent:      #b8d9f0;
-  --border-strong:      #5a9fd4;
+  /* ── Borders ── */
+  --border:        color-mix(in srgb, var(--c-muted) 28%, var(--c-bg));
+  --border-accent: color-mix(in srgb, var(--c-accent) 30%, var(--c-bg));
 
-  /* Buttons */
-  --btn-bg:             #ffffff;
-  --btn-color:          #1a1a2e;
-  --btn-border:         #7ab8e8;
-  --btn-hover-bg:       #ddeef8;
-  --btn-hover-color:    #1a3a52;
-  --btn-hover-border:   #5a9fd4;
+  /* ── Accent ── */
+  --accent:       var(--c-accent);
+  --accent-hover: color-mix(in srgb, var(--c-accent) 72%, var(--c-bg));
 
-  --btn-primary-bg:     #c6e0f5;
-  --btn-primary-color:  #1a3a52;
-  --btn-primary-border: #7ab8e8;
-  --btn-primary-hover-bg:     #a8d0ee;
-  --btn-primary-hover-border: #3a82be;
+  /* ── Default buttons ── */
+  --btn-bg:           var(--c-bg);
+  --btn-color:        var(--c-accent);
+  --btn-border:       color-mix(in srgb, var(--c-accent) 35%, var(--c-bg));
+  --btn-hover-bg:     color-mix(in srgb, var(--c-accent) 8%,  var(--c-bg));
+  --btn-hover-color:  var(--c-accent);
+  --btn-hover-border: var(--c-accent);
 
-  --btn-danger-bg:      #ffffff;
-  --btn-danger-color:   #ED87A4;
-  --btn-danger-border:  #ED87A4;
-  --btn-danger-hover-bg:    #ED87A4;
-  --btn-danger-hover-color: #2d1111;
+  /* ── Primary button ── */
+  --btn-primary-color: var(--c-bg);
 
-  /* Inputs */
-  --input-bg:           #ffffff;
-  --input-color:        #1a1a2e;
-  --input-border:       #5a9fd4;
+  /* ── Danger button ── */
+  --btn-danger-bg:           var(--c-bg);
+  --btn-danger-color:        #c0185a;
+  --btn-danger-border:       #c0185a;
+  --btn-danger-hover-bg:     #c0185a;
+  --btn-danger-hover-color:  var(--c-bg);
+  --btn-danger-hover-border: #c0185a;
 
-  /* Header / nav */
-  --header-bg:          #ffffff;
-  --header-border:      #5a9fd4;
-  --tab-color:          #555770;
-  --tabs-border:        #e0e0e0;
+  /* ── Inputs ── */
+  --input-bg:     var(--c-bg);
+  --input-color:  var(--c-accent);
+  --input-border: color-mix(in srgb, var(--c-accent) 30%, var(--c-bg));
 
-  /* Cards */
-  --card-bg:            #ffffff;
-  --card-border:        #e0e0e0;
-  --card-hover-bg:      #eef6fc;
-  --card-selected-bg:   #ddeef8;
-  --deck-name-color:    #0f0f12;
+  /* ── Header ── */
+  --header-bg:   var(--c-bg);
+  --tabs-border: color-mix(in srgb, var(--c-muted) 28%, var(--c-bg));
+  --tab-color:   var(--c-muted);
 
-  /* Flashcard */
-  --flashcard-bg:       #ffffff;
-  --flashcard-back-bg:  #eef6fc;
-  --flashcard-border:   #5a9fd4;
+  /* ── Deck cards ── */
+  --card-bg:          var(--c-bg);
+  --card-border:      color-mix(in srgb, var(--c-muted) 28%, var(--c-bg));
+  --card-hover-bg:    color-mix(in srgb, var(--c-bg) 92%, var(--c-muted));
+  --card-selected-bg: color-mix(in srgb, var(--c-bg) 85%, var(--c-accent));
+  --deck-name-color:  var(--c-accent);
 
-  /* Progress */
-  --progress-bar-bg:    #e0e0e0;
-  --progress-fill:      #5a9fd4;
-  --progress-color:     #5a9fd4;
+  /* ── Flashcard ── */
+  --flashcard-bg:      var(--c-bg);
+  --flashcard-back-bg: color-mix(in srgb, var(--c-bg) 90%, var(--c-muted));
+  --flashcard-border:  color-mix(in srgb, var(--c-accent) 45%, var(--c-bg));
 
-  /* Lang switcher */
-  --lang-bg:            #ffffff;
-  --lang-color:         #555770;
-  --lang-border:        #e0e0e0;
+  /* ── Progress ── */
+  --progress-bar-bg: color-mix(in srgb, var(--c-muted) 22%, var(--c-bg));
+  --progress-fill:   var(--c-accent);
+  --progress-color:  var(--c-accent);
 
-  /* Auth */
-  --auth-box-bg:        #ffffff;
-  --auth-box-border:    #e0e0e0;
-  --auth-feature-bg:    #eef6fc;
-  --auth-feature-border:#b8d9f0;
-  --auth-hero-p:        #555770;
-  --auth-hero-border:     #e0e0e0;
-  --auth-hero-bg:         #ffffff;
+  /* ── Lang switcher ── */
+  --lang-bg:     var(--c-bg);
+  --lang-color:  var(--c-muted);
+  --lang-border: color-mix(in srgb, var(--c-muted) 28%, var(--c-bg));
 
-  /* Footer */
-  --footer-bg:          #F3F3F3;
-  --footer-border:      #e0e0e0;
-  --footer-color:       #8b8da3;
+  /* ── Auth ── */
+  --auth-box-bg:         var(--c-bg);
+  --auth-box-border:     color-mix(in srgb, var(--c-muted) 28%, var(--c-bg));
+  --auth-feature-bg:     color-mix(in srgb, var(--c-bg) 90%, var(--c-muted));
+  --auth-feature-border: color-mix(in srgb, var(--c-muted) 38%, var(--c-bg));
+  --auth-hero-border:    color-mix(in srgb, var(--c-muted) 28%, var(--c-bg));
+  --auth-hero-bg:        var(--c-bg);
 
-  /* Dialog */
-  --dialog-bg:          #ffffff;
+  /* ── Footer ── */
+  --footer-bg:     color-mix(in srgb, var(--c-bg) 93%, var(--c-muted));
+  --footer-border: color-mix(in srgb, var(--c-muted) 28%, var(--c-bg));
+  --footer-color:  color-mix(in srgb, var(--c-muted) 65%, var(--c-bg));
 
-  /* Radius */
-  --radius-sm:          6px;
-  --radius-md:          10px;
-  --radius-lg:          16px;
-  --radius-pill:        20px;
+  /* ── Dialog ── */
+  --dialog-bg: var(--c-bg);
 
-  /* Misc */
-  --error-color:        #c30f0f;
-  --hint-color:         #8b8da3;
-  --empty-color:        #555770;
+  /* ── Misc ── */
+  --error-color: #c0185a;
+
+  /* ── Radius ── */
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --radius-pill: 20px;
 }

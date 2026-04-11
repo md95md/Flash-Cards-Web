@@ -286,13 +286,13 @@ button:active { transform: scale(0.95); }
 /* ─── Buttons ────────────────────────────────────────────────────────────────── */
 
 .btn-primary {
-  background: var(--btn-primary-bg);
+  background: var(--accent);
   color: var(--btn-primary-color);
-  border-color: var(--btn-primary-border);
+  border-color: var(--border-accent);
 }
 .btn-primary:hover {
-  background: var(--btn-primary-hover-bg);
-  border-color: var(--btn-primary-hover-border);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 .btn-danger {
@@ -303,6 +303,7 @@ button:active { transform: scale(0.95); }
 .btn-danger:hover {
   background: var(--btn-danger-hover-bg);
   color: var(--btn-danger-hover-color);
+  border-color: var(--btn-danger-hover-border);
 }
 
 /* ─── Forms ──────────────────────────────────────────────────────────────────── */
@@ -726,7 +727,7 @@ button:active { transform: scale(0.95); }
   top: 0;
   z-index: 10;
   background: var(--header-bg);
-  border-bottom: 2px solid var(--header-border);
+  border-bottom: 2px solid var(--border-accent);
   display: flex;
   justify-content: space-between;
   align-items: center;

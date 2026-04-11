@@ -1,100 +1,103 @@
+/* ─── Dark Theme ─────────────────────────────────────────────────────────────
+   --c-bg:     #18202c   primary surface  (dark navy)
+   --c-muted:  #4a6080   secondary / grey-blue
+   --c-accent: #6cc6ff   accent / action  (light blue)
+   ──────────────────────────────────────────────────────────────────────────── */
+
 body.dark {
-  /* Grid background */
-  --grid-line:          #2a3445;
-  --bg-page:            #0f141b;
+  /* ── Page ── */
+  --bg-page:   #111720;   /* bg 96% + muted 4%  */
+  --grid-line: #1c2535;   /* bg 84% + muted 16% */
 
-  /* Text */
-  --text-primary:       #f1f5ff;
-  --text-secondary:     #9db2ce;
-  --text-muted:         #7f96b3;
+  /* ── Surfaces ── */
+  --surface:          #18202c;
+  --surface-raised:   #1a2230;   /* bg 94% + muted 6%   */
+  --surface-sunken:   #1c2636;   /* bg 87% + muted 13%  */
+  --surface-deep:     #20304a;   /* bg 78% + muted 22%  */
+  --surface-selected: #253a55;   /* bg 85% + accent 15% */
 
-  /* Accent (playful blue → neon-ish) */
-  --accent:             #6cc6ff;
-  --accent-light:       #9be0ff;
-  --accent-hover:       #4fb3ff;
+  /* ── Text ── */
+  --text-primary:   #f1f5ff;   /* explicit: must be near-white */
+  --text-secondary: #4a6080;   /* = muted                      */
+  --text-muted:     #344d69;   /* muted 60% + bg 40%           */
+  --hint-color:     #344d69;
 
-  /* Surfaces */
-  --surface:            #18202c;
-  --surface-raised:     #1c2633;
-  --surface-sunken:     #141b26;
-  --surface-deep:       #223047;
-  --surface-selected:   #21344d;
+  /* ── Borders ── */
+  --border:        #253040;   /* muted 28% + bg 72% */
+  --border-accent: #3a5572;   /* accent 30% + bg 70% → blueish */
 
-  /* Borders */
-  --border:             #2f4764;
-  --border-accent:      #3a6ea5;
-  --border-strong:      #5aa9ff;
+  /* ── Accent ── */
+  --accent:       #6cc6ff;
+  --accent-hover: #4fa8e8;   /* accent 72% + bg 28% */
 
-  /* Buttons */
-  --btn-bg:             #1c2633;
-  --btn-color:          #f1f5ff;
-  --btn-border:         #35506f;
-  --btn-hover-bg:       #223047;
-  --btn-hover-color:    #ffffff;
-  --btn-hover-border:   #6cc6ff;
+  /* ── Default buttons ── */
+  --btn-bg:           #1c2633;
+  --btn-color:        #f1f5ff;
+  --btn-border:       #2e4460;
+  --btn-hover-bg:     #223047;
+  --btn-hover-color:  #ffffff;
+  --btn-hover-border: #6cc6ff;
 
-  --btn-primary-bg:     #3b82f6; /* brighter, fun */
-  --btn-primary-color:  #ffffff;
-  --btn-primary-border: #60a5fa;
-  --btn-primary-hover-bg:     #2563eb;
-  --btn-primary-hover-border: #93c5fd;
+  /* ── Primary button ── */
+  --btn-primary-color: #18202c;   /* dark text on light-blue button */
 
-  --btn-danger-bg:      transparent;
-  --btn-danger-color:   #ff8fab; /* softer pink */
-  --btn-danger-border:  #ff6f91;
-  --btn-danger-hover-bg:    #ff8fab;
-  --btn-danger-hover-color: #5a1f2b;
+  /* ── Danger button ── */
+  --btn-danger-bg:           transparent;
+  --btn-danger-color:        #ff8fab;
+  --btn-danger-border:       #ff6f91;
+  --btn-danger-hover-bg:     #ff8fab;
+  --btn-danger-hover-color:  #5a1f2b;
+  --btn-danger-hover-border: #ff6f91;
 
-  /* Inputs */
-  --input-bg:           #1c2633;
-  --input-color:        #f1f5ff;
-  --input-border:       #4f7db3;
+  /* ── Inputs ── */
+  --input-bg:     #1c2633;
+  --input-color:  #f1f5ff;
+  --input-border: #3a5572;
 
-  /* Header / nav */
-  --header-bg:          #18202c;
-  --header-border:      #2f4764;
-  --tab-color:          #9db2ce;
-  --tabs-border:        #2f4764;
+  /* ── Header ── */
+  --header-bg:   #18202c;
+  --tabs-border: #253040;
+  --tab-color:   #7a9ab8;
 
-  /* Cards */
-  --card-bg:            #1c2633;
-  --card-border:        #2f4764;
-  --card-hover-bg:      #223047;
-  --card-selected-bg:   #2a3f5c;
-  --deck-name-color:    #f1f5ff;
+  /* ── Deck cards ── */
+  --card-bg:          #1c2633;
+  --card-border:      #253040;
+  --card-hover-bg:    #1e2d42;
+  --card-selected-bg: #253a55;
+  --deck-name-color:  #f1f5ff;
 
-  /* Flashcard */
-  --flashcard-bg:       #1c2633;
-  --flashcard-back-bg:  #141b26;
-  --flashcard-border:   #5aa9ff;
+  /* ── Flashcard ── */
+  --flashcard-bg:      #1c2633;
+  --flashcard-back-bg: #18202c;
+  --flashcard-border:  #4a8ab0;
 
-  /* Progress */
-  --progress-bar-bg:    #2f4764;
-  --progress-fill:      #6cc6ff;
-  --progress-color:     #6cc6ff;
+  /* ── Progress ── */
+  --progress-bar-bg: #253040;
+  --progress-fill:   #6cc6ff;
+  --progress-color:  #6cc6ff;
 
-  /* Lang switcher */
-  --lang-bg:            #1c2633;
-  --lang-color:         #9db2ce;
-  --lang-border:        #2f4764;
+  /* ── Lang switcher ── */
+  --lang-bg:     #1c2633;
+  --lang-color:  #7a9ab8;
+  --lang-border: #253040;
 
-  /* Auth */
-  --auth-box-bg:        #1c2633;
-  --auth-box-border:    #2f4764;
-  --auth-feature-bg:    #1c2633;
-  --auth-feature-border:#2f4764;
-  --auth-hero-p:        #9db2ce;
-  --auth-hero-border:   #2f4764;
-  --auth-hero-bg:       #18202c;
+  /* ── Auth ── */
+  --auth-box-bg:         #1c2633;
+  --auth-box-border:     #253040;
+  --auth-feature-bg:     #1c2633;
+  --auth-feature-border: #2e4460;
+  --auth-hero-border:    #253040;
+  --auth-hero-bg:        #18202c;
 
-  /* Footer */
-  --footer-bg:          #0f141b;
-  --footer-border:      #2f4764;
-  --footer-color:       #6f92b8;
+  /* ── Footer ── */
+  --footer-bg:     #111720;
+  --footer-border: #253040;
+  --footer-color:  #4a6080;
 
-  /* Dialog */
-  --dialog-bg:          #1c2633;
+  /* ── Dialog ── */
+  --dialog-bg: #1c2633;
 
-  /* Misc */
-  --hint-color:         #6f92b8;
+  /* ── Errors ── */
+  --error-color:       #ff8fab;
+  --error-color-hover: #ff6f91;
 }
