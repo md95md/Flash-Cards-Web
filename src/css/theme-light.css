@@ -1,45 +1,31 @@
-/* ─── Light Theme ────────────────────────────────────────────────────────────
-   Change only these 3 to retheme the entire site:
-   --c-bg      primary surface  (white)
-   --c-muted   secondary / grey
-   --c-accent  accent / action  (black)
-   ──────────────────────────────────────────────────────────────────────────── */
-
 :root {
   --c-bg:     #ffffff;
-  --c-muted:  #9ca3af;
-  --c-accent: #111111;
+  --c-muted:  #c9c9c9;
+  --c-accent: #0a0a0a;
 
   /* ── Page ── */
-  --bg-page:   color-mix(in srgb, var(--c-bg) 96%, var(--c-muted));
-  --grid-line: color-mix(in srgb, var(--c-bg) 84%, var(--c-muted));
-
-  /* ── Surfaces ── */
-  --surface:          var(--c-bg);
-  --surface-raised:   color-mix(in srgb, var(--c-bg) 94%, var(--c-muted));
-  --surface-sunken:   color-mix(in srgb, var(--c-bg) 87%, var(--c-muted));
-  --surface-deep:     color-mix(in srgb, var(--c-bg) 78%, var(--c-muted));
-  --surface-selected: color-mix(in srgb, var(--c-bg) 85%, var(--c-accent));
+  --bg-page:   var(--c-bg);
+  --grid-line: var(--c-muted);
 
   /* ── Text ── */
-  --text-primary:   color-mix(in srgb, var(--c-accent) 92%, var(--c-bg));
+  --text-primary:   var(--c-accent);
   --text-secondary: var(--c-muted);
-  --text-muted:     color-mix(in srgb, var(--c-muted) 60%, var(--c-bg));
-  --hint-color:     color-mix(in srgb, var(--c-muted) 60%, var(--c-bg));
+  --text-muted:     color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
+  --hint-color:     color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
 
   /* ── Borders ── */
-  --border:        color-mix(in srgb, var(--c-muted) 28%, var(--c-bg));
-  --border-accent: color-mix(in srgb, var(--c-accent) 30%, var(--c-bg));
+  --border:        var(--c-muted);
+  --border-accent: var(--c-accent);
 
   /* ── Accent ── */
   --accent:       var(--c-accent);
-  --accent-hover: color-mix(in srgb, var(--c-accent) 72%, var(--c-bg));
+  --accent-hover: var(--c-muted);
 
   /* ── Default buttons ── */
   --btn-bg:           var(--c-bg);
   --btn-color:        var(--c-accent);
-  --btn-border:       color-mix(in srgb, var(--c-accent) 35%, var(--c-bg));
-  --btn-hover-bg:     color-mix(in srgb, var(--c-accent) 8%,  var(--c-bg));
+  --btn-border:       var(--c-accent);
+  --btn-hover-bg:     var(--c-muted);
   --btn-hover-color:  var(--c-accent);
   --btn-hover-border: var(--c-accent);
 
@@ -57,47 +43,48 @@
   /* ── Inputs ── */
   --input-bg:     var(--c-bg);
   --input-color:  var(--c-accent);
-  --input-border: color-mix(in srgb, var(--c-accent) 30%, var(--c-bg));
+  --input-border: color-mix(in srgb, var(--c-accent) 50%, var(--c-bg));
 
   /* ── Header ── */
   --header-bg:   var(--c-bg);
-  --tabs-border: color-mix(in srgb, var(--c-muted) 28%, var(--c-bg));
+  --tabs-border: var(--c-accent);
   --tab-color:   var(--c-muted);
 
   /* ── Deck cards ── */
   --card-bg:          var(--c-bg);
-  --card-border:      color-mix(in srgb, var(--c-muted) 28%, var(--c-bg));
-  --card-hover-bg:    color-mix(in srgb, var(--c-bg) 92%, var(--c-muted));
-  --card-selected-bg: color-mix(in srgb, var(--c-bg) 85%, var(--c-accent));
+  --card-border:      var(--c-accent);
+  --card-hover-bg:    var(--c-muted);
+  --card-hover-border: var(--c-accent);
+  --card-selected-bg: var(--c-muted);
   --deck-name-color:  var(--c-accent);
 
   /* ── Flashcard ── */
   --flashcard-bg:      var(--c-bg);
-  --flashcard-back-bg: color-mix(in srgb, var(--c-bg) 90%, var(--c-muted));
-  --flashcard-border:  color-mix(in srgb, var(--c-accent) 45%, var(--c-bg));
+  --flashcard-back-bg: var(--c-muted);
+  --flashcard-border:  var(--c-accent);
 
   /* ── Progress ── */
-  --progress-bar-bg: color-mix(in srgb, var(--c-muted) 22%, var(--c-bg));
+  --progress-bar-bg: color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
   --progress-fill:   var(--c-accent);
   --progress-color:  var(--c-accent);
 
   /* ── Lang switcher ── */
   --lang-bg:     var(--c-bg);
   --lang-color:  var(--c-muted);
-  --lang-border: color-mix(in srgb, var(--c-muted) 28%, var(--c-bg));
+  --lang-border: var(--c-accent);
 
   /* ── Auth ── */
   --auth-box-bg:         var(--c-bg);
-  --auth-box-border:     color-mix(in srgb, var(--c-muted) 28%, var(--c-bg));
-  --auth-feature-bg:     color-mix(in srgb, var(--c-bg) 90%, var(--c-muted));
-  --auth-feature-border: color-mix(in srgb, var(--c-muted) 38%, var(--c-bg));
-  --auth-hero-border:    color-mix(in srgb, var(--c-muted) 28%, var(--c-bg));
+  --auth-box-border:     color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
+  --auth-feature-bg:     color-mix(in srgb, var(--c-bg) 50%, var(--c-muted));
+  --auth-feature-border: color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
+  --auth-hero-border:    color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
   --auth-hero-bg:        var(--c-bg);
 
   /* ── Footer ── */
-  --footer-bg:     color-mix(in srgb, var(--c-bg) 93%, var(--c-muted));
-  --footer-border: color-mix(in srgb, var(--c-muted) 28%, var(--c-bg));
-  --footer-color:  color-mix(in srgb, var(--c-muted) 65%, var(--c-bg));
+  --footer-bg:     color-mix(in srgb, var(--c-bg) 50%, var(--c-muted));
+  --footer-border: color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
+  --footer-color:  color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
 
   /* ── Dialog ── */
   --dialog-bg: var(--c-bg);

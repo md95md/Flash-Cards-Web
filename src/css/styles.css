@@ -201,9 +201,10 @@ button:active { transform: scale(0.95); }
   word-break: break-word;
   margin-top: 0.5rem;
   padding-top: 0.5rem;
-  border-top: 1px solid var(--border);
   line-height: 1.4;
 }
+
+
 
 .deck-count { font-size: 28px; font-weight: 500; color: var(--text-primary); margin: 0.5rem 0; }
 .deck-name  { font-size: 20px; color: var(--deck-name-color); margin: 1rem 0; }
@@ -236,7 +237,7 @@ button:active { transform: scale(0.95); }
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem;
-  background: var(--surface-sunken);
+  background: var(--card-bg);
   border-radius: var(--radius-sm);
   font-size: 13px;
   cursor: pointer;
@@ -244,8 +245,13 @@ button:active { transform: scale(0.95); }
   border: 1px solid transparent;
 }
 
-.card-list-item:hover         { background: var(--surface-deep); }
-.card-list-item.card-selected { background: var(--surface-selected); border-color: var(--accent); }
+.card-list-item:hover         {
+   background: var(--card-hover-bg); 
+}
+.card-list-item.card-selected {
+   background: var(--card-hover-bg);
+    border-color: var(--accent); 
+  }
 
 
 /* ─── Deck item rows ─────────────────────────────────────────────────────────── */
@@ -260,7 +266,7 @@ button:active { transform: scale(0.95); }
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background: var(--surface);
+  background: var(--card-bg);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
 }
@@ -330,7 +336,7 @@ button:active { transform: scale(0.95); }
 /* ─── Panels ─────────────────────────────────────────────────────────────────── */
 
 .panel {
-  background: var(--surface-raised);
+  background: var(--card-bg);
   padding: 1.5rem;
   border-radius: var(--radius-pill);
   margin-bottom: 1.5rem;
@@ -338,7 +344,7 @@ button:active { transform: scale(0.95); }
 }
 
 .panel-center {
-  background: var(--surface-raised);
+  background: var(--card-bg);
   padding: 2rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-accent);
@@ -349,7 +355,7 @@ button:active { transform: scale(0.95); }
 .panel-center p  { margin-bottom: 1.5rem; color: var(--text-secondary); }
 
 .panel-inner {
-  background: var(--surface-sunken);
+  background: var(--card-hover-bg);
   padding: 1rem;
   border-radius: var(--radius-sm);
   margin-bottom: 1rem;
@@ -358,9 +364,9 @@ button:active { transform: scale(0.95); }
 /* ─── Study mode ─────────────────────────────────────────────────────────────── */
 
 .study-header {
-  /* background: var(--surface);
+   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md); */ 
+  border-radius: var(--radius-md); 
   padding: .5rem 1.5rem;
   
   width: 420px;
@@ -529,7 +535,7 @@ button:active { transform: scale(0.95); }
 }
 
 .stat-card {
-  background: var(--surface);
+  background: var(--card-bg);
   padding: 1rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
@@ -674,13 +680,19 @@ button:active { transform: scale(0.95); }
 
 #app { display: none; }
 #signin-screen { display: none; }
-#create-deck-form { display: none; }
+#create-deck-form {
+  display: none;
+  background: var(--card-bg);
+ }
 #deck-controls { display: none; }
 #add-card-form { display: none; }
 #json-import-input { display: none; }
+
 #manage-cards-panel { 
   margin-top: 2rem;
+  background: var(--card-bg);
 }
+
 #deck-action-btns { margin-top: 2rem; display: flex; flex-direction: column; align-items: flex-start; gap: 0; }
 #delete-deck-btn { margin-top: 1rem; }
 #card-toolbar { margin-bottom: 1rem; }
