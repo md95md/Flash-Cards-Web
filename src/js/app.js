@@ -1080,6 +1080,19 @@ function renderStats() {
   panelHeader.appendChild(heading);
   panel.appendChild(panelHeader);
 
+  const colHeaderTable = document.createElement('table');
+  colHeaderTable.className = 'stat-history-table stat-history-col-header';
+  const colHeaderThead = document.createElement('thead');
+  const colHeaderRow = document.createElement('tr');
+  [t('col_date'), t('col_learned'), t('col_not_known'), t('col_repeated'), t('col_duration'), ''].forEach(label => {
+    const th = document.createElement('th');
+    th.textContent = label;
+    colHeaderRow.appendChild(th);
+  });
+  colHeaderThead.appendChild(colHeaderRow);
+  colHeaderTable.appendChild(colHeaderThead);
+  panel.appendChild(colHeaderTable);
+
   const scrollArea = document.createElement('div');
   scrollArea.className = 'stat-history-scroll';
 
@@ -1118,17 +1131,6 @@ function renderStats() {
 
       const table = document.createElement('table');
       table.className = 'stat-history-table';
-
-      const thead = document.createElement('thead');
-      const headerRow = document.createElement('tr');
-      const headers = [t('col_date'), t('col_learned'), t('col_not_known'), t('col_repeated'), t('col_duration'), ''];
-      headers.forEach(label => {
-        const th = document.createElement('th');
-        th.textContent = label;
-        headerRow.appendChild(th);
-      });
-      thead.appendChild(headerRow);
-      table.appendChild(thead);
 
       const tbody = document.createElement('tbody');
       entries.forEach(({ s, originalIdx }, rowIdx) => {
