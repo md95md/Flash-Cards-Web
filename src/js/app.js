@@ -257,46 +257,20 @@ function renderDeckControls() {
   manageDeckSection.style.display = isCardSelected ? 'none' : 'block';
 }
 
-function renderCardsList(deck) {
-  const cardsList = document.getElementById('cards-list');
-  cardsList.innerHTML = '';
+function filterCards(deck, query) {
+  const q = query.trim().toLowerCase();
+  const all = deck.cards.map((card, idx) => ({ card, idx }));
+  return q
+    ? all.filter(({ card }) => card.question.toLowerCase().includes(q) || card.answer.toLowerCase().includes(q))
+    : all;
+}
 
-  const query = cardSearchQuery.trim().toLowerCase();
-  const filteredCards = query
-    ? deck.cards.map((card, idx) => ({ card, idx }))
-        .filter(({ card }) => card.question.toLowerCase().includes(query) || card.answer.toLowerCase().includes(query))
-    : deck.cards.map((card, idx) => ({ card, idx }));
+function renderCardsGrid(deck, query) {
+  const grid = document.getElementById('cards-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
 
-  const wrapper = document.createElement('div');
-  wrapper.className = 'cards-list-wrapper';
-
-  const searchWrapper = document.createElement('div');
-  searchWrapper.id = 'cards-search-wrapper';
-
-  const searchIcon = document.createElement('span');
-  searchIcon.className = 'cards-search-icon';
-  searchIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
-
-  const searchInput = document.createElement('input');
-  searchInput.type = 'text';
-  searchInput.id = 'cards-search';
-  searchInput.placeholder = t('search_cards') || 'Search';
-  searchInput.value = cardSearchQuery;
-  searchInput.oninput = () => {
-    cardSearchQuery = searchInput.value;
-    selectedCardIdx = null;
-    renderCardsList(deck);
-  };
-
-  searchWrapper.append(searchIcon, searchInput);
-  wrapper.appendChild(searchWrapper);
-
-  const heading = document.createElement('h4');
-  wrapper.appendChild(heading);
-
-  const grid = document.createElement('div');
-  grid.className = 'cards-grid';
-
+  const filteredCards = filterCards(deck, query);
   const orderedCards = selectedCardIdx !== null
     ? [...filteredCards.filter(e => e.idx === selectedCardIdx), ...filteredCards.filter(e => e.idx !== selectedCardIdx)]
     : filteredCards;
@@ -313,9 +287,54 @@ function renderCardsList(deck) {
     item.appendChild(text);
     grid.appendChild(item);
   });
+}
+
+function renderCardsList(deck) {
+  const cardsList = document.getElementById('cards-list');
+  cardsList.innerHTML = '';
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'cards-list-wrapper';
+
+  const searchWrapper = document.createElement('div');
+  searchWrapper.id = 'cards-search-wrapper';
+
+  const searchIcon = document.createElement('span');
+  searchIcon.className = 'cards-search-icon';
+  searchIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.id = 'cards-search';
+  searchInput.placeholder = t('search_cards') || 'Search';
+  searchInput.value = cardSearchQuery;
+
+  searchInput.oninput = () => {
+    renderCardsGrid(deck, searchInput.value);
+  };
+
+  searchInput.onkeydown = (e) => {
+    if (e.key === 'Enter') {
+      cardSearchQuery = searchInput.value;
+      selectedCardIdx = null;
+      renderCardsGrid(deck, cardSearchQuery);
+    }
+  };
+
+  searchWrapper.append(searchIcon, searchInput);
+  wrapper.appendChild(searchWrapper);
+
+  const heading = document.createElement('h4');
+  wrapper.appendChild(heading);
+
+  const grid = document.createElement('div');
+  grid.className = 'cards-grid';
+  grid.id = 'cards-grid';
 
   wrapper.appendChild(grid);
   cardsList.appendChild(wrapper);
+
+  renderCardsGrid(deck, cardSearchQuery);
 }
 
 function closeDeckPanel() {
