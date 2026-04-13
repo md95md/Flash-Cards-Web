@@ -530,10 +530,40 @@ function triggerImportJSON() {
     alert(t('select_deck'));
     return;
   }
+  showJsonHintDialog();
+}
+
+function showJsonHintDialog() {
+  const example = `[
+  {
+    "question": "What is the capital of France?",
+    "answer": "Paris"
+  },
+  {
+    "question": "2 + 2 = ?",
+    "answer": "4"
+  }
+]`;
+  document.getElementById('json-hint-title').textContent = t('import_json_hint_title');
+  document.getElementById('json-hint-desc').textContent = t('import_json_hint_desc');
+  document.getElementById('json-hint-example').textContent = example;
+  document.getElementById('json-hint-ai-label').textContent = t('import_json_hint_ai_label');
+  document.getElementById('json-hint-prompt-text').textContent = t('import_json_hint_prompt');
+  document.getElementById('json-hint-proceed-btn').textContent = t('import_json_hint_proceed');
+  document.getElementById('json-hint-dialog').style.display = 'flex';
+}
+
+function closeJsonHintDialog() {
+  document.getElementById('json-hint-dialog').style.display = 'none';
+}
+
+function proceedImportJSON() {
+  closeJsonHintDialog();
   const input = document.getElementById('json-import-input');
   input.value = '';
   input.click();
 }
+
 
 let pendingImportCards = [];
 
@@ -1397,6 +1427,8 @@ window.triggerImportJSON = triggerImportJSON;
 window.importJSON = importJSON;
 window.confirmImport = confirmImport;
 window.cancelImport = cancelImport;
+window.closeJsonHintDialog = closeJsonHintDialog;
+window.proceedImportJSON = proceedImportJSON;
 window.triggerExportJSON = triggerExportJSON;
 window.confirmExport = confirmExport;
 window.cancelExport = cancelExport;

@@ -735,6 +735,33 @@ button:active { transform: scale(0.95); }
 #import-preview-dialog .button-row,
 #export-preview-dialog .button-row { justify-content: center; margin-top: 1.25rem; flex-shrink: 0; }
 
+/* JSON hint dialog */
+.json-hint-heading { margin: 0 0 0.75rem; font-size: 1.1rem; }
+.json-hint-code {
+  background: var(--input-bg, #f5f5f5);
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: var(--radius-sm, 6px);
+  padding: 0.75rem 1rem;
+  font-size: 0.78rem;
+  overflow-x: auto;
+  margin: 0 0 1.25rem;
+  white-space: pre;
+  line-height: 1.5;
+}
+.json-hint-ai-block { border-top: 1px solid var(--border-color, #eee); padding-top: 1rem; }
+.json-hint-prompt {
+  background: var(--input-bg, #f5f5f5);
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: var(--radius-sm, 6px);
+  padding: 0.6rem 0.75rem;
+  font-size: 0.78rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+  max-height: 130px;
+  overflow-y: auto;
+  line-height: 1.5;
+}
 .dialog-box--wide {
   max-width: 520px;
   width: 90vw;

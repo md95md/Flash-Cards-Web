@@ -133,6 +133,25 @@
         <button class="btn-primary" data-i18n="add_deck" onclick="showCreateDeckForm()">+ New Deck</button>
       </div>
 
+      <!-- JSON format hint dialog -->
+      <div id="json-hint-dialog" class="dialog-overlay">
+        <div class="dialog-box dialog-box--wide">
+          <h3 id="json-hint-title" class="json-hint-heading"></h3>
+          <p id="json-hint-desc" ></p>
+          <pre class="json-hint-code"><code id="json-hint-example"></code></pre>
+          <div class="json-hint-ai-block">
+            <p id="json-hint-ai-label"></p>
+            <div class="json-hint-prompt-wrap">
+              <pre class="json-hint-prompt"><code id="json-hint-prompt-text"></code></pre>
+            </div>
+          </div>
+          <div class="button-row" style="justify-content:center; margin-top:1.5rem;">
+            <button class="btn-danger" data-i18n="cancel" onclick="closeJsonHintDialog()">Cancel</button>
+            <button class="btn-primary" id="json-hint-proceed-btn" onclick="proceedImportJSON()"></button>
+          </div>
+        </div>
+      </div>
+
       <!-- Import preview dialog -->
       <div id="import-preview-dialog" class="dialog-overlay">
         <div class="dialog-box dialog-box--wide">
