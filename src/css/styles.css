@@ -57,6 +57,11 @@ textarea {
   min-height: 80px;
 }
 
+.btn-secondary:hover {
+background-color: var(--c-muted);
+
+}
+
 button {
   background: var(--btn-bg);
   color: var(--btn-color);
@@ -71,15 +76,14 @@ button {
   letter-spacing: 0.2px;
 }
 
-@media (hover: hover) {
-  button:hover {
-    background-color: var(--btn-hover-bg);
-    color: var(--btn-hover-color);
-    border-color: var(--btn-hover-border);
-  }
+
+button:hover {
+  background-color: var(--c-muted);
 }
 
-button:active { transform: scale(0.95); }
+button:active { 
+  background-color: var(--c-muted);
+  transform: scale(0.95); }
 
 /* ─── Layout ────────────────────────────────────────────────────────────────── */
 
@@ -155,14 +159,11 @@ button:active { transform: scale(0.95); }
 
 .tab-btn.active {
   border-bottom-color: var(--c-accent);
-  color: var(--c-accent);
 }
 
 .tab-btn:hover {
-  color: var(--c-accent);
   background: transparent;
-  border-color: transparent;
-  border-bottom-color: var(--c-accent);
+    border-bottom: 2px solid var(--c-muted);
 }
 
 /* ─── Content sections ──────────────────────────────────────────────────────── */
@@ -303,10 +304,10 @@ button:active { transform: scale(0.95); }
   border: 1px solid var(--surface-border);
 }
 
-.deck-item:hover {
+/* .deck-item:hover {
   background-color: var(--c-muted);
   transition: background .2s;
-}
+} */
 
 
 .deck-item-info  { text-align: left; }
@@ -336,32 +337,46 @@ button:active { transform: scale(0.95); }
   color: var(--c-muted);
   border-color: var(--surface-border);
 }
-@media (hover: hover) {
-  .btn-primary:hover {
-    background: var(--c-bg);
-    border-color: var(--c-accent);
-    border-width: 2px;
-    font-weight: 900;
-    transition: scale .2s;
-  }
+
+.btn-primary:hover {
+  background-color: var(--cc-bg);
 }
+
 
 .btn-danger {
   background: var(--btn-danger-bg);
   color: var(--btn-danger-color);
   border-color: var(--btn-danger-border);
 }
-@media (hover: hover) {
-  .btn-danger:hover {
-    background: var(--btn-danger-hover-bg);
-    color: var(--btn-danger-hover-color);
-    border-color: var(--btn-danger-hover-border);
-  }
-}
+
+
 
 /* ─── Forms ──────────────────────────────────────────────────────────────────── */
 
 .form-group { margin-bottom: 1rem; }
+
+/* ─── Color swatches ─────────────────────────────────────────────────────────── */
+.color-swatches {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+.color-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2.5px solid transparent;
+  background-color: var(--swatch-color);
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+  padding: 0;
+}
+.color-swatch.active {
+  border-color: var(--c-accent);
+  transform: scale(1.15);
+}
+
+
 
 .form-group label {
   text-align: left;
@@ -812,9 +827,8 @@ body.dark .json-hint-error {
   opacity: 0.75;
   transition: opacity 0.15s;
 }
-@media (hover: hover) {
-  .btn-link:hover { opacity: 1; }
-}
+
+
 .json-hint-heading { margin: 0 0 0.75rem; font-size: 1.1rem; }
 .json-hint-code {
   background: var(--surface-bg);

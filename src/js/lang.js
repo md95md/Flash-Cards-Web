@@ -41,6 +41,7 @@ export const translations = {
     delete_card_btn: 'Delete Card',
     enter_question_answer: 'Please enter both question and answer',
     account: 'Account',
+    accent_color: 'Interface color',
     // ─── Landing copy ───────────────────────────────
     hero_title: "POV: you're finally studying (for real)",
     hero_sub: 'Flash Card Game is a system that actually works',
@@ -145,6 +146,7 @@ export const translations = {
     delete_card_btn: 'Удалить карточку',
     enter_question_answer: 'Пожалуйста, введите и вопрос, и ответ',
     account: 'Аккаунт',
+    accent_color: 'Цвет интерфейса',
     // ─── Landing copy ───────────────────────────────
     hero_title: 'POV: ты наконец учишься (на самом деле)',
     hero_sub: 'Flash Card Game — это система, которая реально работает',
@@ -249,6 +251,7 @@ export const translations = {
     delete_card_btn: 'Eliminar tarjeta',
     enter_question_answer: 'Por favor, ingresa tanto la pregunta como la respuesta',
     account: 'Cuenta',
+    accent_color: 'Color de interfaz',
     // ─── Landing copy ───────────────────────────────
     hero_title: 'POV: por fin estás estudiando (en serio)',
     hero_sub: 'Flash Card Game es un sistema que realmente funciona',

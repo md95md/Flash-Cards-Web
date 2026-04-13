@@ -33,7 +33,11 @@ customElements.define('app-footer', AppFooter);
 customElements.define('lottie-hero', LottieHero);
 
 
-/* Bootstrap: load sign.html fragment then init auth */
+/* Bootstrap: restore saved accent color */
+const savedAccentColor = localStorage.getItem('accent_color');
+if (savedAccentColor) {
+  document.documentElement.style.setProperty('--c-muted', savedAccentColor);
+}
 
 onAuthChange(user => {
     if (user) {
@@ -1414,8 +1418,34 @@ function renderAccount() {
   logoutBtn.textContent = 'Sign Out';
   logoutBtn.onclick = handleLogout;
 
-  panel.append(title, email, passRow, logoutBtn);
+  const colorRow = document.createElement('div');
+  colorRow.className = 'form-group';
+  const colorLabel = document.createElement('label');
+  colorLabel.textContent = t('accent_color');
+  const colorSwatches = document.createElement('div');
+  colorSwatches.className = 'color-swatches';
+  const COLORS = ['#F3B9C7', '#b9c8f3', '#caf3b9'];
+  const activeMuted = getComputedStyle(document.documentElement).getPropertyValue('--c-muted').trim();
+  COLORS.forEach(hex => {
+    const btn = document.createElement('button');
+    btn.className = 'color-swatch' + (activeMuted === hex ? ' active' : '');
+    btn.style.setProperty('--swatch-color', hex);
+    btn.title = hex;
+    btn.onclick = () => setAccentColor(hex);
+    colorSwatches.appendChild(btn);
+  });
+  colorRow.append(colorLabel, colorSwatches);
+
+  panel.append(title, email, passRow, colorRow, logoutBtn);
   container.appendChild(panel);
+}
+
+function setAccentColor(hex) {
+  document.documentElement.style.setProperty('--c-muted', hex);
+  localStorage.setItem('accent_color', hex);
+  document.querySelectorAll('.color-swatch').forEach(btn => {
+    btn.classList.toggle('active', btn.style.getPropertyValue('--swatch-color') === hex);
+  });
 }
 
 function goToSignIn() {
