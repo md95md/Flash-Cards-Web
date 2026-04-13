@@ -1,27 +1,19 @@
 :root {
   --c-bg:     #ffffff;
-  --c-muted:  #c9c9c9;
+  --c-muted:  #c3edff;
   --c-accent: #0a0a0a;
+  --c-danger: #c0183f;
 
-  /* ── Page ── */
-  --bg-page:   var(--c-bg);
-  --grid-line: var(--c-muted);
+  /* ── Surfaces ── */
+  --surface-bg:     var(--c-bg);
+  --surface-border: var(--c-accent);
+  --surface-hover:  var(--c-muted);
 
   /* ── Text ── */
   --text-primary:   var(--c-accent);
   --text-secondary: var(--c-muted);
-  --text-muted:     color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
-  --hint-color:     color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
 
-  /* ── Borders ── */
-  --border:        var(--c-muted);
-  --border-accent: var(--c-accent);
-
-  /* ── Accent ── */
-  --accent:       var(--c-accent);
-  --accent-hover: var(--c-muted);
-
-  /* ── Default buttons ── */
+  /* ── Buttons ── */
   --btn-bg:           var(--c-bg);
   --btn-color:        var(--c-accent);
   --btn-border:       var(--c-accent);
@@ -29,72 +21,20 @@
   --btn-hover-color:  var(--c-accent);
   --btn-hover-border: var(--c-accent);
 
-  /* ── Primary button ── */
-  --btn-primary-color: var(--c-bg);
-
-  /* ── Danger button ── */
   --btn-danger-bg:           var(--c-bg);
-  --btn-danger-color:        #c0185a;
-  --btn-danger-border:       #c0185a;
-  --btn-danger-hover-bg:     #c0185a;
+  --btn-danger-color:        var(--c-danger);
+  --btn-danger-border:       var(--c-danger);
+  --btn-danger-hover-bg:     var(--c-danger);
   --btn-danger-hover-color:  var(--c-bg);
-  --btn-danger-hover-border: #c0185a;
-
-  /* ── Inputs ── */
-  --input-bg:     var(--c-bg);
-  --input-color:  var(--c-accent);
-  --input-border: color-mix(in srgb, var(--c-accent) 50%, var(--c-bg));
-
-  /* ── Header ── */
-  --header-bg:   var(--c-bg);
-  --tabs-border: var(--c-accent);
-  --tab-color:   var(--c-muted);
-
-  /* ── Deck cards ── */
-  --card-bg:          var(--c-bg);
-  --card-border:      var(--c-accent);
-  --card-hover-bg:    var(--c-muted);
-  --card-hover-border: var(--c-accent);
-  --card-selected-bg: var(--c-muted);
-  --deck-name-color:  var(--c-accent);
-
-  /* ── Flashcard ── */
-  --flashcard-bg:      var(--c-bg);
-  --flashcard-back-bg: var(--c-muted);
-  --flashcard-border:  var(--c-accent);
-
-  /* ── Progress ── */
-  --progress-bar-bg: color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
-  --progress-fill:   var(--c-accent);
-  --progress-color:  var(--c-accent);
-
-  /* ── Lang switcher ── */
-  --lang-bg:     var(--c-bg);
-  --lang-color:  var(--c-muted);
-  --lang-border: var(--c-accent);
-
-  /* ── Auth ── */
-  --auth-box-bg:         var(--c-bg);
-  --auth-box-border:     color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
-  --auth-feature-bg:     color-mix(in srgb, var(--c-bg) 50%, var(--c-muted));
-  --auth-feature-border: color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
-  --auth-hero-border:    color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
-  --auth-hero-bg:        var(--c-bg);
-
-  /* ── Footer ── */
-  --footer-bg:     color-mix(in srgb, var(--c-bg) 50%, var(--c-muted));
-  --footer-border: color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
-  --footer-color:  color-mix(in srgb, var(--c-muted) 50%, var(--c-bg));
-
-  /* ── Dialog ── */
-  --dialog-bg: var(--c-bg);
+  --btn-danger-hover-border: var(--c-danger);
 
   /* ── Misc ── */
-  --error-color: #c0185a;
+  --error-color: var(--c-danger);
 
   /* ── Radius ── */
   --radius-sm:   6px;
   --radius-md:   10px;
   --radius-lg:   16px;
   --radius-pill: 20px;
+
 }

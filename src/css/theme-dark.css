@@ -1,103 +1,26 @@
-/* ─── Dark Theme ─────────────────────────────────────────────────────────────
-   --c-bg:     #18202c   primary surface  (dark navy)
-   --c-muted:  #4a6080   secondary / grey-blue
-   --c-accent: #6cc6ff   accent / action  (light blue)
-   ──────────────────────────────────────────────────────────────────────────── */
-
 body.dark {
-  /* ── Page ── */
-  --bg-page:   #111720;   /* bg 96% + muted 4%  */
-  --grid-line: #1c2535;   /* bg 84% + muted 16% */
+  --c-bg:     #0a0a0a;
+  --c-muted:  #212936;
+  --c-accent: #ffffff;
+  --color: rgb(36, 36, 36);
 
   /* ── Surfaces ── */
-  --surface:          #18202c;
-  --surface-raised:   #1a2230;   /* bg 94% + muted 6%   */
-  --surface-sunken:   #1c2636;   /* bg 87% + muted 13%  */
-  --surface-deep:     #20304a;   /* bg 78% + muted 22%  */
-  --surface-selected: #253a55;   /* bg 85% + accent 15% */
+  --surface-bg:     var(--c-bg);
+  --surface-border: var(--c-accent);
+  --surface-hover:  var(--c-muted);
 
   /* ── Text ── */
-  --text-primary:   #f1f5ff;   /* explicit: must be near-white */
-  --text-secondary: #4a6080;   /* = muted                      */
-  --text-muted:     #344d69;   /* muted 60% + bg 40%           */
-  --hint-color:     #344d69;
+  --text-primary:   var(--c-accent);
+  --text-secondary: var(--c-muted);
 
-  /* ── Borders ── */
-  --border:        #253040;   /* muted 28% + bg 72% */
-  --border-accent: #3a5572;   /* accent 30% + bg 70% → blueish */
+  /* ── Buttons ── */
+  --btn-bg:           var(--c-bg);
+  --btn-color:        var(--c-accent);
+  --btn-border:       var(--c-accent);
+  --btn-hover-bg:     var(--c-muted);
+  --btn-hover-color:  var(--c-accent);
+  --btn-hover-border: var(--c-accent);
 
-  /* ── Accent ── */
-  --accent:       #6cc6ff;
-  --accent-hover: #4fa8e8;   /* accent 72% + bg 28% */
-
-  /* ── Default buttons ── */
-  --btn-bg:           #1c2633;
-  --btn-color:        #f1f5ff;
-  --btn-border:       #2e4460;
-  --btn-hover-bg:     #223047;
-  --btn-hover-color:  #ffffff;
-  --btn-hover-border: #6cc6ff;
-
-  /* ── Primary button ── */
-  --btn-primary-color: #18202c;   /* dark text on light-blue button */
-
-  /* ── Danger button ── */
-  --btn-danger-bg:           transparent;
-  --btn-danger-color:        #ff8fab;
-  --btn-danger-border:       #ff6f91;
-  --btn-danger-hover-bg:     #ff8fab;
-  --btn-danger-hover-color:  #5a1f2b;
-  --btn-danger-hover-border: #ff6f91;
-
-  /* ── Inputs ── */
-  --input-bg:     #1c2633;
-  --input-color:  #f1f5ff;
-  --input-border: #3a5572;
-
-  /* ── Header ── */
-  --header-bg:   #18202c;
-  --tabs-border: #253040;
-  --tab-color:   #7a9ab8;
-
-  /* ── Deck cards ── */
-  --card-bg:          #1c2633;
-  --card-border:      #253040;
-  --card-hover-bg:    #1e2d42;
-  --card-selected-bg: #253a55;
-  --deck-name-color:  #f1f5ff;
-
-  /* ── Flashcard ── */
-  --flashcard-bg:      #1c2633;
-  --flashcard-back-bg: #18202c;
-  --flashcard-border:  #4a8ab0;
-
-  /* ── Progress ── */
-  --progress-bar-bg: #253040;
-  --progress-fill:   #6cc6ff;
-  --progress-color:  #6cc6ff;
-
-  /* ── Lang switcher ── */
-  --lang-bg:     #1c2633;
-  --lang-color:  #7a9ab8;
-  --lang-border: #253040;
-
-  /* ── Auth ── */
-  --auth-box-bg:         #1c2633;
-  --auth-box-border:     #253040;
-  --auth-feature-bg:     #1c2633;
-  --auth-feature-border: #2e4460;
-  --auth-hero-border:    #253040;
-  --auth-hero-bg:        #18202c;
-
-  /* ── Footer ── */
-  --footer-bg:     #111720;
-  --footer-border: #253040;
-  --footer-color:  #4a6080;
-
-  /* ── Dialog ── */
-  --dialog-bg: #1c2633;
-
-  /* ── Errors ── */
-  --error-color:       #ff8fab;
-  --error-color-hover: #ff6f91;
+  /* -- Danger --- */
+  --btn-danger-bg: var(--c-bg);
 }

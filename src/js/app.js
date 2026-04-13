@@ -1059,18 +1059,19 @@ function renderStats() {
   heading.textContent = deck.name;
 
   panelHeader.appendChild(heading);
+  panel.appendChild(panelHeader);
+
+  const scrollArea = document.createElement('div');
+  scrollArea.className = 'stat-history-scroll';
 
   const sessions = deck.sessions || [];
-
-  panel.appendChild(panelHeader);
 
   if (sessions.length === 0) {
     const empty = document.createElement('p');
     empty.className = 'stat-history-empty';
     empty.textContent = t('no_sessions');
-    panel.appendChild(empty);
+    scrollArea.appendChild(empty);
   } else {
-    // Group sessions by day, newest day first
     const byDay = new Map();
     [...sessions].reverse().forEach((s, i) => {
       const originalIdx = sessions.length - 1 - i;
@@ -1148,10 +1149,11 @@ function renderStats() {
 
       table.appendChild(tbody);
       tableWrap.appendChild(table);
-      panel.appendChild(tableWrap);
+      scrollArea.appendChild(tableWrap);
     });
   }
 
+  panel.appendChild(scrollArea);
   container.appendChild(panel);
 }
 
@@ -1301,8 +1303,8 @@ function renderAccount() {
   const passRow = document.createElement('div');
   passRow.className = 'form-group';
   passRow.innerHTML = isGoogle
-    ? `<label>Password</label><p style="color:var(--text-secondary)">Signed in with Google</p>`
-    : `<label>Password</label><p style="color:var(--text-secondary)">••••••••</p>`;
+    ? `<label>Password</label><p>Signed in with Google</p>`
+    : `<label>Password</label><p>••••••••</p>`;
 
   const logoutBtn = document.createElement('button');
   logoutBtn.className = 'btn-danger';
