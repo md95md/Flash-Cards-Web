@@ -571,6 +571,8 @@ button:active { transform: scale(0.95); }
   margin: 0;
 }
 
+.card-duplicate { opacity: 0.4; text-decoration: line-through; }
+
 .stat-history-col-header {
   flex-shrink: 0;
   border-bottom: 1px solid var(--surface-border);
@@ -736,9 +738,41 @@ button:active { transform: scale(0.95); }
 #export-preview-dialog .button-row { justify-content: center; margin-top: 1.25rem; flex-shrink: 0; }
 
 /* JSON hint dialog */
+.json-hint-error {
+  background: #fde8ec;
+  color: #c0183f;
+  border: 1.5px solid #c0183f;
+  border-radius: var(--radius-sm, 6px);
+  padding: 0.6rem 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+body.dark .json-hint-error {
+  background: #3a0d17;
+  color: #f48a9e;
+  border-color: #f48a9e;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary, #888);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 0.75;
+  transition: opacity 0.15s;
+}
+@media (hover: hover) {
+  .btn-link:hover { opacity: 1; }
+}
 .json-hint-heading { margin: 0 0 0.75rem; font-size: 1.1rem; }
 .json-hint-code {
-  background: var(--input-bg, #f5f5f5);
+  background: var(--surface-bg);
   border: 1px solid var(--border-color, #ddd);
   border-radius: var(--radius-sm, 6px);
   padding: 0.75rem 1rem;
@@ -750,7 +784,7 @@ button:active { transform: scale(0.95); }
 }
 .json-hint-ai-block { border-top: 1px solid var(--border-color, #eee); padding-top: 1rem; }
 .json-hint-prompt {
-  background: var(--input-bg, #f5f5f5);
+  background: var(--surface-bg);
   border: 1px solid var(--border-color, #ddd);
   border-radius: var(--radius-sm, 6px);
   padding: 0.6rem 0.75rem;

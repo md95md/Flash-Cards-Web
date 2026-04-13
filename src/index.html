@@ -136,6 +136,7 @@
       <!-- JSON format hint dialog -->
       <div id="json-hint-dialog" class="dialog-overlay">
         <div class="dialog-box dialog-box--wide">
+          <div id="json-hint-error" class="json-hint-error" style="display:none;"></div>
           <h3 id="json-hint-title" class="json-hint-heading"></h3>
           <p id="json-hint-desc" ></p>
           <pre class="json-hint-code"><code id="json-hint-example"></code></pre>
@@ -149,16 +150,20 @@
             <button class="btn-danger" data-i18n="cancel" onclick="closeJsonHintDialog()">Cancel</button>
             <button class="btn-primary" id="json-hint-proceed-btn" onclick="proceedImportJSON()"></button>
           </div>
+          <div id="json-hint-skip-wrap" style="text-align:center; margin-top:0.75rem;">
+            <button class="btn-link" id="json-hint-skip-btn" onclick="proceedImportJSONSkip()"></button>
+          </div>
         </div>
       </div>
 
       <!-- Import preview dialog -->
       <div id="import-preview-dialog" class="dialog-overlay">
         <div class="dialog-box dialog-box--wide">
+          <p id="import-duplicate-notice" class="dialog-text" style="display:none; color:var(--c-danger)"></p>
           <p id="import-preview-title" class="dialog-text"></p>
           <div id="import-preview-list" class="import-preview-list"></div>
           <div class="button-row">
-            <button class="btn-danger"onclick="cancelImport()" data-i18n="cancel">Cancel</button>
+            <button class="btn-danger" onclick="cancelImport()" data-i18n="cancel">Cancel</button>
             <button class="btn-primary" id="import-confirm-btn" onclick="confirmImport()"></button>
           </div>
         </div>

@@ -88,8 +88,10 @@ async function seedDefaultDecks() {
 // ─── Internationalization ────────────────────────────────────────────────────
 
 let lang = 'en';
-export function t(key) {
-  return translations[lang][key] || key;
+export function t(key, arg) {
+  const val = translations[lang][key];
+  if (!val) return key;
+  return typeof val === 'function' ? val(arg) : val;
 }
 
 const langs = [
@@ -525,15 +527,23 @@ function hideAddCardForm() {
   document.getElementById('card-toolbar').style.display = 'flex';
 }
 
+const JSON_HINT_SKIP_KEY = 'json_hint_skip';
+
 function triggerImportJSON() {
   if (!selectedDeckId) {
     alert(t('select_deck'));
     return;
   }
-  showJsonHintDialog();
+  if (localStorage.getItem(JSON_HINT_SKIP_KEY) === '1') {
+    const input = document.getElementById('json-import-input');
+    input.value = '';
+    input.click();
+  } else {
+    showJsonHintDialog();
+  }
 }
 
-function showJsonHintDialog() {
+function showJsonHintDialog(showError = false) {
   const example = `[
   {
     "question": "What is the capital of France?",
@@ -550,6 +560,16 @@ function showJsonHintDialog() {
   document.getElementById('json-hint-ai-label').textContent = t('import_json_hint_ai_label');
   document.getElementById('json-hint-prompt-text').textContent = t('import_json_hint_prompt');
   document.getElementById('json-hint-proceed-btn').textContent = t('import_json_hint_proceed');
+  document.getElementById('json-hint-skip-btn').textContent = t('import_json_hint_skip');
+  const errorEl = document.getElementById('json-hint-error');
+  if (showError) {
+    errorEl.textContent = t('import_json_format_error');
+    errorEl.style.display = 'block';
+    document.getElementById('json-hint-skip-wrap').style.display = 'none';
+  } else {
+    errorEl.style.display = 'none';
+    document.getElementById('json-hint-skip-wrap').style.display = 'block';
+  }
   document.getElementById('json-hint-dialog').style.display = 'flex';
 }
 
@@ -562,6 +582,11 @@ function proceedImportJSON() {
   const input = document.getElementById('json-import-input');
   input.value = '';
   input.click();
+}
+
+function proceedImportJSONSkip() {
+  localStorage.setItem(JSON_HINT_SKIP_KEY, '1');
+  proceedImportJSON();
 }
 
 
@@ -577,12 +602,12 @@ function importJSON(event) {
     try {
       data = JSON.parse(e.target.result);
     } catch {
-      alert(t('import_json_invalid'));
+      showJsonHintDialog(true);
       return;
     }
 
     if (!Array.isArray(data)) {
-      alert(t('import_json_invalid'));
+      showJsonHintDialog(true);
       return;
     }
 
@@ -595,27 +620,47 @@ function importJSON(event) {
     }
 
     if (parsed.length === 0) {
-      alert(t('import_json_invalid'));
+      showJsonHintDialog(true);
       return;
     }
 
-    pendingImportCards = parsed;
-    showImportPreview(parsed);
+    const deck = decks.find(d => d.id === selectedDeckId);
+    const existingCards = deck?.cards || [];
+    const newCards = parsed.filter(c =>
+      !existingCards.some(e =>
+        (e.question ?? '').trim() === c.question &&
+        (e.answer ?? '').trim() === c.answer
+      )
+    );
+    const skipped = parsed.length - newCards.length;
+
+    pendingImportCards = newCards;
+    showImportPreview(parsed, skipped, newCards);
   };
   reader.readAsText(file);
 }
 
-function showImportPreview(cards) {
-  const title = document.getElementById('import-preview-title');
-  title.textContent = cards.length + ' ' + t('import_json_success');
 
+
+function showImportPreview(allCards, skipped = 0, newCards = allCards) {
+  const title = document.getElementById('import-preview-title');
   const list = document.getElementById('import-preview-list');
+  const confirmBtn = document.getElementById('import-confirm-btn');
+  const notice = document.getElementById('import-duplicate-notice');
+
   list.innerHTML = '';
 
-  cards.forEach(card => {
-    const item = document.createElement('div');
-    item.className = 'card-list-item';
+  if (skipped > 0) {
+    notice.textContent = t('import_json_skipped', skipped);
+    notice.style.display = '';
+  } else {
+    notice.style.display = 'none';
+  }
 
+  allCards.forEach(card => {
+    const isDup = !newCards.includes(card);
+    const item = document.createElement('div');
+    item.className = 'card-list-item' + (isDup ? ' card-duplicate' : '');
     const text = document.createElement('span');
     const q = document.createElement('strong');
     q.textContent = card.question;
@@ -624,8 +669,15 @@ function showImportPreview(cards) {
     list.appendChild(item);
   });
 
-  const confirmBtn = document.getElementById('import-confirm-btn');
-  confirmBtn.textContent = t('import_json_add_btn');
+  if (newCards.length > 0) {
+    title.textContent = newCards.length + ' ' + t('import_json_success');
+    title.style.display = 'block';
+    confirmBtn.textContent = t('import_json_add_btn');
+    confirmBtn.style.display = 'inline-block';
+  } else {
+    title.style.display = 'none';
+    confirmBtn.style.display = 'none';
+  }
 
   document.getElementById('import-preview-dialog').style.display = 'flex';
 }
@@ -1105,7 +1157,7 @@ function renderStats() {
   panelHeader.className = 'stat-history-header';
 
   const heading = document.createElement('h3');
-  heading.textContent = deck.name;
+  heading.textContent = t('sessions_history');
 
   panelHeader.appendChild(heading);
   panel.appendChild(panelHeader);
@@ -1429,6 +1481,7 @@ window.confirmImport = confirmImport;
 window.cancelImport = cancelImport;
 window.closeJsonHintDialog = closeJsonHintDialog;
 window.proceedImportJSON = proceedImportJSON;
+window.proceedImportJSONSkip = proceedImportJSONSkip;
 window.triggerExportJSON = triggerExportJSON;
 window.confirmExport = confirmExport;
 window.cancelExport = cancelExport;

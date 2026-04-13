@@ -80,9 +80,12 @@ export const translations = {
     import_json_hint_copy: 'Copy prompt',
     import_json_hint_copied: 'Copied!',
     import_json_hint_proceed: 'Choose file',
+    import_json_hint_skip: "Don't show this again",
     import_json_success: 'cards found',
     import_json_add_btn: 'Add to deck',
     import_json_invalid: 'Invalid JSON. Expected an array of objects with "question" and "answer" fields.',
+    import_json_format_error: 'Invalid file format. Please review the format requirements below.',
+    import_json_skipped: (n) => `${n} duplicate${n === 1 ? '' : 's'} found — ${n === 1 ? 'it' : 'they'} will not be added`,
     export_json_btn: 'Export JSON',
     export_json_title: 'cards to export',
     export_json_download_btn: 'Download',
@@ -97,6 +100,7 @@ export const translations = {
     col_not_known: 'not known',
     col_repeated: 'repeated',
     col_duration: 'duration',
+    sessions_history: 'Sessions History',
     repeat: 'Repeat'
   },
   ru: {
@@ -180,9 +184,12 @@ export const translations = {
     import_json_hint_copy: 'Копировать промпт',
     import_json_hint_copied: 'Скопировано!',
     import_json_hint_proceed: 'Выбрать файл',
+    import_json_hint_skip: 'Не показывать снова',
     import_json_success: 'карточек найдено',
     import_json_add_btn: 'Добавить в колоду',
     import_json_invalid: 'Неверный JSON. Ожидается массив объектов с полями "question" и "answer".',
+    import_json_format_error: 'Неверный формат загруженного файла. Ознакомьтесь с правилами формата ниже.',
+    import_json_skipped: (n) => `${n} ${n === 1 ? 'дубликат' : n < 5 ? 'дубликата' : 'дубликатов'} уже есть в колоде — ${n === 1 ? 'он' : 'они'} не будут добавлены`,
     export_json_btn: 'Экспорт JSON',
     export_json_title: 'карточек для экспорта',
     export_json_download_btn: 'Скачать',
@@ -197,6 +204,7 @@ export const translations = {
     col_not_known: 'не знаю',
     col_repeated: 'повторено',
     col_duration: 'длительность',
+    sessions_history: 'История сессий',
     repeat: 'Повторить'
   },
   es: {
@@ -280,9 +288,12 @@ export const translations = {
     import_json_hint_copy: 'Copiar prompt',
     import_json_hint_copied: '¡Copiado!',
     import_json_hint_proceed: 'Elegir archivo',
+    import_json_hint_skip: 'No mostrar de nuevo',
     import_json_success: 'tarjetas encontradas',
     import_json_add_btn: 'Añadir al mazo',
     import_json_invalid: 'JSON inválido. Se espera un array de objetos con campos "question" y "answer".',
+    import_json_format_error: 'Formato de archivo no válido. Por favor, revisa los requisitos de formato a continuación.',
+    import_json_skipped: (n) => `${n} duplicado${n === 1 ? '' : 's'} encontrado${n === 1 ? '' : 's'} — no ${n === 1 ? 'será añadido' : 'serán añadidos'}`,
     export_json_btn: 'Exportar JSON',
     export_json_title: 'tarjetas para exportar',
     export_json_download_btn: 'Descargar',
@@ -297,6 +308,7 @@ export const translations = {
     col_not_known: 'no sé',
     col_repeated: 'repetidas',
     col_duration: 'duración',
+    sessions_history: 'Historial de sesiones',
     repeat: 'Repetir'
   }
 };
