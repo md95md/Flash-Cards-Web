@@ -140,7 +140,7 @@ let sessionWrongCount = 0;
 let sessionRepeatCount = 0;
 let sessionStartTime = 0;
 let selectedStatDeckId = null;
-const editingStatDays = new Set();
+let isEditingStats = false;
 
 
 // ─── Deck list ────────────────────────────────────────────────────────────────
@@ -427,6 +427,31 @@ function showCreateDeckForm() {
   const submitBtn = form.querySelector('.btn-primary');
   submitBtn.textContent = t('create');
   submitBtn.onclick = createDeck;
+
+  const nameInput = document.getElementById('deckNameInput');
+  const descInput = document.getElementById('deckDescInput');
+  const nameCounter = document.getElementById('deckNameCounter');
+  const descCounter = document.getElementById('deckDescCounter');
+
+  const nameError = document.getElementById('deck-name-error');
+  const descLimitError = document.getElementById('deck-desc-limit-error');
+
+  nameInput.oninput = () => {
+    const len = nameInput.value.length;
+    nameCounter.textContent = `${len}/20`;
+    nameCounter.classList.toggle('char-counter--limit', len === 20);
+    nameError.style.display = len === 20 ? 'block' : 'none';
+    nameError.textContent = t('deck_name_limit');
+  };
+
+  descInput.oninput = () => {
+    const len = descInput.value.length;
+    descCounter.textContent = `${len}/60`;
+    descCounter.classList.toggle('char-counter--limit', len === 60);
+    descLimitError.style.display = len === 60 ? 'block' : 'none';
+    descLimitError.textContent = t('deck_desc_limit');
+  };
+
   form.style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -435,7 +460,13 @@ function hideDeckForm() {
   document.getElementById('create-deck-form').style.display = 'none';
   document.getElementById('deckNameInput').value = '';
   document.getElementById('deckDescInput').value = '';
+  document.getElementById('deck-name-error').style.display = 'none';
+  document.getElementById('deck-desc-limit-error').style.display = 'none';
   document.getElementById('deck-desc-error').style.display = 'none';
+  document.getElementById('deckNameCounter').textContent = '0/20';
+  document.getElementById('deckDescCounter').textContent = '0/60';
+  document.getElementById('deckNameCounter').classList.remove('char-counter--limit');
+  document.getElementById('deckDescCounter').classList.remove('char-counter--limit');
 }
 
 function createDeck() {
@@ -1177,7 +1208,7 @@ function renderStats() {
     card.style.cursor = 'pointer';
     card.onclick = () => {
       selectedStatDeckId = isSelected ? null : deck.id;
-      editingStatDays.clear();
+      isEditingStats = false;
       renderStats();
     };
 
@@ -1220,12 +1251,23 @@ function renderStats() {
   colHeaderTable.className = 'stat-history-table stat-history-col-header';
   const colHeaderThead = document.createElement('thead');
   const colHeaderRow = document.createElement('tr');
-  [[t('col_date'), null], ['✓', t('col_learned')], ['✕', t('col_not_known')], ['↺', t('col_repeated')], ['⏱', t('col_duration')], ['', null]].forEach(([label, tooltip]) => {
+  [[t('col_date'), null], ['✓', t('col_learned')], ['✕', t('col_not_known')], ['↺', t('col_repeated')], ['⏱', t('col_duration')], [null, null]].forEach(([label, tooltip]) => {
     const th = document.createElement('th');
-    th.textContent = label;
-    if (tooltip) {
-      th.dataset.tooltip = tooltip;
-      th.tabIndex = 0;
+    if (label === null) {
+      const editBtn = document.createElement('button');
+      editBtn.className = 'stat-table-edit-btn' + (isEditingStats ? ' active' : '');
+      editBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+      editBtn.onclick = () => {
+        isEditingStats = !isEditingStats;
+        renderStats();
+      };
+      th.appendChild(editBtn);
+    } else {
+      th.textContent = label;
+      if (tooltip) {
+        th.dataset.tooltip = tooltip;
+        th.tabIndex = 0;
+      }
     }
     colHeaderRow.appendChild(th);
   });
@@ -1253,21 +1295,8 @@ function renderStats() {
     });
 
     byDay.forEach((entries, day) => {
-      const isEditing = editingStatDays.has(day);
-
       const tableWrap = document.createElement('div');
       tableWrap.className = 'stat-table-wrap';
-
-      const editBtn = document.createElement('button');
-      editBtn.className = 'stat-table-edit-btn' + (isEditing ? ' active' : '');
-      editBtn.title = 'edit';
-      editBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
-      editBtn.onclick = () => {
-        if (editingStatDays.has(day)) editingStatDays.delete(day);
-        else editingStatDays.add(day);
-        renderStats();
-      };
-      tableWrap.appendChild(editBtn);
 
       const table = document.createElement('table');
       table.className = 'stat-history-table';
@@ -1292,14 +1321,9 @@ function renderStats() {
         const delBtn = document.createElement('button');
         delBtn.className = 'btn-danger stat-session-del-btn';
         delBtn.textContent = '✕';
-        delBtn.style.visibility = isEditing ? 'visible' : 'hidden';
+        delBtn.style.visibility = isEditingStats ? 'visible' : 'hidden';
         delBtn.onclick = () => {
           deck.sessions.splice(originalIdx, 1);
-          const remaining = deck.sessions.filter(s2 => {
-            const d = new Date(s2.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
-            return d === day;
-          });
-          if (remaining.length === 0) editingStatDays.delete(day);
           saveDeck(currentUser.uid, deck);
           renderStats();
         };

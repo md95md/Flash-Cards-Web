@@ -209,12 +209,20 @@
       <div id="create-deck-form" class="panel">
         <h3 data-i18n="create_deck">Create New Deck</h3>
         <div class="form-group">
-          <label data-i18n="deck_name">Deck name</label>
-          <input type="text" id="deckNameInput">
+          <div class="form-label-row">
+            <label data-i18n="deck_name">Deck name</label>
+            <span class="char-counter" id="deckNameCounter">0/20</span>
+          </div>
+          <input type="text" id="deckNameInput" maxlength="20">
+          <p id="deck-name-error" class="field-error" style="display:none;" data-i18n="deck_name_limit"></p>
         </div>
         <div class="form-group">
-          <label data-i18n="deck_desc">Description</label>
-          <textarea id="deckDescInput"></textarea>
+          <div class="form-label-row">
+            <label data-i18n="deck_desc">Description</label>
+            <span class="char-counter" id="deckDescCounter">0/60</span>
+          </div>
+          <textarea id="deckDescInput" maxlength="60"></textarea>
+          <p id="deck-desc-limit-error" class="field-error" style="display:none;" data-i18n="deck_desc_limit"></p>
           <p id="deck-desc-error" class="field-error" style="display:none;" data-i18n="deck_desc_required"></p>
         </div>
         <div class="button-row">
