@@ -1170,17 +1170,21 @@ function renderStats() {
   colHeaderTable.className = 'stat-history-table stat-history-col-header';
   const colHeaderThead = document.createElement('thead');
   const colHeaderRow = document.createElement('tr');
-  [t('col_date'), t('col_learned'), t('col_not_known'), t('col_repeated'), t('col_duration'), ''].forEach(label => {
+  [[t('col_date'), null], ['✓', t('col_learned')], ['✕', t('col_not_known')], ['↺', t('col_repeated')], ['⏱', t('col_duration')], ['', null]].forEach(([label, tooltip]) => {
     const th = document.createElement('th');
     th.textContent = label;
+    if (tooltip) {
+      th.dataset.tooltip = tooltip;
+      th.tabIndex = 0;
+    }
     colHeaderRow.appendChild(th);
   });
   colHeaderThead.appendChild(colHeaderRow);
   colHeaderTable.appendChild(colHeaderThead);
-  panel.appendChild(colHeaderTable);
 
   const scrollArea = document.createElement('div');
   scrollArea.className = 'stat-history-scroll';
+  scrollArea.appendChild(colHeaderTable);
 
   const sessions = deck.sessions || [];
 
@@ -1234,6 +1238,7 @@ function renderStats() {
         });
 
         const tdDel = document.createElement('td');
+
         const delBtn = document.createElement('button');
         delBtn.className = 'btn-danger stat-session-del-btn';
         delBtn.textContent = '✕';
