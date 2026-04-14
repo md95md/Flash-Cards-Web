@@ -102,7 +102,9 @@ export const translations = {
     col_repeated: 'repeated',
     col_duration: 'duration',
     sessions_history: 'Sessions History',
-    repeat: 'Repeat'
+    repeat: 'Repeat',
+    card_limit_add: (current) => `Deck limit is 100 cards. This deck already has ${current} card${current === 1 ? '' : 's'}.`,
+    card_limit_import: (adding, current) => `Deck limit is 100 cards. You're trying to add ${adding} cards to a deck with ${current} (${adding + current} total).`,
   },
   ru: {
     my_decks: 'Мои колоды',
@@ -207,7 +209,9 @@ export const translations = {
     col_repeated: 'повторено',
     col_duration: 'длительность',
     sessions_history: 'История сессий',
-    repeat: 'Повторить'
+    repeat: 'Повторить',
+    card_limit_add: (current) => `Лимит колоды — 100 карточек. В этой колоде уже ${current} карт${current === 1 ? 'очка' : current < 5 ? 'очки' : 'очек'}.`,
+    card_limit_import: (adding, current) => `Лимит колоды — 100 карточек. Вы добавляете ${adding} к ${current} уже имеющимся (итого ${adding + current}).`,
   },
   es: {
     my_decks: 'Mis mazos',
@@ -312,6 +316,8 @@ export const translations = {
     col_repeated: 'repetidas',
     col_duration: 'duración',
     sessions_history: 'Historial de sesiones',
-    repeat: 'Repetir'
+    repeat: 'Repetir',
+    card_limit_add: (current) => `El límite del mazo es 100 tarjetas. Este mazo ya tiene ${current} tarjeta${current === 1 ? '' : 's'}.`,
+    card_limit_import: (adding, current) => `El límite del mazo es 100 tarjetas. Intentas añadir ${adding} tarjetas a un mazo con ${current} (${adding + current} en total).`,
   }
 };

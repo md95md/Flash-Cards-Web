@@ -92,10 +92,10 @@ async function seedDefaultDecks() {
 // ─── Internationalization ────────────────────────────────────────────────────
 
 let lang = 'en';
-export function t(key, arg) {
+export function t(key, ...args) {
   const val = translations[lang][key];
   if (!val) return key;
-  return typeof val === 'function' ? val(arg) : val;
+  return typeof val === 'function' ? val(...args) : val;
 }
 
 const langs = [
@@ -121,6 +121,8 @@ function cycleLang() {
 
 
 // ─── State ────────────────────────────────────────────────────────────────────
+
+const CARD_LIMIT = 100;
 
 let decks = [];
 let selectedDeckId = null;
@@ -501,6 +503,11 @@ function confirmNo() {
   confirmCallback = null;
 }
 
+function showLimitDialog(msg) {
+  document.getElementById('limit-dialog-text').textContent = msg;
+  document.getElementById('limit-dialog').style.display = 'flex';
+}
+
 // ─── Card form ────────────────────────────────────────────────────────────────
 
 function showAddCardForm() {
@@ -688,6 +695,14 @@ function showImportPreview(allCards, skipped = 0, newCards = allCards) {
 
 function confirmImport() {
   const deck = decks.find(d => d.id === selectedDeckId);
+
+  if (deck.cards.length + pendingImportCards.length > CARD_LIMIT) {
+    showLimitDialog(t('card_limit_import', pendingImportCards.length, deck.cards.length));
+    document.getElementById('import-preview-dialog').style.display = 'none';
+    pendingImportCards = [];
+    return;
+  }
+
   pendingImportCards.forEach((card, i) => {
     deck.cards.push({ id: Date.now() + i, question: card.question, answer: card.answer, correct: 0, total: 0 });
   });
@@ -776,6 +791,12 @@ function addCard() {
   }
 
   const deck = decks.find(d => d.id === selectedDeckId);
+
+  if (deck.cards.length >= CARD_LIMIT) {
+    showLimitDialog(t('card_limit_add', deck.cards.length));
+    return;
+  }
+
   deck.cards.push({ id: Date.now(), question, answer, correct: 0, total: 0 });
 
   saveDeck(currentUser.uid, deck);
@@ -1066,6 +1087,12 @@ function nextCard() {
   renderStudyMode();
 }
 
+function pruneOldSessions(deck) {
+  if (!Array.isArray(deck.sessions)) return;
+  const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  deck.sessions = deck.sessions.filter(s => s.date >= cutoff);
+}
+
 function exitStudy() {
   if (currentStudyDeckId) {
     const deck = decks.find(d => d.id === currentStudyDeckId);
@@ -1079,6 +1106,7 @@ function exitStudy() {
         repeated: sessionRepeatCount,
         duration: durationSec,
       });
+      pruneOldSessions(deck);
       saveDeck(currentUser.uid, deck);
     }
   }
@@ -1112,6 +1140,8 @@ function formatDate(ts) {
 function renderStats() {
   const container = document.getElementById('stats-content');
   container.innerHTML = '';
+
+  decks.forEach(deck => pruneOldSessions(deck));
 
   const deckList = document.createElement('div');
   deckList.className = 'decks-grid';
