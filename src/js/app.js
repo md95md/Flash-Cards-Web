@@ -435,16 +435,25 @@ function hideDeckForm() {
   document.getElementById('create-deck-form').style.display = 'none';
   document.getElementById('deckNameInput').value = '';
   document.getElementById('deckDescInput').value = '';
+  document.getElementById('deck-desc-error').style.display = 'none';
 }
 
 function createDeck() {
   const name = document.getElementById('deckNameInput').value.trim();
   const desc = document.getElementById('deckDescInput').value.trim();
+  const descError = document.getElementById('deck-desc-error');
 
   if (!name) {
     alert(t('deck_name'));
     return;
   }
+
+  if (!desc) {
+    descError.textContent = t('deck_desc_required');
+    descError.style.display = 'block';
+    return;
+  }
+  descError.style.display = 'none';
 
   if (decks.length >= DECK_LIMIT) {
     showLimitDialog(t('deck_limit'));

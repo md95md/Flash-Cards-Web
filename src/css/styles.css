@@ -1008,6 +1008,13 @@ dotlottie-wc {
   flex-direction: column;
 }
 
+.field-error {
+  color: var(--error-color);
+  margin-top: 0.25rem;
+  font-size: 13px;
+  font-weight: 500;
+}
+
 #auth-error,
 #signin-error {
   color: var(--error-color);

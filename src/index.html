@@ -213,8 +213,9 @@
           <input type="text" id="deckNameInput">
         </div>
         <div class="form-group">
-          <label data-i18n="deck_desc">Description (optional)</label>
+          <label data-i18n="deck_desc">Description</label>
           <textarea id="deckDescInput"></textarea>
+          <p id="deck-desc-error" class="field-error" style="display:none;" data-i18n="deck_desc_required"></p>
         </div>
         <div class="button-row">
           <button class="btn-danger" data-i18n="cancel" onclick="hideDeckForm()">Cancel</button>
