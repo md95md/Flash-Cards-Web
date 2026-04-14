@@ -123,6 +123,7 @@ function cycleLang() {
 // ─── State ────────────────────────────────────────────────────────────────────
 
 const CARD_LIMIT = 100;
+const DECK_LIMIT = 10;
 
 let decks = [];
 let selectedDeckId = null;
@@ -416,6 +417,11 @@ function saveEditCard() {
 // ─── Deck create / delete ─────────────────────────────────────────────────────
 
 function showCreateDeckForm() {
+  if (decks.length >= DECK_LIMIT) {
+    showLimitDialog(t('deck_limit'));
+    return;
+  }
+
   const form = document.getElementById('create-deck-form');
   form.querySelector('h3').textContent = t('create_deck');
   const submitBtn = form.querySelector('.btn-primary');
@@ -437,6 +443,11 @@ function createDeck() {
 
   if (!name) {
     alert(t('deck_name'));
+    return;
+  }
+
+  if (decks.length >= DECK_LIMIT) {
+    showLimitDialog(t('deck_limit'));
     return;
   }
 

@@ -105,6 +105,7 @@ export const translations = {
     repeat: 'Repeat',
     card_limit_add: (current) => `Deck limit is 100 cards. This deck already has ${current} card${current === 1 ? '' : 's'}.`,
     card_limit_import: (adding, current) => `Deck limit is 100 cards. You're trying to add ${adding} cards to a deck with ${current} (${adding + current} total).`,
+    deck_limit: `You've reached the limit of 10 decks. Delete an existing deck to create a new one.`,
   },
   ru: {
     my_decks: 'Мои колоды',
@@ -212,6 +213,7 @@ export const translations = {
     repeat: 'Повторить',
     card_limit_add: (current) => `Лимит колоды — 100 карточек. В этой колоде уже ${current} карт${current === 1 ? 'очка' : current < 5 ? 'очки' : 'очек'}.`,
     card_limit_import: (adding, current) => `Лимит колоды — 100 карточек. Вы добавляете ${adding} к ${current} уже имеющимся (итого ${adding + current}).`,
+    deck_limit: `Достигнут лимит в 10 колод. Удалите одну из существующих, чтобы создать новую.`,
   },
   es: {
     my_decks: 'Mis mazos',
@@ -319,5 +321,6 @@ export const translations = {
     repeat: 'Repetir',
     card_limit_add: (current) => `El límite del mazo es 100 tarjetas. Este mazo ya tiene ${current} tarjeta${current === 1 ? '' : 's'}.`,
     card_limit_import: (adding, current) => `El límite del mazo es 100 tarjetas. Intentas añadir ${adding} tarjetas a un mazo con ${current} (${adding + current} en total).`,
+    deck_limit: `Has alcanzado el límite de 10 mazos. Elimina uno existente para poder crear uno nuevo.`,
   }
 };
