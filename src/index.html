@@ -244,12 +244,20 @@
           <div id="add-card-form" class="panel-inner">
             <h4 id="card-form-title"></h4>
             <div class="form-group">
-              <label data-i18n="question">Question</label>
-              <textarea id="questionInput"></textarea>
+              <div class="form-label-row">
+                <label data-i18n="question">Question</label>
+                <span class="char-counter" id="questionCounter">0/100</span>
+              </div>
+              <textarea id="questionInput" maxlength="100"></textarea>
+              <p id="question-limit-error" class="field-error" style="display:none;" data-i18n="card_field_limit"></p>
             </div>
             <div class="form-group">
-              <label data-i18n="answer">Answer</label>
-              <textarea id="answerInput"></textarea>
+              <div class="form-label-row">
+                <label data-i18n="answer">Answer</label>
+                <span class="char-counter" id="answerCounter">0/100</span>
+              </div>
+              <textarea id="answerInput" maxlength="100"></textarea>
+              <p id="answer-limit-error" class="field-error" style="display:none;" data-i18n="card_field_limit"></p>
             </div>
             <div class="button-row">
               <button class="btn-danger" data-i18n="cancel" onclick="hideAddCardForm()">Cancel</button>

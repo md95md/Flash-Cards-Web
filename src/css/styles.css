@@ -748,6 +748,9 @@ button:active {
   white-space: nowrap;
 }
 
+.date-short { display: none; }
+.date-full  { display: inline; }
+
 .stat-history-table {
   width: 100%;
   border-collapse: collapse;
@@ -1201,6 +1204,9 @@ body.dark .btn-google:focus  { box-shadow: 0 -1px 0 rgba(255,255,255,.04), 0 2px
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .date-full  { display: none; }
+  .date-short { display: inline; }
 
   .stat-history-table {
     font-size: 12px;

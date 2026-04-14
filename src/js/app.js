@@ -389,6 +389,10 @@ function showEditCardForm() {
   submitBtn.textContent = t('save');
   submitBtn.onclick = saveEditCard;
 
+  initCardFieldCounters();
+  document.getElementById('questionCounter').textContent = `${card.question.length}/100`;
+  document.getElementById('answerCounter').textContent = `${card.answer.length}/100`;
+
   document.getElementById('add-card-form').style.display = 'block';
   document.getElementById('deck-action-btns').style.display = 'none';
   document.getElementById('card-toolbar').style.display = 'none';
@@ -561,6 +565,31 @@ function showLimitDialog(msg) {
 
 // ─── Card form ────────────────────────────────────────────────────────────────
 
+function initCardFieldCounters() {
+  const questionInput = document.getElementById('questionInput');
+  const answerInput = document.getElementById('answerInput');
+  const questionCounter = document.getElementById('questionCounter');
+  const answerCounter = document.getElementById('answerCounter');
+  const questionError = document.getElementById('question-limit-error');
+  const answerError = document.getElementById('answer-limit-error');
+
+  questionInput.oninput = () => {
+    const len = questionInput.value.length;
+    questionCounter.textContent = `${len}/100`;
+    questionCounter.classList.toggle('char-counter--limit', len === 100);
+    questionError.style.display = len === 100 ? 'block' : 'none';
+    questionError.textContent = t('card_field_limit');
+  };
+
+  answerInput.oninput = () => {
+    const len = answerInput.value.length;
+    answerCounter.textContent = `${len}/100`;
+    answerCounter.classList.toggle('char-counter--limit', len === 100);
+    answerError.style.display = len === 100 ? 'block' : 'none';
+    answerError.textContent = t('card_field_limit');
+  };
+}
+
 function showAddCardForm() {
   if (!selectedDeckId) {
     alert(t('select_deck'));
@@ -568,12 +597,13 @@ function showAddCardForm() {
   }
   editingCardIdx = null;
   document.getElementById('questionInput').value = '';
- document.getElementById('card-form-title').textContent = t('add_card');
-  
+  document.getElementById('card-form-title').textContent = t('add_card');
 
   const submitBtn = document.getElementById('card-form-submit');
   submitBtn.textContent = t('add_card');
   submitBtn.onclick = addCard;
+
+  initCardFieldCounters();
 
   document.getElementById('add-card-form').style.display = 'block';
   document.getElementById('deck-action-btns').style.display = 'none';
@@ -584,6 +614,12 @@ function hideAddCardForm() {
   document.getElementById('add-card-form').style.display = 'none';
   document.getElementById('questionInput').value = '';
   document.getElementById('answerInput').value = '';
+  document.getElementById('questionCounter').textContent = '0/100';
+  document.getElementById('answerCounter').textContent = '0/100';
+  document.getElementById('questionCounter').classList.remove('char-counter--limit');
+  document.getElementById('answerCounter').classList.remove('char-counter--limit');
+  document.getElementById('question-limit-error').style.display = 'none';
+  document.getElementById('answer-limit-error').style.display = 'none';
   document.getElementById('deck-action-btns')?.style &&
     (document.getElementById('deck-action-btns').style.display = 'flex');
   document.getElementById('card-toolbar').style.display = 'flex';
@@ -1307,7 +1343,17 @@ function renderStats() {
 
         const tdDate = document.createElement('td');
         tdDate.className = 'stat-history-date-cell';
-        tdDate.textContent = rowIdx === 0 ? day : '';
+        if (rowIdx === 0) {
+          const d = new Date(s.date);
+          const shortDate = `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getFullYear()).slice(-2)}`;
+          const spanFull = document.createElement('span');
+          spanFull.className = 'date-full';
+          spanFull.textContent = day;
+          const spanShort = document.createElement('span');
+          spanShort.className = 'date-short';
+          spanShort.textContent = shortDate;
+          tdDate.append(spanFull, spanShort);
+        }
         tr.appendChild(tdDate);
 
         [s.learned, s.notKnown, s.repeated ?? 0, formatDuration(s.duration)].forEach(val => {
